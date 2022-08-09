@@ -1,0 +1,14 @@
+{
+  "hash": "2110990560096c913fe16295de3bdae4",
+  "result": {
+    "markdown": "---\ntitle: \"Software\"\ndate: \"2022-08-09\"\noutput: distill::distill_article\nexecute:\n  echo: false\ncomments: false\n---\n\n\n\n\n## `carfollowingmodels`\n\nR package for running car-following models.\n\n`<a href=\"https://github.com/durraniu/carfollowingmodels\" class=\"icon-link\" target=\"_blank\" rel=\"noopener\"><i class=\"fab fa-github\"></i> Code</a>`{=html}\n`<a href=\"https://durraniu.github.io/carfollowingmodels/\" class=\"icon-link\" target=\"_blank\" rel=\"noopener\"><i class=\"fas fa-globe\"></i> Website</a>`{=html}  \n\n\n## `opendatawindsor`\n\nR package for downloading data from [City of Windsor Open Data Portal](https://opendata.citywindsor.ca/).\n\n`<a href=\"https://github.com/JervisMurzello/opendatawindsor/\" class=\"icon-link\" target=\"_blank\" rel=\"noopener\"><i class=\"fab fa-github\"></i> Code</a>`{=html}  ",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

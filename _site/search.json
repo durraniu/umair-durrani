@@ -259,27 +259,6 @@
     "text": "Step 4: Create a table of year and relevant history:\nFinally, I used the reactable package to create an interactive table that contained year as a group. Clicking on a year group reveals history in one or more sentences from Discover Canada:\n\nsuppressPackageStartupMessages(library(reactable))\n\nreactable(\n  dc_df_year,\n  groupBy = \"year\",\n  searchable = TRUE,\n  filterable = TRUE,\n  resizable = TRUE,\n  onClick = \"expand\",\n  showPageSizeOptions = TRUE,\n  columns = list(\n    year = colDef(name = \"Year\", maxWidth = 250),\n    sentence = colDef( name = \"What happened?\")\n   ),\n  theme = reactableTheme(backgroundColor = \"#eadbcb\")\n)\n\n\n\n\n\n\nI am now ready to delve into the Discover Canada study guide further. Ideally, I want to extract the most useful phrases from each sentence for a given year, but at this point I do not know the best way to do that programmatically. If you have any ideas, please share with me on twitter."
   },
   {
-    "objectID": "posts/BBC100/test1.html",
-    "href": "posts/BBC100/test1.html",
-    "title": "Umair Durrani",
-    "section": "",
-    "text": "Image credit: https://www.bbc.com/news/world-55042935 Code: https://github.com/durraniu/BBC100\n\n\nFollowing map shows the location, image and description of all the women. Click on a bubble to explore the number of women and then hover over a circle to see who the person is. For more details, click on the circle.\n<iframe seamless src= “wmap.html”, width=“200%”, height=“500” style=“border:none;”>"
-  },
-  {
-    "objectID": "posts/BBC100/test2.html",
-    "href": "posts/BBC100/test2.html",
-    "title": "Umair Durrani",
-    "section": "",
-    "text": "This globe shows the number of selected women by country.\n<iframe seamless src= “globe.html”, width=“100%”, height=“250” style=“border:none;”>"
-  },
-  {
-    "objectID": "posts/BBC100/test3.html",
-    "href": "posts/BBC100/test3.html",
-    "title": "Umair Durrani",
-    "section": "",
-    "text": "The number of women by each award category are described in the following interactivebar chart. You can click on each bar to drilldown into number of women by country.\n<iframe seamless src= “bar_chart.html”, width=“100%”, height=“300” style=“border:none;”>"
-  },
-  {
     "objectID": "projects/distracted-driving.html",
     "href": "projects/distracted-driving.html",
     "title": "Distracted Driving",

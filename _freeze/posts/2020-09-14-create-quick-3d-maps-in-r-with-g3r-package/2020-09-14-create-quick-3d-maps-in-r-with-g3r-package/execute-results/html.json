@@ -1,0 +1,14 @@
+{
+  "hash": "6a0e77d424a9defafd4b147cc96bfc26",
+  "result": {
+    "markdown": "---\ntitle: How to fit different models on a dataset (the power of purrr)?\ndate: '2020-09-14'\nimage: \"https://media.giphy.com/media/YRtLgsajXrz1FNJ6oy/giphy.gif\"\n---\n\n\n# The Problem\n\nI wanted to fit multiple models on a dataset in R, and I had no idea how to do that efficiently. So, I turned to twitter and got an amazing reply:  \n\n<blockquote class=\"twitter-tweet\"><p lang=\"en\" dir=\"ltr\">Like this? <a href=\"https://t.co/uGcKpVGLbH\">pic.twitter.com/uGcKpVGLbH</a></p>&mdash; Daniel Anderson (@datalorax_) <a href=\"https://twitter.com/datalorax_/status/1120904037988048896?ref_src=twsrc%5Etfw\">April 24, 2019</a></blockquote> <script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>   \n\nPurrrfect!! Thank you Daniel.  \n\n\n## A short screencast\n\nI created a short tutorial to show the steps for fitting a model to multiple datasets or fitting multiple models to a single dataset:   \n\n\n<iframe width=\"800\" height=\"600\" src=\"https://www.youtube.com/embed/iOfK3sBsCuA\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>\n\n\n### Cat Bonus\n\n![](https://media.giphy.com/media/YRtLgsajXrz1FNJ6oy/giphy.gif)  \n\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
