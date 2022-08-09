@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2020-09-07">
+
+<title>Umair Durrani - Draw cars with ggplot2</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../../academicons.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Umair Durrani</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../teaching.html">Teaching</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../projects.html">Projects</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../software.html">Software</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://scholar.google.com/citations?user=jS1b6osAAAAJ&amp;hl=en">Publications</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html">Blog</a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../CV.pdf">CV</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/durraniu"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/umairdurrani87"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/durraniu/"><i class="bi bi-linkedin" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#credit" id="toc-credit" class="nav-link active" data-scroll-target="#credit">Credit:</a></li>
+  <li><a href="#i-wanted-to-draw-cars" id="toc-i-wanted-to-draw-cars" class="nav-link" data-scroll-target="#i-wanted-to-draw-cars">I wanted to draw cars</a>
+  <ul class="collapse">
+  <li><a href="#creating-geom_car" id="toc-creating-geom_car" class="nav-link" data-scroll-target="#creating-geom_car">Creating <code>geom_car</code></a>
+  <ul class="collapse">
+  <li><a href="#load-libraries" id="toc-load-libraries" class="nav-link" data-scroll-target="#load-libraries">Load Libraries</a></li>
+  <li><a href="#load-data" id="toc-load-data" class="nav-link" data-scroll-target="#load-data">Load data</a></li>
+  <li><a href="#coordinates-plot" id="toc-coordinates-plot" class="nav-link" data-scroll-target="#coordinates-plot">Coordinates plot</a></li>
+  <li><a href="#step-1-create-a-car-image-with-no-fill-color" id="toc-step-1-create-a-car-image-with-no-fill-color" class="nav-link" data-scroll-target="#step-1-create-a-car-image-with-no-fill-color">Step 1: Create a car image with no fill color</a></li>
+  <li><a href="#step-2-create-a-graphical-object-grob-from-the-image" id="toc-step-2-create-a-graphical-object-grob-from-the-image" class="nav-link" data-scroll-target="#step-2-create-a-graphical-object-grob-from-the-image">Step 2: Create a graphical object (<code>grob</code>) from the image</a></li>
+  <li><a href="#step-3-map-the-data-to-the-grob-using-ggproto" id="toc-step-3-map-the-data-to-the-grob-using-ggproto" class="nav-link" data-scroll-target="#step-3-map-the-data-to-the-grob-using-ggproto">Step 3: Map the data to the grob using <code>ggproto</code></a></li>
+  <li><a href="#step-4-create-the-external-interface-i.e.-the-geom_car-layer" id="toc-step-4-create-the-external-interface-i.e.-the-geom_car-layer" class="nav-link" data-scroll-target="#step-4-create-the-external-interface-i.e.-the-geom_car-layer">Step 4: Create the external interface i.e.&nbsp;the <code>geom_car</code> layer</a></li>
+  </ul></li>
+  <li><a href="#plotting-the-cars" id="toc-plotting-the-cars" class="nav-link" data-scroll-target="#plotting-the-cars">Plotting the cars</a>
+  <ul class="collapse">
+  <li><a href="#attempt-1-to-plot-cars" id="toc-attempt-1-to-plot-cars" class="nav-link" data-scroll-target="#attempt-1-to-plot-cars">Attempt 1 to plot cars</a></li>
+  <li><a href="#attemp-2-adjust-the-coordinates-and-plot-again" id="toc-attemp-2-adjust-the-coordinates-and-plot-again" class="nav-link" data-scroll-target="#attemp-2-adjust-the-coordinates-and-plot-again">Attemp 2: Adjust the coordinates and plot again</a></li>
+  <li><a href="#attempt-3---fixing-y-coordinate" id="toc-attempt-3---fixing-y-coordinate" class="nav-link" data-scroll-target="#attempt-3---fixing-y-coordinate">Attempt 3 - Fixing y coordinate</a></li>
+  </ul></li>
+  <li><a href="#car-rear-view" id="toc-car-rear-view" class="nav-link" data-scroll-target="#car-rear-view">Car Rear View</a></li>
+  </ul></li>
+  <li><a href="#bonus-animation" id="toc-bonus-animation" class="nav-link" data-scroll-target="#bonus-animation">Bonus: Animation</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Draw cars with ggplot2</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 7, 2020</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<section id="credit" class="level2">
+<h2 class="anchored" data-anchor-id="credit">Credit:</h2>
+<p>Thanks to <a href="https://twitter.com/brodiegaslam?lang=en">BrodieG</a> for answering my <a href="https://stackoverflow.com/questions/22159087/is-it-possible-to-draw-diagrams-in-r">stackoverflow question</a> about drawing diagrams in R.</p>
+</section>
+<section id="i-wanted-to-draw-cars" class="level1">
+<h1>I wanted to draw cars</h1>
+<p>I wanted to plot a car following another car using <code>ggplot2</code>. There are <code>geom_rect</code> and <code>geom_tile</code> that could do that, but I wanted to give the rectangles a ‘car’ look. So, I posted a question on stackoverflow (linked above). The answer showed how to do that by creating a <code>geom_car</code></p>
+<section id="creating-geom_car" class="level2">
+<h2 class="anchored" data-anchor-id="creating-geom_car">Creating <code>geom_car</code></h2>
+<p>Creating a new geom in <code>ggplot2</code> is much more complicated then using the <code>ggplot2</code> interface. The official <code>gpplot2</code> book, <a href="https://ggplot2-book.org/"><strong>ggplot2: Elegant Graphics for Data Analysis</strong></a>, says the following:</p>
+<blockquote class="blockquote">
+<p>When making the jump from user to developer, it is common to encounter frustrations because the nature of the ggplot2 interface is very different to the structure of the underlying machinery that makes it work</p>
+</blockquote>
+<p>And I completely agree. The <a href="https://ggplot2-book.org/internals.html">chapter</a> that the above quote is from explains that <code>ggplot2</code> uses the <code>ggproto</code> class system to create new objects such as geoms.</p>
+<p>The following shows the use of <code>ggproto</code> that creates the <code>geom_car</code>. Again, the code is not mine but provided by Brodie G (thanks!).</p>
+<p>First, load libraries.</p>
+<section id="load-libraries" class="level3">
+<h3 class="anchored" data-anchor-id="load-libraries">Load Libraries</h3>
+<div class="cell" data-hash="2020-09-07-creating-your-own-geom-in-ggplot2_cache/html/load_libs_1a19182f20bb74c0e1e75680a65c2f2a">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>( <span class="fu">library</span>(tidyverse) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidyverse' was built under R version 4.0.5</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidyr' was built under R version 4.0.5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>( <span class="fu">library</span>(here) )</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>( <span class="fu">library</span>(readr) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="load-data" class="level3">
+<h3 class="anchored" data-anchor-id="load-data">Load data</h3>
+<p>I am using a dataset of 2 cars. The <em>Following car</em> is approaching a <em>Lead car</em> from a large distance. The Lead car is stopped. The dataset contains the x and y coordinates of the centroid of cars and their sizes.</p>
+<div class="cell" data-hash="2020-09-07-creating-your-own-geom-in-ggplot2_cache/html/load_data_f066411b12206f46bbed3d1f3aa4beb2">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"driver_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+-- Column specification --------------------------------------------------------
+cols(
+  Time_s = col_double(),
+  ED_x_m = col_double(),
+  ED_y_m = col_double(),
+  LV_x_m = col_double(),
+  LV_y_m = col_double(),
+  LV_length_m = col_double(),
+  LV_width_m = col_double(),
+  visual_angle_W = col_double(),
+  visual_angle_H = col_double(),
+  tau = col_double(),
+  ED_length_m = col_double(),
+  ED_width_m = col_double()
+)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 12
+  Time_s ED_x_m ED_y_m LV_x_m LV_y_m LV_length_m LV_widt~1 visua~2 visua~3   tau
+   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+1      1  4341. -8921.  3991. -7732.        5.39      2.29 0.00185 0.00128  55.1
+2      2  4335. -8899.  3991. -7732.        5.39      2.29 0.00189 0.00130  52.8
+3      3  4329. -8877.  3991. -7732.        5.39      2.29 0.00193 0.00133  50.7
+4      4  4322. -8854.  3991. -7732.        5.39      2.29 0.00197 0.00136  48.6
+5      5  4315. -8831.  3991. -7732.        5.39      2.29 0.00201 0.00138  46.9
+6      6  4308. -8808.  3991. -7732.        5.39      2.29 0.00205 0.00141  45.3
+# ... with 2 more variables: ED_length_m &lt;dbl&gt;, ED_width_m &lt;dbl&gt;, and
+#   abbreviated variable names 1: LV_width_m, 2: visual_angle_W,
+#   3: visual_angle_H
+# i Use `colnames()` to see all variable names</code></pre>
+</div>
+</div>
+</section>
+<section id="coordinates-plot" class="level3">
+<h3 class="anchored" data-anchor-id="coordinates-plot">Coordinates plot</h3>
+<p>Following plot shows that in the original data format, the Following car moves up and left towards the lead car.</p>
+<div class="cell" data-hash="2020-09-07-creating-your-own-geom-in-ggplot2_cache/html/unnamed-chunk-1_67828dbdb8f8b7880023e41d0a9c90f9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> ED_x_m, <span class="at">y =</span> ED_y_m)) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="st">"Following car"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="2020-09-07-creating-your-own-geom-in-ggplot2_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="step-1-create-a-car-image-with-no-fill-color" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-create-a-car-image-with-no-fill-color">Step 1: Create a car image with no fill color</h3>
+<p>The stackoverflow answer comes with a car image, but I wanted to experiment with my own image. So, I created one with no fill color. This was important to enable the <code>fill</code> method in <code>geom_car</code>. Then it was read by the <code>png::readPNG</code> method:</p>
+<div class="cell" data-hash="2020-09-07-creating-your-own-geom-in-ggplot2_cache/html/load_car_image_2591575d41737fc15c145805e24911c9">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>car.raster <span class="ot">&lt;-</span> png<span class="sc">::</span><span class="fu">readPNG</span>(<span class="st">"car4.png"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(car.raster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> num [1:238, 1:505, 1:4] 0 0.184 0.184 0.184 0.184 ...</code></pre>
+</div>
+</div>
+</section>
+<section id="step-2-create-a-graphical-object-grob-from-the-image" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-create-a-graphical-object-grob-from-the-image">Step 2: Create a graphical object (<code>grob</code>) from the image</h3>
+<div class="cell" data-hash="2020-09-07-creating-your-own-geom-in-ggplot2_cache/html/create_grob_4733158bd19c845578200ae8dc603262">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a car 'grob' using a baseline PNG</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The `grid` grob actually responsible for rendering our car, </span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># combines our transparent car elements with a background rectangle</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># for color/fill.</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>carGrob <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, length, width, gp) {</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  grid<span class="sc">::</span><span class="fu">grobTree</span>(</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    grid<span class="sc">::</span><span class="fu">rectGrob</span>(</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>      x, y, <span class="at">hjust=</span>.<span class="dv">5</span>, <span class="at">height=</span>width, <span class="at">width=</span>length,</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">gp =</span> gp</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    grid<span class="sc">::</span><span class="fu">rasterGrob</span>(</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>      car.raster, <span class="at">x=</span>x, <span class="at">y=</span>y, <span class="at">hjust=</span>.<span class="dv">5</span>, <span class="at">height=</span>width, <span class="at">width=</span>length</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    ) ) }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="step-3-map-the-data-to-the-grob-using-ggproto" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-map-the-data-to-the-grob-using-ggproto">Step 3: Map the data to the grob using <code>ggproto</code></h3>
+<div class="cell" data-hash="2020-09-07-creating-your-own-geom-in-ggplot2_cache/html/unnamed-chunk-2_7bbb853e62c2a8a534eb7efff7f254f8">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The `ggproto` object that maps our data to the `grid` grobs</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>GeomCar <span class="ot">&lt;-</span> ggplot2<span class="sc">::</span><span class="fu">ggproto</span>(<span class="st">"GeomCar"</span>, ggplot2<span class="sc">::</span>Geom,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># Generate grobs from the data, we have to reconvert length/width so</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># that the transformations persist</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>                            </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">draw_panel=</span><span class="cf">function</span>(self, data, panel_params, coords) {</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">with</span>(</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>                                coords<span class="sc">$</span><span class="fu">transform</span>(data, panel_params),</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">carGrob</span>(</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>                                  x, y, <span class="at">length=</span>xmax<span class="sc">-</span>xmin, <span class="at">width=</span>ymax<span class="sc">-</span>ymin,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">gp=</span>grid<span class="sc">::</span><span class="fu">gpar</span>(</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">col =</span> colour, <span class="at">fill =</span> <span class="fu">alpha</span>(fill, alpha),</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">lwd =</span> size <span class="sc">*</span> .pt, <span class="at">lty =</span> linetype, <span class="at">lineend =</span> <span class="st">"butt"</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>                                  ) ) ) },</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># Convert data to coordinates that will get transformed (length/width don't</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># normally).</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>                            </span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>                            <span class="at">setup_data=</span><span class="cf">function</span>(self, data, params) {</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">transform</span>(data,</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">xmin =</span> x <span class="sc">-</span> length <span class="sc">/</span> <span class="dv">2</span>, <span class="at">xmax =</span> x <span class="sc">+</span> length <span class="sc">/</span> <span class="dv">2</span>,</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">ymin =</span> y <span class="sc">-</span> width <span class="sc">/</span> <span class="dv">2</span>, <span class="at">ymax =</span> y <span class="sc">+</span> width <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>                              ) },</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># Required and default aesthetics</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>                            </span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>                            <span class="at">required_aes=</span><span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"length"</span>, <span class="st">"width"</span>),</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>                            <span class="at">default_aes =</span> <span class="fu">aes</span>(</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>                              <span class="at">colour =</span> <span class="cn">NA</span>, <span class="at">fill =</span> <span class="st">"grey35"</span>, <span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">linetype =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="cn">NA</span></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>                            ),</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># Use the car grob in the legend</span></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>                            </span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>                            <span class="at">draw_key =</span> <span class="cf">function</span>(data, params, size) {</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">with</span>(</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>                                data,</span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">carGrob</span>(</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>                                  <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="at">length=</span>.<span class="dv">75</span>, <span class="at">width=</span>.<span class="dv">5</span>,</span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">gp =</span> grid<span class="sc">::</span><span class="fu">gpar</span>(</span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">col =</span> colour, <span class="at">fill =</span> <span class="fu">alpha</span>(fill, alpha),</span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">lwd =</span> size <span class="sc">*</span> .pt, <span class="at">lty =</span> linetype, <span class="at">lineend =</span> <span class="st">"butt"</span></span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>                                  ) ) ) }</span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="step-4-create-the-external-interface-i.e.-the-geom_car-layer" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-create-the-external-interface-i.e.-the-geom_car-layer">Step 4: Create the external interface i.e.&nbsp;the <code>geom_car</code> layer</h3>
+<div class="cell" data-hash="2020-09-07-creating-your-own-geom-in-ggplot2_cache/html/external_interface_4ed4a8d55efd1d1571d3eac81f2fecc0">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># External interface</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>geom_car <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">mapping=</span><span class="cn">NULL</span>, <span class="at">data=</span><span class="cn">NULL</span>, ..., <span class="at">inherit.aes=</span><span class="cn">TRUE</span>, <span class="at">show.legend=</span><span class="cn">NA</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>) {</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer</span>(</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>data, <span class="at">mapping=</span>mapping, <span class="at">geom=</span>GeomCar, <span class="at">position=</span><span class="st">"identity"</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat=</span><span class="st">"identity"</span>, <span class="at">show.legend =</span> show.legend, <span class="at">inherit.aes =</span> inherit.aes,</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">params=</span><span class="fu">list</span>(...)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="2020-09-07-creating-your-own-geom-in-ggplot2_cache/html/unnamed-chunk-3_f443c6fdf2cc7d0566f632fd0c1937fc">
+
+</div>
+</section>
+</section>
+<section id="plotting-the-cars" class="level2">
+<h2 class="anchored" data-anchor-id="plotting-the-cars">Plotting the cars</h2>
+<p>I can now use <code>geom_car</code> to plot the cars. Since the coordinates change every second (see the <code>Time_s</code> column above), I need to filter for one time only. So, I choose <code>Time_s == 49</code>.</p>
+<section id="attempt-1-to-plot-cars" class="level3">
+<h3 class="anchored" data-anchor-id="attempt-1-to-plot-cars">Attempt 1 to plot cars</h3>
+<div class="cell" data-hash="2020-09-07-creating-your-own-geom-in-ggplot2_cache/html/unnamed-chunk-4_d607f3aa919992f1bd036bb6a03727a5">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Time_s <span class="sc">==</span> <span class="dv">49</span>) ) <span class="sc">+</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_car</span>(<span class="fu">aes</span>(<span class="at">x=</span>ED_x_m, <span class="at">y=</span>ED_y_m, </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">length=</span>ED_length_m, <span class="at">width=</span>ED_width_m, </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill=</span><span class="st">"ed"</span>)) <span class="sc">+</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span>ED_x_m, <span class="at">y=</span>ED_y_m<span class="sc">+</span><span class="dv">5</span>), </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">label =</span> <span class="st">"Following Car"</span>) <span class="sc">+</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_car</span>(<span class="fu">aes</span>(<span class="at">x=</span>LV_x_m, <span class="at">y=</span>LV_y_m, </span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">length=</span>LV_length_m, <span class="at">width=</span>LV_width_m, </span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill=</span><span class="st">"lv"</span>)) <span class="sc">+</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span>LV_x_m, <span class="at">y=</span>LV_y_m<span class="sc">+</span><span class="dv">5</span>), </span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">label =</span> <span class="st">"Lead Car</span><span class="sc">\n</span><span class="st">(stationary)"</span>) <span class="sc">+</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>(<span class="at">ratio =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="2020-09-07-creating-your-own-geom-in-ggplot2_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This does not look right. The Following car seems to be ahead of the lead car. Also, due to the elongated scale, the Following car appears to be in a different lane. The main reason is the unusual coordinates. The x coordinates decrease as the Following car gets closer to the lead car.</p>
+<p>I can fix this by scaling: subtracting the x coordinates from the largest x coordinate in the data.</p>
+</section>
+<section id="attemp-2-adjust-the-coordinates-and-plot-again" class="level3">
+<h3 class="anchored" data-anchor-id="attemp-2-adjust-the-coordinates-and-plot-again">Attemp 2: Adjust the coordinates and plot again</h3>
+<section id="adjust-coordinates" class="level4">
+<h4 class="anchored" data-anchor-id="adjust-coordinates">Adjust coordinates:</h4>
+<div class="cell" data-hash="2020-09-07-creating-your-own-geom-in-ggplot2_cache/html/unnamed-chunk-5_f2afa05c5ab48ef9183cc5ccd993a3fd">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>first_ed_x_coord <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">pull</span>(ED_x_m) <span class="sc">%&gt;%</span> <span class="fu">range</span>() <span class="sc">%&gt;%</span> <span class="fu">tail</span>(<span class="dv">1</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">ED_x_m_a =</span> <span class="fu">abs</span>(ED_x_m <span class="sc">-</span> first_ed_x_coord),</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">LV_x_m_a =</span> <span class="fu">abs</span>(LV_x_m <span class="sc">-</span> first_ed_x_coord)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>         )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="plot" class="level4">
+<h4 class="anchored" data-anchor-id="plot">Plot:</h4>
+<div class="cell" data-hash="2020-09-07-creating-your-own-geom-in-ggplot2_cache/html/unnamed-chunk-6_aa14a39924fb6aade9fcd67bdafa21d9">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Time_s <span class="sc">==</span> <span class="dv">49</span>) ) <span class="sc">+</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_car</span>(<span class="fu">aes</span>(<span class="at">x=</span>ED_x_m_a, <span class="at">y=</span>ED_y_m, </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">length=</span>ED_length_m, <span class="at">width=</span>ED_width_m, </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill=</span><span class="st">"ed"</span>)) <span class="sc">+</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span>ED_x_m_a, <span class="at">y=</span>ED_y_m<span class="sc">+</span><span class="dv">5</span>), </span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">label =</span> <span class="st">"Following Car"</span>) <span class="sc">+</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_car</span>(<span class="fu">aes</span>(<span class="at">x=</span>LV_x_m_a, <span class="at">y=</span>LV_y_m, </span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">length=</span>LV_length_m, <span class="at">width=</span>LV_width_m, </span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill=</span><span class="st">"lv"</span>)) <span class="sc">+</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span>LV_x_m_a, <span class="at">y=</span>LV_y_m<span class="sc">+</span><span class="dv">5</span>), </span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">label =</span> <span class="st">"Lead Car</span><span class="sc">\n</span><span class="st">(stationary)"</span>) <span class="sc">+</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>(<span class="at">ratio =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="2020-09-07-creating-your-own-geom-in-ggplot2_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This is better. Now, to fix the problem of the elongated y coordinate, I can fix them to a single value, because I’m mainly interested in the movement along the x-axis. But note that this might not be a good idea if there is a large change in y coordinate (e.g.&nbsp;in a lane change).</p>
+</section>
+</section>
+<section id="attempt-3---fixing-y-coordinate" class="level3">
+<h3 class="anchored" data-anchor-id="attempt-3---fixing-y-coordinate">Attempt 3 - Fixing y coordinate</h3>
+<div class="cell" data-hash="2020-09-07-creating-your-own-geom-in-ggplot2_cache/html/unnamed-chunk-7_47570826b4a7f8f0341c7e0fb0dc0b68">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>car_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Time_s <span class="sc">==</span> <span class="dv">49</span>) ) <span class="sc">+</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_car</span>(<span class="fu">aes</span>(<span class="at">x=</span>ED_x_m_a, <span class="at">y=</span><span class="dv">300</span>, </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">length=</span>ED_length_m, <span class="at">width=</span>ED_width_m, </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill=</span><span class="st">"ed"</span>)) <span class="sc">+</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span>ED_x_m_a, <span class="at">y=</span><span class="dv">300</span><span class="sc">+</span><span class="dv">5</span>), </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">label =</span> <span class="st">"Following Car"</span>) <span class="sc">+</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_car</span>(<span class="fu">aes</span>(<span class="at">x=</span>LV_x_m_a, <span class="at">y=</span><span class="dv">300</span>, </span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">length=</span>LV_length_m, <span class="at">width=</span>LV_width_m, </span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill=</span><span class="st">"lv"</span>)) <span class="sc">+</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span>LV_x_m_a, <span class="at">y=</span><span class="dv">300</span><span class="sc">+</span><span class="dv">5</span>), </span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">label =</span> <span class="st">"Lead Car</span><span class="sc">\n</span><span class="st">(stationary)"</span>) <span class="sc">+</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>(<span class="at">ratio =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>())</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>car_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="2020-09-07-creating-your-own-geom-in-ggplot2_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This looks much better. :D</p>
+</section>
+</section>
+<section id="car-rear-view" class="level2">
+<h2 class="anchored" data-anchor-id="car-rear-view">Car Rear View</h2>
+<p>I also created a <code>geom_car_rear</code> by using a different image (car rear created in powerpoint). Following plots the car rear at time = 49 s.</p>
+<div class="cell" data-hash="2020-09-07-creating-your-own-geom-in-ggplot2_cache/html/unnamed-chunk-8_9debd121cf812660470e72211ba59bea">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Time_s <span class="sc">==</span> <span class="dv">49</span>)) <span class="sc">+</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_car_rear</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="dv">0</span>, <span class="at">y=</span><span class="dv">0</span>, <span class="at">length=</span>visual_angle_W,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">width=</span>visual_angle_H), <span class="at">fill=</span><span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="2020-09-07-creating-your-own-geom-in-ggplot2_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="192"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="bonus-animation" class="level1">
+<h1>Bonus: Animation</h1>
+<p>Since I have data across time, I can also animate my cars using the fantastic <code>gganimate</code> package. Here goes:</p>
+<div class="cell" data-hash="2020-09-07-creating-your-own-geom-in-ggplot2_cache/html/unnamed-chunk-9_9709865dec7cf659e3cadc6de3645615">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gganimate)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df ) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_car</span>(<span class="fu">aes</span>(<span class="at">x=</span>ED_x_m_a, <span class="at">y=</span><span class="dv">300</span>, </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">length=</span>ED_length_m, <span class="at">width=</span>ED_width_m, </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill=</span><span class="st">"ed"</span>)) <span class="sc">+</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span>ED_x_m_a, <span class="at">y=</span><span class="dv">300</span><span class="sc">+</span><span class="dv">5</span>), </span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">label =</span> <span class="st">"Following Car"</span>) <span class="sc">+</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_car</span>(<span class="fu">aes</span>(<span class="at">x=</span>LV_x_m_a, <span class="at">y=</span><span class="dv">300</span>, </span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">length=</span>LV_length_m, <span class="at">width=</span>LV_width_m, </span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill=</span><span class="st">"lv"</span>)) <span class="sc">+</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span>LV_x_m_a, <span class="at">y=</span><span class="dv">300</span><span class="sc">+</span><span class="dv">5</span>), </span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">label =</span> <span class="st">"Lead Car</span><span class="sc">\n</span><span class="st">(stationary)"</span>) <span class="sc">+</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>(<span class="at">ratio =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>())  <span class="sc">+</span></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transition_time</span>(Time_s) <span class="sc">+</span></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">view_follow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="2020-09-07-creating-your-own-geom-in-ggplot2_files/figure-html/unnamed-chunk-9-1.gif" class="img-fluid"></p>
+</div>
+</div>
+<p>This animation has one limitation. The lead car also appears to be moving. Maybe putting a vertcial line or using <code>gganimate::view_step()</code> might solve this problem. I’d perhaps explore that in a different post.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,9 @@
+---
+title: "Machine Learning to Classify Drivers"
+image: "plt_Task 1.png"
+---
+
+## Classifying Drivers using Supervised and Unsupervised Machine Learning Techniques. In collaboration with University of South Florida (2021 - 2022)
+
+- Developed clusters of drivers with similar behaviours based on self-reported, psychophysiological, and performance metrics within a simulated environment  
+- Applied machine learning models to predict moderate and conservative drivers  

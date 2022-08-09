@@ -1,0 +1,28 @@
+---
+title: "Software"
+date: "`r Sys.Date()`"
+output: distill::distill_article
+execute:
+  echo: false
+comments: false
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(distilltools)
+```
+
+## `carfollowingmodels`
+
+R package for running car-following models.
+
+`r icon_link("github", "Code", "https://github.com/durraniu/carfollowingmodels")`
+`r icon_link("globe", "Website", "https://durraniu.github.io/carfollowingmodels/")`  
+
+
+## `opendatawindsor`
+
+R package for downloading data from [City of Windsor Open Data Portal](https://opendata.citywindsor.ca/).
+
+`r icon_link("github", "Code", "https://github.com/JervisMurzello/opendatawindsor/")`  

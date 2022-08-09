@@ -1,0 +1,242 @@
+---
+title: Dynamic Time Warping and Hierarchical Clustering with {gapminder}
+date: '2020-12-16'
+image: "pp.png"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+```
+
+# Goal
+
+I want to find which countries are the most similar to each other in terms of their life expectancy, population and GDP over the years
+
+
+# Load packages
+
+```{r, warning=FALSE, message=FALSE}
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(dtwclust))
+suppressPackageStartupMessages(library(factoextra))
+suppressPackageStartupMessages(library(gapminder))
+suppressPackageStartupMessages(library(ggrepel))
+```
+
+We'll use `dtwclust` for hierarchical clustering using the `dtw_basic` as the distance measure. If you are not familiar with these methods, please read about [dynamic time warping](http://www.phon.ox.ac.uk/jcoleman/old_SLP/Lecture_5/DTW_explanation.html) and [hierachical clustering](https://people.revoledu.com/kardi/tutorial/Clustering/Numerical%20Example.htm).  
+
+
+# Data
+
+We are going to use the `gapminder` dataset for comparing different countries. Let's see the first few rows here:
+
+```{r}
+gapminder
+```
+
+
+Plot of life expectancy:
+
+```{r}
+# Let's plot the life expectancy over years 
+# and represent each country by a line
+ggplot(data=gapminder)+
+  geom_line(aes(group=country, x=year, y=lifeExp,
+                color = continent)) +
+  facet_wrap(~ continent)
+```
+
+Similarly, you can plot other variables to see their time-series.  
+
+
+# Cluster Analysis:
+
+## Step 1) Choose the variables you want to use in calculating the dtw dissimilarity score
+
+Here, I am choosing to use only the countries in Asia, and I am going to use life expectancy, population and GDP for the estimation of dtw score.
+
+Also, it is important to scale all variables as right now they are in different scales. You can also scale them in the function that does the clustering.
+
+```{r}
+### Function to scale a variable
+scale_this <- function(x){
+  (x - mean(x, na.rm=TRUE)) / sd(x, na.rm=TRUE)
+}
+
+
+df <- gapminder %>% 
+  filter(continent == "Asia") %>% # countries in Asia only
+  group_by(country) %>%           # scaling the vars for each country
+  mutate(lifeExp = scale_this(lifeExp),
+         pop = scale_this(pop),
+         gdpPercap = scale_this(gdpPercap)
+  ) %>%
+  ungroup()
+
+df
+```
+
+
+
+## Step 2) Split the data by each country and convert to a matrix
+
+This is required by the `dtwclust` package. 
+
+```{r}
+df_matrix <- df %>% 
+  split(.$country, drop = T) %>% 
+  purrr::map(~ .x[, c("lifeExp",    # names of all vars
+                       "pop",
+                       "gdpPercap"
+                      )]) %>% 
+  purrr::map(as.matrix) 
+
+### printing out df shows the matrices by country
+str(df_matrix[[1]])
+```
+
+
+## Step 3) Use the `tsclust` function from the `dtwclust` package for clustering using the dtw score
+
+Both steps are done using a single function:
+
+```{r}
+clusters_gp <- df_matrix %>% 
+  tsclust(., 
+          k = 8L,                 # assuming clusters
+          distance = "dtw_basic", # this is dtw score
+          seed = 390,             # to reproduce results
+          type="hierarchical",    # type of clustering
+          control = hierarchical_control(method = "ward.D")) # method in hc
+
+clusters_gp
+```
+
+
+
+# Plotting the results
+
+## A dendrogram (tree)
+
+```{r}
+fviz_dend(clusters_gp, k = 8, # Cut the tree in groups
+          cex = 0.5, # label size
+          color_labels_by_k = TRUE, # color labels by groups
+          rect = TRUE, # Add rectangle around groups
+          horiz = TRUE, # Make the tree horizontal
+          ylab = "DTW score",
+          palette = "uchicago")
+```
+
+
+## Labeling countries based on clusters and visualizing each variable
+
+We are now joining the estimated groups with the data:
+
+```{r}
+Gps <- as.data.frame(cutree(clusters_gp, k = 8)) # num of clusters
+colnames(Gps) <- "Gp"
+Gps$country <- row.names(Gps)
+row.names(Gps) <- NULL
+
+
+
+## Getting the clustering info into the original data
+gapminder_Asia <- gapminder %>% 
+  filter(continent == "Asia") %>% 
+  left_join(x=., y=Gps, by = "country")
+
+gapminder_Asia
+```
+
+
+## Plotting each variable by group
+
+Following plots show the time-series of life expectancy, population and GDP by group:  
+
+
+```{r}
+### Select 15 countries at random to label on plot
+set.seed(123)
+
+selected_countries <- gapminder_Asia %>% 
+  group_by(Gp) %>% 
+  select(country) %>% 
+  unique() %>% 
+  sample_n(size = 4, replace = TRUE) %>% 
+  ungroup() %>% 
+  pull(country) %>% 
+  unique()
+
+
+sc_data <- gapminder_Asia %>% 
+  filter(year == 1982,
+         country %in% selected_countries)
+
+
+
+### lifeExp
+ggplot(data = gapminder_Asia,
+       aes(x = year, y = lifeExp)) +
+  geom_line(aes(group=country), color = "grey") +
+  facet_wrap(~ Gp) +
+  geom_line(data = gapminder_Asia %>% 
+              filter(country %in% selected_countries),
+            aes(group=country)) +
+  geom_text_repel(data = sc_data,
+            aes(label = country),
+            box.padding = 1,
+            nudge_x = .15,
+            nudge_y = .5,
+            arrow = arrow(length = unit(0.015, "npc")),
+            hjust = 0
+            ) +
+  theme_bw()
+
+
+
+
+
+### pop
+ggplot(data = gapminder_Asia,
+       aes(x = year, y = pop)) +
+  geom_line(aes(group=country), color = "grey") +
+  facet_wrap(~ Gp, scales = "free_y") +
+  geom_line(data = gapminder_Asia %>% 
+              filter(country %in% selected_countries),
+            aes(group=country)) +
+  geom_text_repel(data = sc_data,
+                  aes(label = country),
+                  box.padding = 1,
+                  nudge_x = .15,
+                  nudge_y = .5,
+                  arrow = arrow(length = unit(0.015, "npc")),
+                  hjust = 0
+  ) +
+  theme_bw()
+
+
+
+
+
+### gdpPercap
+pp <- ggplot(data = gapminder_Asia,
+       aes(x = year, y = gdpPercap)) +
+  geom_line(aes(group=country), color = "grey") +
+  facet_wrap(~ Gp, scales = "free_y") +
+  geom_line(data = gapminder_Asia %>% 
+              filter(country %in% selected_countries),
+            aes(group=country)) +
+  geom_text_repel(data = sc_data,
+                  aes(label = country),
+                  box.padding = 1,
+                  nudge_x = .15,
+                  nudge_y = .5,
+                  arrow = arrow(length = unit(0.015, "npc")),
+                  hjust = 0
+  ) +
+  theme_bw()
+
+ggsave("pp.png", plot=pp, dpi=600)
+```
+

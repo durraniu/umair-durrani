@@ -1,0 +1,68 @@
+---
+page-layout: full
+---
+
+<!-- Nothing else to see here -->
+
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-6}
+![](umair-profile3.jpg)
+:::
+
+::: {.g-col-12 .g-col-md-6 #about-me-text}
+# <span style="color:#1296e3">Hello there, I am Umair Durrani.</span>
+
+I am a research associate in transportation engineering at the [Civil and Environmental Engineering Department at the University of Windsor](https://www.uwindsor.ca/engineering/civil/). I study and develop models of road users for traffic flow modeling. Moreover, I teach programmatic data analysis to students in the Transportation Systems Innovation Lab.
+
+I am also an instructor of [Data Analytics at St. Clair College, Windsor, Ontario](https://www.stclaircollege.ca/programs/data-analytics-business). I teach Statistics and analytical tools (Python, R, Tableau, Excel), and manage capstone projects of students from diverse backgrounds.
+
+I speak **English**, **Urdu** and **R** (programming) fluently. You can get in touch with me via [email](mailto:umairdurrani@outlook.com) or [twitter](https://twitter.com/umairdurrani87).
+
+:::
+
+
+::: {.g-col-12 .g-col-md-5 .g-start-md-2}
+# <span style="color:#1296e3">Interests</span>
+
+-   Machine Learning Applications in Transportation  
+
+-   Intelligent Transportation Systems
+
+-   Driver Behaviour
+
+-   Connected and Autonomous Vehicles  
+
+-   Spatiotemporal Analysis of Transportation Networks
+
+:::
+
+::: {.g-col-12 .g-col-md-5}
+# <span style="color:#1296e3">Education</span>
+
+<ul>
+
+-   **PhD in Civil Engineering, 2022** <br>
+
+    <p class="grad-location">
+
+    University of Windsor, Ontario, Canada
+
+    </p>
+
+
+-   **B.Sc. in Transportation Engineering, 2009** <br>
+
+    <p class="grad-location">
+
+    University of Engineering and Technology, Lahore, Pakistan
+
+    </p>
+
+</ul>
+
+:::
+
+
+:::

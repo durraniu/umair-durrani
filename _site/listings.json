@@ -1,0 +1,22 @@
+[
+  {
+    "listing": "/blog.html",
+    "items": [
+      "/posts/2021-02-07-making-a-history-table-from-discover-canada-in-r/making-a-history-table-from-discover-canada-in-r.html",
+      "/posts/2021-01-01-autocomplete-character-factor-values-in-rstudio/2021-01-01-autocomplete-character-factor-values-in-rstudio.html",
+      "/posts/2020-12-25-elevation-maps-in-r/elevation-maps-in-r.html",
+      "/posts/2020-12-16-dtw/2020-12-16-dtw.html",
+      "/posts/2020-09-14-create-quick-3d-maps-in-r-with-g3r-package/2020-09-14-create-quick-3d-maps-in-r-with-g3r-package.html",
+      "/posts/2020-09-13-combining-multiple-animations/2020-09-13-combining-multiple-animations.html",
+      "/posts/2020-09-07-creating-your-own-geom-in-ggplot2/2020-09-07-creating-your-own-geom-in-ggplot2.html"
+    ]
+  },
+  {
+    "listing": "/projects.html",
+    "items": [
+      "/projects/vsl.html",
+      "/projects/rss.html",
+      "/projects/distracted-driving.html"
+    ]
+  }
+]

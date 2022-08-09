@@ -1,0 +1,11 @@
+---
+title: "Distracted Driving"
+image: "app_image_tablet_and_simulator2.jpg"
+---
+
+## Mitigating Distracted Driving based on Understanding of Drivers’ Personality, Motivational, and Mobile Phone Dependency Characteristics. Road Safety Research Partnership Program (RSRPP), Ministry of Transportation of Ontario	(2020 – Present)
+
+
+-	Assisted in the development of driving simulator scenarios to evaluate driver distraction  
+-	Developed and deployed a dashboard application that worked with real-time driving simulator data to evaluate driver distraction due to music and navigation tasks  
+-	Created computer programs to extract and analyze driving data and participant heart rate data   

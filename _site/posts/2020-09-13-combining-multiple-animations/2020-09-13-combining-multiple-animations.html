@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2020-09-13">
+
+<title>Umair Durrani - Creating and combining multiple animations with gganimate and magick</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../../academicons.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Umair Durrani</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../teaching.html">Teaching</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../projects.html">Projects</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../software.html">Software</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://scholar.google.com/citations?user=jS1b6osAAAAJ&amp;hl=en">Publications</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html">Blog</a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../CV.pdf">CV</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/durraniu"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/umairdurrani87"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/durraniu/"><i class="bi bi-linkedin" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#credit" id="toc-credit" class="nav-link active" data-scroll-target="#credit">Credit</a></li>
+  <li><a href="#animating-cars" id="toc-animating-cars" class="nav-link" data-scroll-target="#animating-cars">Animating cars</a>
+  <ul class="collapse">
+  <li><a href="#load-data" id="toc-load-data" class="nav-link" data-scroll-target="#load-data">Load data</a></li>
+  </ul></li>
+  <li><a href="#creating-animations-with-gganimate" id="toc-creating-animations-with-gganimate" class="nav-link" data-scroll-target="#creating-animations-with-gganimate">Creating animations with <code>gganimate</code></a>
+  <ul class="collapse">
+  <li><a href="#top-view" id="toc-top-view" class="nav-link" data-scroll-target="#top-view">Top view</a></li>
+  <li><a href="#pedal-positions-and-inverse-time-to-collision" id="toc-pedal-positions-and-inverse-time-to-collision" class="nav-link" data-scroll-target="#pedal-positions-and-inverse-time-to-collision">Pedal positions and inverse time-to-collision</a></li>
+  <li><a href="#drivers-front-view" id="toc-drivers-front-view" class="nav-link" data-scroll-target="#drivers-front-view">Driver’s front view</a></li>
+  <li><a href="#rendering-animations-and-saving-them" id="toc-rendering-animations-and-saving-them" class="nav-link" data-scroll-target="#rendering-animations-and-saving-them">Rendering animations and saving them</a></li>
+  </ul></li>
+  <li><a href="#combining-animations" id="toc-combining-animations" class="nav-link" data-scroll-target="#combining-animations">Combining animations</a>
+  <ul class="collapse">
+  <li><a href="#reading-the-gif-images" id="toc-reading-the-gif-images" class="nav-link" data-scroll-target="#reading-the-gif-images">Reading the gif images</a></li>
+  <li><a href="#aligning-the-animations" id="toc-aligning-the-animations" class="nav-link" data-scroll-target="#aligning-the-animations">Aligning the animations</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Creating and combining multiple animations with gganimate and magick</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 13, 2020</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<section id="credit" class="level2">
+<h2 class="anchored" data-anchor-id="credit">Credit</h2>
+<p>Thanks to <strong>Robert Walker</strong> for showing how to combine multiple animations using the <code>magick</code> package in R.</p>
+<blockquote class="twitter-tweet blockquote">
+<p lang="en" dir="ltr">
+Wow, you can side-by-side gganimates with imagemagick. That was fun to put together. <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://twitter.com/hashtag/tidyTuesday?src=hash&amp;ref_src=twsrc%5Etfw">#tidyTuesday</a> An adaptation of measles and a map… <a href="https://t.co/FPOgAOQS84">pic.twitter.com/FPOgAOQS84</a>
+</p>
+— Robert Walker (<span class="citation" data-cites="PieRatio">@PieRatio</span>) <a href="https://twitter.com/PieRatio/status/1206508341750456320?ref_src=twsrc%5Etfw">December 16, 2019</a>
+</blockquote>
+<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</section>
+<section id="animating-cars" class="level1">
+<h1>Animating cars</h1>
+<p>In a <a href="https://rgems.netlify.app/post/2020/09/07/creating-your-own-geom-in-ggplot2/">previous blogpost</a>, I showed how to create a new geom to plot cars as seen from top and rear. This post is about animating them in a way to synchronie their timing.</p>
+<p><code>gganimate</code> package is a powerful animation package in R, but as of this writing, it does not have a function to combine multiple animations. So, we’ll use the <code>magick</code> package to combine the animations.</p>
+<section id="load-data" class="level2">
+<h2 class="anchored" data-anchor-id="load-data">Load data</h2>
+<p>I am using a dataset that contains car positions, speed and distance (also called as <em>spacing</em>).</p>
+<div class="cell" data-hash="2020-09-13-combining-multiple-animations_cache/html/load_data_77051f0d00c7be516e49557c83e8e5a6">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>( <span class="fu">library</span>(tidyverse) )</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>( <span class="fu">library</span>(magick) )</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>( <span class="fu">library</span>(gganimate) )</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>( <span class="fu">library</span>(here) )</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>( <span class="fu">library</span>(readr) )</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"vb.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+-- Column specification --------------------------------------------------------
+cols(
+  Time_s = col_double(),
+  ED_x_m = col_double(),
+  LV_x_m = col_double(),
+  LV_length_m = col_double(),
+  LV_width_m = col_double(),
+  visual_angle_W = col_double(),
+  visual_angle_H = col_double(),
+  tau = col_double(),
+  ED_speed_mps = col_double(),
+  LV_speed_mps = col_double(),
+  LV_frspacing_m = col_double(),
+  ED_gas_pedal_pos = col_double(),
+  ED_brake_pedal_force_kg = col_double(),
+  tau_inv = col_double()
+)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 49 x 14
+   Time_s ED_x_m LV_x_m LV_lengt~1 LV_wi~2 visua~3 visua~4   tau ED_sp~5 LV_sp~6
+    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1      1  4341.  3991.       5.39    2.29 0.00185 0.00128  55.1    22.4       0
+ 2      2  4335.  3991.       5.39    2.29 0.00189 0.00130  52.8    22.9       0
+ 3      3  4329.  3991.       5.39    2.29 0.00193 0.00133  50.7    23.5       0
+ 4      4  4322.  3991.       5.39    2.29 0.00197 0.00136  48.6    24.0       0
+ 5      5  4315.  3991.       5.39    2.29 0.00201 0.00138  46.9    24.3       0
+ 6      6  4308.  3991.       5.39    2.29 0.00205 0.00141  45.3    24.7       0
+ 7      7  4302.  3991.       5.39    2.29 0.00210 0.00145  43.7    25         0
+ 8      8  4294.  3991.       5.39    2.29 0.00215 0.00148  42.1    25.3       0
+ 9      9  4287.  3991.       5.39    2.29 0.00220 0.00152  40.6    25.7       0
+10     10  4280.  3991.       5.39    2.29 0.00226 0.00156  39.1    26.0       0
+# ... with 39 more rows, 4 more variables: LV_frspacing_m &lt;dbl&gt;,
+#   ED_gas_pedal_pos &lt;dbl&gt;, ED_brake_pedal_force_kg &lt;dbl&gt;, tau_inv &lt;dbl&gt;, and
+#   abbreviated variable names 1: LV_length_m, 2: LV_width_m,
+#   3: visual_angle_W, 4: visual_angle_H, 5: ED_speed_mps, 6: LV_speed_mps
+# i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
+</div>
+</div>
+<div class="cell" data-hash="2020-09-13-combining-multiple-animations_cache/html/load_function_4bb0e5f51a6311962140e8eec1fa2059">
+
+</div>
+<p>As discussed in the <a href="https://rgems.netlify.app/post/2020/09/07/creating-your-own-geom-in-ggplot2/">previous blogpost</a>, I had to adjust the coordinates to make one car appear approaching another car. So, we estimate the first and last coordinates in the data to do that.</p>
+<div class="cell" data-hash="2020-09-13-combining-multiple-animations_cache/html/coords_539c1e87476bc64349c61dfed1f570ed">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Largest x coordinate of following vehicle------------------</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  first_ed_x_coord <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">pull</span>(ED_x_m) <span class="sc">%&gt;%</span> <span class="fu">range</span>() <span class="sc">%&gt;%</span> <span class="fu">tail</span>(<span class="dv">1</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  last_ed_x_coord <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">pull</span>(ED_x_m) <span class="sc">%&gt;%</span> <span class="fu">range</span>() <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="creating-animations-with-gganimate" class="level1">
+<h1>Creating animations with <code>gganimate</code></h1>
+<p>Now, the following code shows three animations created using <code>gganimate</code>.</p>
+<section id="top-view" class="level2">
+<h2 class="anchored" data-anchor-id="top-view">Top view</h2>
+<div class="cell" data-hash="2020-09-13-combining-multiple-animations_cache/html/ani1_cae8ab9a66af660c9707a425989c5f6d">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># animation of position---------------------------------------</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  ani_car_b <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_car</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">abs</span>(ED_x_m<span class="sc">-</span>first_ed_x_coord), </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y=</span>first_ed_x_coord<span class="sc">-</span>last_ed_x_coord, <span class="at">length=</span><span class="fl">4.64</span>, <span class="at">width=</span><span class="fl">2.078</span>, <span class="at">fill=</span><span class="st">"ed"</span>)) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">abs</span>(ED_x_m<span class="sc">-</span>first_ed_x_coord), <span class="at">y =</span> (first_ed_x_coord<span class="sc">-</span>last_ed_x_coord)<span class="sc">+</span><span class="dv">3</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Following Car</span><span class="sc">\n</span><span class="st">Speed ="</span>, ED_speed_mps, <span class="st">"m/s"</span>)),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">color=</span><span class="st">"darkgray"</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_car</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">abs</span>(LV_x_m<span class="sc">-</span>first_ed_x_coord), <span class="at">y=</span>first_ed_x_coord<span class="sc">-</span>last_ed_x_coord, <span class="at">length=</span>LV_length_m,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                 <span class="at">width=</span>LV_width_m, <span class="at">fill=</span><span class="st">"lv"</span>)) <span class="sc">+</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">abs</span>(LV_x_m<span class="sc">-</span>first_ed_x_coord), <span class="at">y =</span> (first_ed_x_coord<span class="sc">-</span>last_ed_x_coord)<span class="sc">+</span><span class="dv">3</span>, </span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                  <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Lead Car</span><span class="sc">\n</span><span class="st">Speed ="</span>, LV_speed_mps, <span class="st">"m/s"</span>)),</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">color=</span><span class="st">"darkgray"</span>) <span class="sc">+</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">abs</span>(ED_x_m<span class="sc">-</span>first_ed_x_coord)<span class="sc">+</span>(<span class="fl">0.5</span><span class="sc">*</span><span class="fl">4.64</span>),</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>                     <span class="at">xend =</span> <span class="fu">abs</span>(LV_x_m<span class="sc">-</span>first_ed_x_coord)<span class="sc">-</span>(<span class="fl">0.5</span><span class="sc">*</span>LV_length_m),</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> first_ed_x_coord<span class="sc">-</span>last_ed_x_coord,</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>                     <span class="at">yend=</span> first_ed_x_coord<span class="sc">-</span>last_ed_x_coord), </span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>                 <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"inches"</span>), <span class="at">ends =</span> <span class="st">"both"</span>)) <span class="sc">+</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span> ((<span class="fu">abs</span>(ED_x_m<span class="sc">-</span>first_ed_x_coord)<span class="sc">+</span>(<span class="fl">0.5</span><span class="sc">*</span><span class="fl">4.64</span>))<span class="sc">+</span>(<span class="fu">abs</span>(LV_x_m<span class="sc">-</span>first_ed_x_coord)<span class="sc">-</span>(<span class="fl">0.5</span><span class="sc">*</span>LV_length_m)))<span class="sc">/</span><span class="dv">2</span>, <span class="at">y =</span> (first_ed_x_coord<span class="sc">-</span>last_ed_x_coord)<span class="sc">+</span><span class="fl">3.5</span>, </span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>                  <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Spacing ="</span>, LV_frspacing_m, <span class="st">"m"</span>)),</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>              <span class="at">color=</span><span class="st">"darkgray"</span>) <span class="sc">+</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_equal</span>(<span class="at">ratio=</span><span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"black"</span>)) <span class="sc">+</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.text =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">transition_manual</span>(Time_s) <span class="sc">+</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ease_aes</span>() <span class="sc">+</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">view_follow</span>()</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>ani_car_b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>nframes and fps adjusted to match transition</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="2020-09-13-combining-multiple-animations_files/figure-html/ani1-1.gif" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="pedal-positions-and-inverse-time-to-collision" class="level2">
+<h2 class="anchored" data-anchor-id="pedal-positions-and-inverse-time-to-collision">Pedal positions and inverse time-to-collision</h2>
+<p>The following animation shows how the gas and brake pedal positions change over time. The variable <code>tau-inverse</code> represents the inverse of time-to-collision (seconds until collision happens <em>if</em> cars don’t change their speeds).</p>
+<div class="cell" data-hash="2020-09-13-combining-multiple-animations_cache/html/ani2_5e51a7b1bd5ad1701e35719431dc9c22">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># animation of pedals/looming---------------------------------------</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>pedals_pos_b <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Time_s)) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> tau_inv<span class="sc">*</span><span class="dv">10</span>), <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">y =</span> tau_inv<span class="sc">*</span><span class="dv">10</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"tau-inv ="</span>, <span class="fu">round</span>(tau_inv, <span class="dv">2</span>))), <span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">size =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_area</span>(<span class="fu">aes</span>(<span class="at">y =</span> tau_inv<span class="sc">*</span><span class="dv">10</span>), <span class="at">fill =</span> <span class="st">"gray"</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">position =</span> <span class="st">"identity"</span>, <span class="at">alpha=</span><span class="fl">0.6</span>)<span class="sc">+</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">scale</span>(ED_gas_pedal_pos)), <span class="at">color =</span> <span class="st">"darkgreen"</span>) <span class="sc">+</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">scale</span>(ED_gas_pedal_pos)),</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">label =</span> <span class="st">"Gas Pedal"</span>, <span class="at">color =</span> <span class="st">"darkgreen"</span>) <span class="sc">+</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">scale</span>(ED_brake_pedal_force_kg)), <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">scale</span>(ED_brake_pedal_force_kg)),</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>              <span class="at">label =</span> <span class="st">"Brake Pedal"</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="at">x=</span> <span class="dv">10</span>, <span class="at">y =</span> <span class="dv">4</span>, </span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Brake Pedal Force ="</span>, </span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">round</span>(ED_brake_pedal_force_kg), <span class="st">"kg"</span>))) <span class="sc">+</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">transition_reveal</span>(Time_s)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a> pedals_pos_b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="2020-09-13-combining-multiple-animations_files/figure-html/ani2-1.gif" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="drivers-front-view" class="level2">
+<h2 class="anchored" data-anchor-id="drivers-front-view">Driver’s front view</h2>
+<p>The following animation shows what the driver in the following car sees from the windscreen. It represents how the image of the lead vehicle grows on the following driver’s retina.</p>
+<div class="cell" data-hash="2020-09-13-combining-multiple-animations_cache/html/ani3_64896a6ff2b1596cf7b563a096465218">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># animation of car rear---------------------------------------</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>ani_retina_b <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df ) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_car_rear</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="dv">0</span>, <span class="at">y=</span><span class="dv">0</span>, <span class="at">length=</span>visual_angle_W,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">width=</span>visual_angle_H), <span class="at">fill=</span><span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>())<span class="sc">+</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_fixed</span>(<span class="at">ratio =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">transition_manual</span>(Time_s) </span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a> ani_retina_b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>nframes and fps adjusted to match transition</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="2020-09-13-combining-multiple-animations_files/figure-html/ani3-1.gif" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="rendering-animations-and-saving-them" class="level2">
+<h2 class="anchored" data-anchor-id="rendering-animations-and-saving-them">Rendering animations and saving them</h2>
+<p>Now that the three animations are created, we can render them using <code>gganimate::animate</code> function. Without doing this, the animations are rendered every time we call them.</p>
+<div class="cell" data-hash="2020-09-13-combining-multiple-animations_cache/html/render_anims_e5a672ff079b9754bd4bfd37c9bcd8b6">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rendering gifs-------------------------------------------------</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  a_gif <span class="ot">&lt;-</span> <span class="fu">animate</span>(ani_car_b, <span class="at">height =</span> <span class="dv">3</span>, <span class="at">width =</span> <span class="dv">8</span>, <span class="at">end_pause =</span> <span class="dv">15</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">units =</span> <span class="st">"in"</span>, <span class="at">res =</span> <span class="dv">150</span>, <span class="at">fps =</span> <span class="dv">5</span>, <span class="at">duration=</span><span class="dv">10</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  b_gif <span class="ot">&lt;-</span> <span class="fu">animate</span>(pedals_pos_b, <span class="at">fps =</span> <span class="dv">5</span>, <span class="at">duration=</span><span class="dv">10</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">height =</span> <span class="fl">3.5</span>, <span class="at">width =</span> <span class="fl">4.5</span>, <span class="at">end_pause =</span> <span class="dv">15</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">units =</span> <span class="st">"in"</span>, <span class="at">res =</span> <span class="dv">150</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  c_gif <span class="ot">&lt;-</span> <span class="fu">animate</span>(ani_retina_b, <span class="at">fps =</span> <span class="dv">5</span>, <span class="at">duration=</span><span class="dv">10</span>,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>                   <span class="at">height =</span> <span class="fl">3.5</span>, <span class="at">width =</span> <span class="fl">3.5</span>, <span class="at">end_pause =</span> <span class="dv">15</span>,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>                   <span class="at">units =</span> <span class="st">"in"</span>, <span class="at">res =</span> <span class="dv">150</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="do">## saving  </span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(<span class="at">filename =</span> <span class="st">"a_gif.gif"</span>,</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">animation =</span> a_gif)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(<span class="at">filename =</span> <span class="st">"b_gif.gif"</span>,</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>          <span class="at">animation =</span> b_gif)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(<span class="at">filename =</span> <span class="st">"c_gif.gif"</span>,</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>          <span class="at">animation =</span> c_gif)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="combining-animations" class="level1">
+<h1>Combining animations</h1>
+<p>To combine the above three animations, we are going to use the <code>magick</code> package.</p>
+<section id="reading-the-gif-images" class="level2">
+<h2 class="anchored" data-anchor-id="reading-the-gif-images">Reading the gif images</h2>
+<div class="cell" data-hash="2020-09-13-combining-multiple-animations_cache/html/convert_to_magick_290a13c10c44ca63ae349dd6843cce2a">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertig the rendered gifs to magick class-------------</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  a_mgif <span class="ot">&lt;-</span> <span class="fu">image_read</span>(<span class="at">path =</span> <span class="st">"a_gif.gif"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  b_mgif <span class="ot">&lt;-</span> <span class="fu">image_read</span>(<span class="at">path =</span> <span class="st">"b_gif.gif"</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  c_mgif <span class="ot">&lt;-</span> <span class="fu">image_read</span>(<span class="at">path =</span> <span class="st">"c_gif.gif"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>By the reading the saved gif images (animations) using <code>magick::image_read()</code>, we convert the animation from the <strong>gif_image</strong> class to <strong>magick-image</strong> class.</p>
+</section>
+<section id="aligning-the-animations" class="level2">
+<h2 class="anchored" data-anchor-id="aligning-the-animations">Aligning the animations</h2>
+<p>Finally, we combine the animations using a <code>for-loop</code> and <code>magick::image_append</code>:</p>
+<div class="cell" data-hash="2020-09-13-combining-multiple-animations_cache/html/unnamed-chunk-1_c3fa59b60ef2229b4bc9c718ccf169f6">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aligning gifs-------------------------------------------------</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  bc_gif <span class="ot">&lt;-</span> <span class="fu">image_append</span>(<span class="fu">c</span>(b_mgif[<span class="dv">1</span>], c_mgif[<span class="dv">1</span>]), <span class="at">stack =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">50</span>){</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    combined <span class="ot">&lt;-</span> <span class="fu">image_append</span>(<span class="fu">c</span>(b_mgif[i], c_mgif[i]), <span class="at">stack =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    bc_gif <span class="ot">&lt;-</span> <span class="fu">c</span>(bc_gif, combined)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  new_gif <span class="ot">&lt;-</span> <span class="fu">image_append</span>(<span class="fu">c</span>(a_mgif[<span class="dv">1</span>], bc_gif[<span class="dv">1</span>]), <span class="at">stack =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">50</span>){</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    combined <span class="ot">&lt;-</span> <span class="fu">image_append</span>(<span class="fu">c</span>(a_mgif[i], bc_gif[i]), <span class="at">stack =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    new_gif <span class="ot">&lt;-</span> <span class="fu">c</span>(new_gif, combined)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a> new_gif</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="2020-09-13-combining-multiple-animations_files/figure-html/unnamed-chunk-1-1.gif" class="img-fluid"></p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,10 @@
+---
+title: "Variable Speed Limit System in Ontario, Canada"
+image: "snow_plots.png"
+---
+
+## Safety Impacts of a Variable Speed Limit System. Highway Infrastructure Innovation Funding Program (HIIFP), Ministry of Transportation of Ontario	(2018 – 2019)
+
+-	Assisted in the development of a new criteria to propose various sites for the deployment of the Variable Speed Limit System in Ontario
+-	Analyzed the weather patterns in Ontario to identify the locations with the most severe weather conditions
+-	Developed an interactive map application for the visualization of precipitation and proposed sites for the Variable Speed Limit System in Ontario  

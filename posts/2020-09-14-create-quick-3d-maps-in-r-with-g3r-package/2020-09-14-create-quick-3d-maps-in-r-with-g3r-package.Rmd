@@ -1,0 +1,28 @@
+---
+title: How to fit different models on a dataset (the power of purrr)?
+date: '2020-09-14'
+image: "https://media.giphy.com/media/YRtLgsajXrz1FNJ6oy/giphy.gif"
+---
+
+# The Problem
+
+I wanted to fit multiple models on a dataset in R, and I had no idea how to do that efficiently. So, I turned to twitter and got an amazing reply:  
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Like this? <a href="https://t.co/uGcKpVGLbH">pic.twitter.com/uGcKpVGLbH</a></p>&mdash; Daniel Anderson (@datalorax_) <a href="https://twitter.com/datalorax_/status/1120904037988048896?ref_src=twsrc%5Etfw">April 24, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>   
+
+Purrrfect!! Thank you Daniel.  
+
+
+## A short screencast
+
+I created a short tutorial to show the steps for fitting a model to multiple datasets or fitting multiple models to a single dataset:   
+
+
+<iframe width="800" height="600" src="https://www.youtube.com/embed/iOfK3sBsCuA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+### Cat Bonus
+
+![](https://media.giphy.com/media/YRtLgsajXrz1FNJ6oy/giphy.gif)  
+
+

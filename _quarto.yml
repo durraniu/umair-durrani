@@ -1,0 +1,42 @@
+project:
+  type: website
+
+website:
+  title: "Umair Durrani"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: teaching.qmd
+        text: Teaching
+      - href: projects.qmd
+        text: Projects
+      - href: software.qmd
+        text: Software
+      - href: https://scholar.google.com/citations?user=jS1b6osAAAAJ&hl=en
+        text: Publications
+      - href: blog.qmd
+        text: Blog
+    right:
+      - href: CV.pdf
+        text: CV
+      - icon: github
+        href: https://github.com/durraniu
+      - icon: twitter
+        href: https://twitter.com/umairdurrani87
+      - icon: linkedin
+        href: https://www.linkedin.com/in/durraniu/
+
+
+format:
+  html:
+    theme:
+      - journal
+      - theme.scss
+    css: 
+      - styles.css
+      - academicons.css
+    toc: true
+
+
+

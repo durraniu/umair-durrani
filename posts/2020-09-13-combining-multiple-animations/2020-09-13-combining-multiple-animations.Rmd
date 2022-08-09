@@ -1,0 +1,217 @@
+---
+title: Creating and combining multiple animations with gganimate and magick
+date: '2020-09-13'
+image: "c_gif.gif"
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+```
+
+## Credit
+
+Thanks to **Robert Walker** for showing how to combine multiple animations using the `magick` package in R.  
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Wow, you can side-by-side gganimates with imagemagick. That was fun to put together. <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://twitter.com/hashtag/tidyTuesday?src=hash&amp;ref_src=twsrc%5Etfw">#tidyTuesday</a> An adaptation of measles and a map... <a href="https://t.co/FPOgAOQS84">pic.twitter.com/FPOgAOQS84</a></p>&mdash; Robert Walker (@PieRatio) <a href="https://twitter.com/PieRatio/status/1206508341750456320?ref_src=twsrc%5Etfw">December 16, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  
+
+
+# Animating cars
+
+In a [previous blogpost](https://rgems.netlify.app/post/2020/09/07/creating-your-own-geom-in-ggplot2/), I showed how to create a new geom to plot cars as seen from top and rear. This post is about animating them in a way to synchronie their timing.  
+
+`gganimate` package is a powerful animation package in R, but as of this writing, it does not have a function to combine multiple animations. So, we'll use the `magick` package to combine the animations.
+
+## Load data
+
+I am using a dataset that contains car positions, speed and distance (also called as *spacing*).  
+
+```{r load_data}
+suppressPackageStartupMessages( library(tidyverse) )
+suppressPackageStartupMessages( library(magick) )
+suppressPackageStartupMessages( library(gganimate) )
+suppressPackageStartupMessages( library(here) )
+suppressPackageStartupMessages( library(readr) )
+
+df <- read_csv("vb.csv")
+
+df
+```
+
+
+
+```{r load_function, echo=FALSE}
+source("creating_car_truck_geoms.R")
+```
+
+As discussed in the [previous blogpost](https://rgems.netlify.app/post/2020/09/07/creating-your-own-geom-in-ggplot2/), I had to adjust the coordinates to make one car appear approaching another car. So, we estimate the first and last coordinates in the data to do that.  
+
+
+```{r coords}
+# Largest x coordinate of following vehicle------------------
+  first_ed_x_coord <- df %>% pull(ED_x_m) %>% range() %>% tail(1)
+  last_ed_x_coord <- df %>% pull(ED_x_m) %>% range() %>% head(1)
+```
+
+
+# Creating animations with `gganimate`
+
+Now, the following code shows three animations created using `gganimate`.  
+
+## Top view
+
+```{r ani1}
+# animation of position---------------------------------------
+  ani_car_b <- ggplot(df) +
+    geom_car(aes(x=abs(ED_x_m-first_ed_x_coord), 
+                 y=first_ed_x_coord-last_ed_x_coord, length=4.64, width=2.078, fill="ed")) +
+    geom_text(aes(x=abs(ED_x_m-first_ed_x_coord), y = (first_ed_x_coord-last_ed_x_coord)+3,
+                  label = paste("Following Car\nSpeed =", ED_speed_mps, "m/s")),
+              color="darkgray"
+    ) +
+    geom_car(aes(x=abs(LV_x_m-first_ed_x_coord), y=first_ed_x_coord-last_ed_x_coord, length=LV_length_m,
+                 width=LV_width_m, fill="lv")) +
+    geom_text(aes(x=abs(LV_x_m-first_ed_x_coord), y = (first_ed_x_coord-last_ed_x_coord)+3, 
+                  label = paste("Lead Car\nSpeed =", LV_speed_mps, "m/s")),
+              color="darkgray") +
+    
+    geom_segment(aes(x = abs(ED_x_m-first_ed_x_coord)+(0.5*4.64),
+                     xend = abs(LV_x_m-first_ed_x_coord)-(0.5*LV_length_m),
+                     y = first_ed_x_coord-last_ed_x_coord,
+                     yend= first_ed_x_coord-last_ed_x_coord), 
+                 arrow = arrow(length = unit(0.1, "inches"), ends = "both")) +
+    geom_text(aes(x= ((abs(ED_x_m-first_ed_x_coord)+(0.5*4.64))+(abs(LV_x_m-first_ed_x_coord)-(0.5*LV_length_m)))/2, y = (first_ed_x_coord-last_ed_x_coord)+3.5, 
+                  label = paste("Spacing =", LV_frspacing_m, "m")),
+              color="darkgray") +
+    
+    coord_equal(ratio=0.7) +
+    scale_fill_manual(values = c("blue", "black")) +
+    theme_void() +
+    theme(legend.position = "none",
+          axis.text = element_blank(),
+          axis.title = element_blank(),
+          axis.ticks = element_blank()
+    ) +
+    transition_manual(Time_s) +
+    ease_aes() +
+    view_follow()
+
+ani_car_b
+```
+
+## Pedal positions and inverse time-to-collision
+
+The following animation shows how the gas and brake pedal positions change over time. The variable `tau-inverse` represents the inverse of time-to-collision (seconds until collision happens *if* cars don't change their speeds).  
+
+
+```{r ani2}
+# animation of pedals/looming---------------------------------------
+pedals_pos_b <- ggplot(data = df,
+                         mapping = aes(x = Time_s)) +
+    geom_line(aes(y = tau_inv*10), color = "black") +
+    geom_text(aes(y = tau_inv*10,
+                  label = paste("tau-inv =", round(tau_inv, 2))), color = "black",
+              size = 5) +
+    geom_area(aes(y = tau_inv*10), fill = "gray",
+              position = "identity", alpha=0.6)+
+    
+    geom_line(aes(y = scale(ED_gas_pedal_pos)), color = "darkgreen") +
+    geom_text(aes(y = scale(ED_gas_pedal_pos)),
+              label = "Gas Pedal", color = "darkgreen") +
+    
+    geom_line(aes(y = scale(ED_brake_pedal_force_kg)), color = "red") +
+    geom_text(aes(y = scale(ED_brake_pedal_force_kg)),
+              label = "Brake Pedal", color = "red") +
+    
+    geom_text(x= 10, y = 4, 
+              aes(label = paste("Brake Pedal Force =", 
+                                round(ED_brake_pedal_force_kg), "kg"))) +
+    theme_void() +
+    transition_reveal(Time_s)
+  
+
+ pedals_pos_b
+```
+
+
+## Driver's front view
+
+The following animation shows what the driver in the following car sees from the windscreen. It represents how the image of the lead vehicle grows on the following driver's retina.  
+
+```{r ani3}
+# animation of car rear---------------------------------------
+ani_retina_b <- ggplot(df ) +
+    geom_car_rear(aes(x=0, y=0, length=visual_angle_W,
+                      width=visual_angle_H), fill="black") +
+    theme_void() +
+    theme(axis.text = element_blank(),
+          axis.title = element_blank(),
+          axis.ticks = element_blank())+
+    coord_fixed(ratio = 0.7) +
+    transition_manual(Time_s) 
+  
+ ani_retina_b
+```
+
+
+## Rendering animations and saving them
+
+Now that the three animations are created, we can render them using `gganimate::animate` function. Without doing this, the animations are rendered every time we call them.
+
+```{r render_anims, cache = TRUE}
+# Rendering gifs-------------------------------------------------
+  a_gif <- animate(ani_car_b, height = 3, width = 8, end_pause = 15,
+                   units = "in", res = 150, fps = 5, duration=10)
+  b_gif <- animate(pedals_pos_b, fps = 5, duration=10,
+                   height = 3.5, width = 4.5, end_pause = 15,
+                   units = "in", res = 150)
+  c_gif <- animate(ani_retina_b, fps = 5, duration=10,
+                   height = 3.5, width = 3.5, end_pause = 15,
+                   units = "in", res = 150)
+  
+## saving  
+anim_save(filename = "a_gif.gif",
+          animation = a_gif)
+anim_save(filename = "b_gif.gif",
+          animation = b_gif)
+anim_save(filename = "c_gif.gif",
+          animation = c_gif)
+```
+
+
+# Combining animations
+
+To combine the above three animations, we are going to use the `magick` package.   
+
+## Reading the gif images
+
+```{r convert_to_magick}
+# Convertig the rendered gifs to magick class-------------
+  a_mgif <- image_read(path = "a_gif.gif")
+  b_mgif <- image_read(path = "b_gif.gif")
+  c_mgif <- image_read(path = "c_gif.gif")
+```
+By the reading the saved gif images (animations) using `magick::image_read()`, we convert the animation from the **`r class(a_gif)`** class to **`r class(a_mgif)`** class.
+
+
+## Aligning the animations
+
+Finally, we combine the animations using a `for-loop` and `magick::image_append`:  
+
+```{r, cache = TRUE}
+# Aligning gifs-------------------------------------------------
+  bc_gif <- image_append(c(b_mgif[1], c_mgif[1]), stack = FALSE)
+  for(i in 2:50){
+    combined <- image_append(c(b_mgif[i], c_mgif[i]), stack = FALSE)
+    bc_gif <- c(bc_gif, combined)
+  }
+
+  new_gif <- image_append(c(a_mgif[1], bc_gif[1]), stack = TRUE)
+  for(i in 2:50){
+    combined <- image_append(c(a_mgif[i], bc_gif[i]), stack = TRUE)
+    new_gif <- c(new_gif, combined)
+  }
+
+ new_gif
+  
+```
+
