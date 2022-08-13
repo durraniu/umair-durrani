@@ -15,6 +15,8 @@ website:
         text: Software
       - href: https://scholar.google.com/citations?user=jS1b6osAAAAJ&hl=en
         text: Publications
+      - href: MLinTransportation.qmd
+        text: ML
       - href: blog.qmd
         text: Blog
       - text: "Fun R Stuff"

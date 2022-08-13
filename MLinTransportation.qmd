@@ -1,0 +1,15 @@
+---
+title: "Machine Learning Applications in Transportation"
+listing:
+  contents: MLinTransportation
+  sort:
+    - "date desc"
+    - "title desc"
+---
+
+
+
+ 
+
+
+

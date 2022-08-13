@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2022-08-13">
+<meta name="description" content="Using Dynamic Time Warping (DTW) algorithm to cluster drivers">
+
+<title>Umair Durrani - Clustering drivers</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../../academicons.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Umair Durrani</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../teaching.html">Teaching</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../projects.html">Projects</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../software.html">Software</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://scholar.google.com/citations?user=jS1b6osAAAAJ&amp;hl=en">Publications</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../MLinTransportation.html">ML</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html">Blog</a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-fun-r-stuff" role="button" data-bs-toggle="dropdown" aria-expanded="false">Fun R Stuff</a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-fun-r-stuff">    
+        <li>
+    <a class="dropdown-item" href="https://umair.shinyapps.io/segmented_app_doc/">
+ <span class="dropdown-text">Segmented</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://umair.shinyapps.io/R_for_driving_sim/">
+ <span class="dropdown-text">R for Driving Sim</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://rpubs.com/durraniu/on_dashboard">
+ <span class="dropdown-text">Ontario Weather Dashboard</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://rpubs.com/durraniu/datavizr">
+ <span class="dropdown-text">Short Intro. to Data Science</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/durraniu/ggplot2_for_beginners/blob/master/Using_ggplot2.Rmd">
+ <span class="dropdown-text">Short Intro. to ggplot2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://rpubs.com/durraniu/interactive_plots">
+ <span class="dropdown-text">Interactive Plotting in R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://rpubs.com/durraniu/sovg">
+ <span class="dropdown-text">Histogram y axis</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://rpubs.com/durraniu/DTQR">
+ <span class="dropdown-text">Decision Tree Example</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://durraniu.github.io/BBC100/">
+ <span class="dropdown-text">BBC 100 Women</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://rpubs.com/durraniu/HT1">
+ <span class="dropdown-text">Hypothesis Test for Population Mean</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../CV.pdf">CV</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/durraniu"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/umairdurrani87"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/durraniu/"><i class="bi bi-linkedin" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#determining-similarity" id="toc-determining-similarity" class="nav-link" data-scroll-target="#determining-similarity">Determining Similarity</a>
+  <ul class="collapse">
+  <li><a href="#dynamic-time-warping" id="toc-dynamic-time-warping" class="nav-link" data-scroll-target="#dynamic-time-warping">Dynamic Time Warping</a></li>
+  </ul></li>
+  <li><a href="#clustering-drivers-using-dtw-score-as-a-distance-measure" id="toc-clustering-drivers-using-dtw-score-as-a-distance-measure" class="nav-link" data-scroll-target="#clustering-drivers-using-dtw-score-as-a-distance-measure">Clustering Drivers using DTW score as a distance measure</a>
+  <ul class="collapse">
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  </ul></li>
+  <li><a href="#clustering" id="toc-clustering" class="nav-link" data-scroll-target="#clustering">Clustering</a></li>
+  <li><a href="#another-example" id="toc-another-example" class="nav-link" data-scroll-target="#another-example">Another Example</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Clustering drivers</h1>
+</div>
+
+<div>
+  <div class="description">
+    <p>Using Dynamic Time Warping (DTW) algorithm to cluster drivers</p>
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 13, 2022</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Speed-related and large truck collisions are the top two situations with highest road fatalities in Ontario <span class="citation" data-cites="MinistryofTransportationOntario2020">(<a href="#ref-MinistryofTransportationOntario2020" role="doc-biblioref">Ministry of Transportation Ontario 2020</a>)</span>. Many studies have found differences in driving styles - such as following a truck too closely - that may help understand the reasons for collisions <span class="citation" data-cites="Ossen2011 Durrani2016">(<a href="#ref-Ossen2011" role="doc-biblioref">Ossen and Hoogendoorn 2011</a>; <a href="#ref-Durrani2016" role="doc-biblioref">Durrani, Lee, and Maoh 2016</a>)</span>.</p>
+<p>A first step to identify different driving styles is to group together those drivers who have a ‘similar’ driving style. Then the aggregated measures of drivers’ socio-demographic characteristics and driving history may help label a certain style of a group. But how do you define similarity?</p>
+</section>
+<section id="determining-similarity" class="level2">
+<h2 class="anchored" data-anchor-id="determining-similarity">Determining Similarity</h2>
+<p>Defining similarity is a challenge because each driver has multiple data points e.g., speed that varies over time. For example, the following shows the speed profiles (also called as trajectories) of three drivers in lane 1 on Interstate-80 (I-80) in United States <span class="citation" data-cites="Montanino2015">(based on the cleaned I80 data from <a href="#ref-Montanino2015" role="doc-biblioref">Montanino and Punzo 2015</a>)</span>:</p>
+<div class="cell" data-hash="clustering-drivers_cache/html/unnamed-chunk-1_c3c04dae22558f0e05fcbda2db936dfe">
+
+</div>
+<div class="cell" data-hash="clustering-drivers_cache/html/unnamed-chunk-2_d9e0e9110eb04a2d29481bafc5a5146b">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(tidyverse))</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df_2_drivers <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Lane <span class="sc">==</span> <span class="dv">1</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>         Vehicle.ID <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">204</span>, <span class="dv">206</span>, <span class="dv">218</span>))</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df_2_drivers,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">group =</span> Vehicle.ID, <span class="at">x =</span> Time, <span class="at">y =</span> svel)) <span class="sc">+</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.character</span>(Vehicle.ID))) <span class="sc">+</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Time (s)"</span>, <span class="at">y =</span> <span class="st">"Speed (m/s)"</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Vehicle ID"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="clustering-drivers_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>So, which of the two trajectories above are the most similar? Qualitatively, we may say that speed trajectories of vehicles <code>204</code> and <code>206</code> seem to be be alike in magnitude and pattern, while vehicle <code>218</code> is different. But how do we quantify the similarity?</p>
+<section id="dynamic-time-warping" class="level3">
+<h3 class="anchored" data-anchor-id="dynamic-time-warping">Dynamic Time Warping</h3>
+<p>We may estimate the difference between speeds of 2 vehicles at each point in time and sum up all the differences to get an overall similarity measure. But this won’t work when the time-series of speed are unequal in length. This approach also ignores the similar pattern (e.g., increase in speed) after a time lag. Dynamic Time Warping (DTW) algorithm can account for this similarity with/without a time lag, and also compares each value with every other value between the two time-series. Therefore, a DTW score is a measure of dissimilarity between two time-series. The higher the score, more is the dissimilarity. You can learn the basics of DTW with <a href="http://www.phon.ox.ac.uk/jcoleman/old_SLP/Lecture_5/DTW_explanation.html">this tutorial</a>.</p>
+<p>The following code shows how to determine the DTW score between the speeds of the vehicles <code>204</code> and <code>206</code>:</p>
+<div class="cell" data-hash="clustering-drivers_cache/html/unnamed-chunk-3_d6f36c04528f3dc92dbd8c518b48216d">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(dtw))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>dataa <span class="ot">&lt;-</span> df_2_drivers <span class="sc">%&gt;%</span> </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Vehicle.ID<span class="sc">==</span><span class="dv">204</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(svel)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>query <span class="ot">&lt;-</span> df_2_drivers <span class="sc">%&gt;%</span> </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Vehicle.ID<span class="sc">==</span><span class="dv">206</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(svel)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>alignment <span class="ot">&lt;-</span> <span class="fu">dtw</span>(query, dataa, <span class="at">keep=</span><span class="cn">TRUE</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(alignment, <span class="at">type=</span><span class="st">"twoway"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="clustering-drivers_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste0</span>(<span class="st">"DTW score between vehicles 204 and 206: "</span>, alignment<span class="sc">$</span>distance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "DTW score between vehicles 204 and 206: 155.26969"</code></pre>
+</div>
+</div>
+<div class="cell" data-hash="clustering-drivers_cache/html/unnamed-chunk-4_c9d055bf0fa106759d4b3dc783f63c20">
+
+</div>
+<p>Similarly, the DTW score between vehicles <code>204</code> and <code>218</code> is 240.33987. Since this score is higher than the previous one, it confirms our visual inference that vehicles <code>204</code> and <code>206</code> have more similar speeds than vehicles <code>204</code> and <code>218</code>.</p>
+</section>
+</section>
+<section id="clustering-drivers-using-dtw-score-as-a-distance-measure" class="level2">
+<h2 class="anchored" data-anchor-id="clustering-drivers-using-dtw-score-as-a-distance-measure">Clustering Drivers using DTW score as a distance measure</h2>
+<p>So far we have seen how to compare pairs of vehicles using DTW score as a dissimilarity measure. We now want to use DTW score to compare all pairs of vehicles. Not only that, we want to use multiple variables, i.e., speed, speed-difference and spacing between two vehicles, etc. Since all of these variables change over time, they are considered as multivariate time-series.<br>
+Clustering algorithms, such as Hierarchical Clustering, can group together those vehicles/drivers that have small dissimilarities i.e., DTW score. The <code>dtwclust</code> package in R <span class="citation" data-cites="dtwclust">(<a href="#ref-dtwclust" role="doc-biblioref">Sarda-Espinosa 2019</a>)</span> automates the calculation of the DTW score and clustering them.</p>
+<section id="data" class="level3">
+<h3 class="anchored" data-anchor-id="data">Data</h3>
+<p>We are going to use data from 500 randomly sampled vehicles on lanes 1, 2, and 3 from the I-80 vehicle trajectories database. These vehicles were observed for at least 30 seconds. The selected data below contains the speed, speed-difference and spacing only.</p>
+<div class="cell" data-hash="clustering-drivers_cache/html/unnamed-chunk-5_76a11366d20ba5ba0057f797cb3c2768">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sampled_vehs <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(Vehicle.ID) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample</span>(., <span class="dv">500</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>df_sampled <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Vehicle.ID <span class="sc">%in%</span> sampled_vehs) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Vehicle.ID, Time, svel, frspacing, dV)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>df_sampled <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 5
+  Vehicle.ID  Time  svel frspacing       dV
+       &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1         11   0    4.42      11.6 -0.00292
+2         11   0.1  4.42      11.6 -0.00103
+3         11   0.2  4.42      11.6  0.00108
+4         11   0.3  4.43      11.6  0.00458
+5         11   0.4  4.43      11.6  0.0106 
+6         11   0.5  4.44      11.6  0.0210 </code></pre>
+</div>
+</div>
+<p>The structure of the data above is called as a <code>dataframe</code> in R. Unfortunately, <code>dtwclust</code> does not accept a <code>dataframe</code>. Therefore, we are reshaping the data in a <code>list</code> format that would contain a matrix for each vehicle. Following shows what it looks like for vehicles <code>11</code> and <code>24</code>:</p>
+<div class="cell" data-hash="clustering-drivers_cache/html/unnamed-chunk-6_efe04554c16e8347ae70b6ae3379430e">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df_matrix <span class="ot">&lt;-</span> df_sampled <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">split</span>(.<span class="sc">$</span>Vehicle.ID, <span class="at">drop =</span> T) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">map</span>(<span class="sc">~</span> .x[, <span class="fu">c</span>(<span class="st">"svel"</span>, <span class="st">"frspacing"</span>, <span class="st">"dV"</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  )]) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">map</span>(as.matrix) </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df_matrix, <span class="at">list.len=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 500
+ $ 11  : num [1:646, 1:3] 4.42 4.42 4.42 4.43 4.43 ...
+  ..- attr(*, "dimnames")=List of 2
+  .. ..$ : NULL
+  .. ..$ : chr [1:3] "svel" "frspacing" "dV"
+ $ 24  : num [1:613, 1:3] 4 3.78 4 4.2 4.35 ...
+  ..- attr(*, "dimnames")=List of 2
+  .. ..$ : NULL
+  .. ..$ : chr [1:3] "svel" "frspacing" "dV"
+  [list output truncated]</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="clustering" class="level2">
+<h2 class="anchored" data-anchor-id="clustering">Clustering</h2>
+<p>Now we use the <code>tsclust</code> function from the <code>dtwclust</code> package to cluster the vehicles using hierarchical clustering with DTW score as a distance measure. We assume here that the number of clusters, <code>k</code> are 2. Moreover, we normalize the data using <code>zscore</code>:</p>
+<div class="cell" data-hash="clustering-drivers_cache/html/unnamed-chunk-7_3bffa4a603026f6025e70280c9a4ce18">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(dtwclust))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>clusters_gp <span class="ot">&lt;-</span> df_matrix <span class="sc">%&gt;%</span> </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tsclust</span>(., </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">k =</span> 2L,                 <span class="co"># assuming clusters</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">distance =</span> <span class="st">"dtw_basic"</span>, <span class="co"># this is dtw score</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">seed =</span> <span class="dv">390</span>,             <span class="co"># to reproduce results</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">type=</span><span class="st">"hierarchical"</span>,    <span class="co"># type of clustering</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">control =</span> <span class="fu">hierarchical_control</span>(<span class="at">method =</span> <span class="st">"ward.D"</span>),</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">preproc =</span> zscore) <span class="co"># method in hc</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>clusters_gp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>hierarchical clustering with 2 clusters
+Using dtw_basic distance
+Using PAM (Hierarchical) centroids
+Using method ward.D 
+Using zscore preprocessing
+
+Time required for analysis:
+   user  system elapsed 
+ 456.99    0.53  123.39 
+
+Cluster sizes with average intra-cluster distance:
+
+  size  av_dist
+1  256 1154.451
+2  244 1299.892</code></pre>
+</div>
+</div>
+<p>The vehicles are now clustered and have cluster numbers. To visualize them, we need to include these numbers in the dataframe <code>df_sampled</code>:</p>
+<div class="cell" data-hash="clustering-drivers_cache/html/unnamed-chunk-8_9938220748ab215101a8bf4a3e7b6bc7">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Gps <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cutree</span>(clusters_gp, <span class="at">k =</span> <span class="dv">2</span>)) <span class="co"># num of clusters</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Gps) <span class="ot">&lt;-</span> <span class="st">"Gp"</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>Gps<span class="sc">$</span>Vehicle.ID <span class="ot">&lt;-</span> <span class="fu">row.names</span>(Gps)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(Gps) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>Gps<span class="sc">$</span>Vehicle.ID <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(Gps<span class="sc">$</span>Vehicle.ID)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Getting the clustering info into the original data</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>df_clustered <span class="ot">&lt;-</span> df_sampled <span class="sc">%&gt;%</span> </span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Vehicle.ID <span class="sc">%in%</span> sampled_vehs) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="at">x=</span>., <span class="at">y=</span>Gps, <span class="at">by =</span> <span class="st">"Vehicle.ID"</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>df_clustered <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 x 6
+  Vehicle.ID  Time  svel frspacing       dV    Gp
+       &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;
+1         11   0    4.42      11.6 -0.00292     1
+2         11   0.1  4.42      11.6 -0.00103     1
+3         11   0.2  4.42      11.6  0.00108     1</code></pre>
+</div>
+</div>
+<p>Plots of each variable are shown below. The numbers at the top represent the cluster numbers:</p>
+<div class="cell" data-hash="clustering-drivers_cache/html/unnamed-chunk-9_caa07b736639136e3ca9c64544dfe505">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># speed</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df_clustered,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Time, <span class="at">y =</span> svel)) <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group=</span>Vehicle.ID), <span class="at">color =</span> <span class="st">"grey"</span>) <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Gp) <span class="sc">+</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Time (s)"</span>, <span class="at">y =</span> <span class="st">"Speed (m/s)"</span>, <span class="at">title =</span> <span class="st">"Speed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="clustering-drivers_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># spacing</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df_clustered,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Time, <span class="at">y =</span> frspacing)) <span class="sc">+</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group=</span>Vehicle.ID), <span class="at">color =</span> <span class="st">"grey"</span>) <span class="sc">+</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Gp) <span class="sc">+</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Time (s)"</span>, <span class="at">y =</span> <span class="st">"Front-to-rear Spacing (m)"</span>, <span class="at">title =</span> <span class="st">"Spacing"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="clustering-drivers_files/figure-html/unnamed-chunk-9-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>An interesting finding in these plots is that drivers in cluster 1 increased their speeds while drivers in cluster 2 decreased their speeds over time. This clustering exercise raises an interesting exploratory question: Why drivers in cluster 1 had higher spacing and speed towards the end of observation? But we won’t dig into that in this post. You can now see the utility of DTW as an exploratory tool in investigating driver behaviour. Try it on your own data!</p>
+</section>
+<section id="another-example" class="level2">
+<h2 class="anchored" data-anchor-id="another-example">Another Example</h2>
+<p>I leave you with one more application of DTW that was a joint work to cluster drivers based on their kinematics data, as well as other interesting variables. See the presentation and paper below from the proceedings of Road Safety and Simulation Conference.</p>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Presentation</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Paper</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell" data-hash="clustering-drivers_cache/html/unnamed-chunk-10_301a4677de5b17a0a2743822f55c6b11">
+<iframe src="https://www.nrso.ntua.gr/rss2022/wp-content/uploads/2022/06/RSS2022_Presentation_157.pdf" width="672" height="400px" data-external="1">
+</iframe>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell" data-hash="clustering-drivers_cache/html/unnamed-chunk-11_1d10427469f7b75eaec221b0d8a2e8c4">
+<iframe src="https://www.nrso.ntua.gr/rss2022/wp-content/uploads/2022/06/RSS2022_paper_157.pdf" width="672" height="400px" data-external="1">
+</iframe>
+</div>
+</div>
+</div>
+</div>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Durrani2016" class="csl-entry" role="doc-biblioentry">
+Durrani, Umair, Chris Lee, and Hanna Maoh. 2016. <span>“<span class="nocase">Calibrating the Wiedemann’s vehicle-following model using mixed vehicle-pair interactions</span>.”</span> <em>Transportation Research Part C: Emerging Technologies</em> 67: 227–42. <a href="https://doi.org/10.1016/j.trc.2016.02.012">https://doi.org/10.1016/j.trc.2016.02.012</a>.
+</div>
+<div id="ref-MinistryofTransportationOntario2020" class="csl-entry" role="doc-biblioentry">
+Ministry of Transportation Ontario. 2020. <span>“<span>Preliminary 2020 Ontario Road Safety Annual Report Selected Statistics</span>.”</span> <a href="https://files.ontario.ca/mto-3/mto-preliminary-orsar-2020-en-2021-11-18.pdf">https://files.ontario.ca/mto-3/mto-preliminary-orsar-2020-en-2021-11-18.pdf</a>.
+</div>
+<div id="ref-Montanino2015" class="csl-entry" role="doc-biblioentry">
+Montanino, Marcello, and Vincenzo Punzo. 2015. <span>“<span class="nocase">Trajectory data reconstruction and simulation-based validation against macroscopic traffic patterns</span>.”</span> <em>Transportation Research Part B: Methodological</em> 80 (October): 82–106. <a href="https://doi.org/10.1016/j.trb.2015.06.010">https://doi.org/10.1016/j.trb.2015.06.010</a>.
+</div>
+<div id="ref-Ossen2011" class="csl-entry" role="doc-biblioentry">
+Ossen, Saskia, and Serge P. Hoogendoorn. 2011. <span>“<span class="nocase">Heterogeneity in car-following behavior: Theory and empirics</span>.”</span> <em>Transportation Research Part C: Emerging Technologies</em> 19 (2): 182–95. <a href="https://doi.org/10.1016/j.trc.2010.05.006">https://doi.org/10.1016/j.trc.2010.05.006</a>.
+</div>
+<div id="ref-dtwclust" class="csl-entry" role="doc-biblioentry">
+Sarda-Espinosa, Alexis. 2019. <span>“Dtwclust: Time Series Clustering Along with Optimizations for the Dynamic Time Warping Distance.”</span> <a href="https://CRAN.R-project.org/package=dtwclust">https://CRAN.R-project.org/package=dtwclust</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
