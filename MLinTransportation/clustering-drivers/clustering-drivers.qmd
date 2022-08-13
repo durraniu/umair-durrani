@@ -196,6 +196,8 @@ An interesting finding in these plots is that drivers in cluster 1 increased the
 
 I leave you with one more application of DTW that was a joint work to cluster drivers based on their kinematics data, as well as other interesting variables. See the presentation and paper below from the proceedings of Road Safety and Simulation Conference.  
 
+Please ask any questions or leave comments below.  
+
 
 ::: panel-tabset
 ## Presentation
