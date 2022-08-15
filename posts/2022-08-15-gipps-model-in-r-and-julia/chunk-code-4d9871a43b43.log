@@ -1,0 +1,36 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.7) (preloaded format=latex 2022.8.15)  15 AUG 2022 13:09
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**C:/Users/umair/AppData/Local/Temp/RtmpUbdwX8/chunk-code-4d9871a43b43.txt
+(C:/Users/umair/AppData/Local/Temp/RtmpUbdwX8/chunk-code-4d9871a43b43.txt
+LaTeX2e <2022-06-01> patch level 5
+L3 programming layer <2022-07-04>
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1 $
+     $
+? 
+! Emergency stop.
+ ...                                              
+                                                  
+l.1 $
+     $
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+ 
+Here is how much of TeX's memory you used:
+ 20 strings out of 478339
+ 733 string characters out of 2836726
+ 297716 words of memory out of 3000000
+ 18549 multiletter control sequences out of 15000+600000
+ 469259 words of font info for 28 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 13i,0n,12p,107b,14s stack positions out of 10000i,1000n,20000p,200000b,80000s
+No pages of output.

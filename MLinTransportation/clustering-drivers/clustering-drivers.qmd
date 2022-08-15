@@ -96,8 +96,7 @@ Similarly, the DTW score between vehicles `204` and `218` is `r alignment2$dista
 ## Clustering Drivers using DTW score as a distance measure
 
 So far we have seen how to compare pairs of vehicles using DTW score as a dissimilarity measure. We now want to use DTW score to compare all pairs of vehicles. Not only that, we want to use multiple variables, i.e., speed, speed-difference and spacing between two vehicles, etc. Since all of these variables change over time, they are considered as multivariate time-series.\
-Clustering algorithms, such as Hierarchical Clustering, can group together those vehicles/drivers that have small dissimilarities i.e., DTW score. The `dtwclust` package in R [@dtwclust] automates the calculation of the DTW score and clustering them.  
-
+Clustering algorithms, such as Hierarchical Clustering, can group together those vehicles/drivers that have small dissimilarities i.e., DTW score. The `dtwclust` package in R [@dtwclust] automates the calculation of the DTW score and clustering them.
 
 ### Data
 
@@ -117,8 +116,7 @@ df_sampled <- df %>%
 df_sampled %>% head()
 ```
 
-
-The structure of the data above is called as a `dataframe` in R. Unfortunately, `dtwclust` does not accept a `dataframe`. Therefore, we are reshaping the data in a `list` format that would contain a matrix for each vehicle. Following shows what it looks like for vehicles `11` and `24`:  
+The structure of the data above is called as a `dataframe` in R. Unfortunately, `dtwclust` does not accept a `dataframe`. Therefore, we are reshaping the data in a `list` format that would contain a matrix for each vehicle. Following shows what it looks like for vehicles `11` and `24`:
 
 ```{r}
 df_matrix <- df_sampled %>% 
@@ -133,7 +131,7 @@ str(df_matrix, list.len=2)
 
 ## Clustering
 
-Now we use the `tsclust` function from the `dtwclust` package to cluster the vehicles using hierarchical clustering with DTW score as a distance measure. We assume here that the number of clusters, `k` are 2. Moreover, we normalize the data using `zscore`:  
+Now we use the `tsclust` function from the `dtwclust` package to cluster the vehicles using hierarchical clustering with DTW score as a distance measure. We assume here that the number of clusters, `k` are 2. Moreover, we normalize the data using `zscore`:
 
 ```{r}
 suppressPackageStartupMessages(library(dtwclust))
@@ -150,7 +148,7 @@ clusters_gp <- df_matrix %>%
 clusters_gp
 ```
 
-The vehicles are now clustered and have cluster numbers. To visualize them, we need to include these numbers in the dataframe `df_sampled`:  
+The vehicles are now clustered and have cluster numbers. To visualize them, we need to include these numbers in the dataframe `df_sampled`:
 
 ```{r}
 Gps <- as.data.frame(cutree(clusters_gp, k = 2)) # num of clusters
@@ -167,7 +165,6 @@ df_clustered <- df_sampled %>%
 
 df_clustered %>% head(3)
 ```
-
 
 Plots of each variable are shown below. The numbers at the top represent the cluster numbers:
 
@@ -189,15 +186,13 @@ ggplot(data = df_clustered,
   labs(x = "Time (s)", y = "Front-to-rear Spacing (m)", title = "Spacing")
 ```
 
-An interesting finding in these plots is that drivers in cluster 1 increased their speeds while drivers in cluster 2 decreased their speeds over time. This clustering exercise raises an interesting exploratory question: Why drivers in cluster 1 had higher spacing and speed towards the end of observation? But we won't dig into that in this post. You can now see the utility of DTW as an exploratory tool in investigating driver behaviour. Try it on your own data!  
-
+An interesting finding in these plots is that drivers in cluster 1 increased their speeds while drivers in cluster 2 decreased their speeds over time. This clustering exercise raises an interesting exploratory question: Why drivers in cluster 1 had higher spacing and speed towards the end of observation? But we won't dig into that in this post. You can now see the utility of DTW as an exploratory tool in investigating driver behaviour. Try it on your own data!
 
 ## Another Example
 
-I leave you with one more application of DTW that was a joint work to cluster drivers based on their kinematics data, as well as other interesting variables. See the presentation and paper below from the proceedings of Road Safety and Simulation Conference.  
+I leave you with one more application of DTW that was a joint work to cluster drivers based on their kinematics data, as well as other interesting variables. See the presentation and paper below from the proceedings of Road Safety and Simulation Conference.
 
-Please ask any questions or leave comments below.  
-
+Please ask any questions or leave comments below.
 
 ::: panel-tabset
 ## Presentation
