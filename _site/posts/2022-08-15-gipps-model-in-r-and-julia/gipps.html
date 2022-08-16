@@ -138,13 +138,28 @@ div.csl-indent {
   }
 }</script>
 
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
 
 <link rel="stylesheet" href="../../styles.css">
 <link rel="stylesheet" href="../../academicons.css">
 </head>
 
-<body class="floating nav-fixed">
+<body class="floating nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -272,7 +287,7 @@ div.csl-indent {
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
-<main class="content column-page-right" id="quarto-document-content">
+<main class="content page-columns page-full column-body" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -301,13 +316,17 @@ div.csl-indent {
 
 </header>
 
-<section id="introduction" class="level2">
+<section id="introduction" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>Car-following behaviour refers to the motion of a vehicle that follows another vehicle in the same lane. Generally, car-following models are used in simulation software that provide other models as well (e.g., lane change model). However, to understand the outputs of a model, it is a good idea to run the model in a programming environment in isolation. This blog post is about running a car-following model - Gipps car-following model <span class="citation" data-cites="gipps1981">(<a href="#ref-gipps1981" role="doc-biblioref">Gipps 1981</a>)</span>- in <code>R</code> and <code>Julia</code> programming languages.</p>
-<p>The equation for the Gipps model is as follows. You can learn more about the model in this <a href="https://en.wikipedia.org/wiki/Gipps%27_model">wikipedia article</a>.</p>
-<p><span class="math display">\[
-v_n(t+\tau) = \mbox{min} \left\{v_n(t) + 2.5 a_n\tau (1-v_n(t)/V_n){(0.025+v_n(t)/V_n)}^{1/2}, \\b_n\tau+\sqrt{b_n^2\tau^2 -b_n [ 2[x_{n-1}(t)-s_{n-1}-x_n(t)] - v_n(t)\tau- v_{n-1}(t)^2/\hat{b}]}\right\}
-\]</span></p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/4RxqKvi8Nys?start=278" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="">
+</iframe>
+</div></div><p>The equation for Gipps model is shown below. To learn more, see this <a href="https://en.wikipedia.org/wiki/Gipps%27_model">wikipedia article</a>. You may also be interested in listening to Dr.&nbsp;Martin Treiber’s lecture on Gipps model (see the right bar).</p>
+<p><span class="math display">
+v_n(t+\tau) = {min} \left\{v_n(t) + 2.5 a_n\tau (1-v_n(t)/V_n){(0.025+v_n(t)/V_n)}^{1/2}, \\ b_n\tau+\sqrt{b_n^2\tau^2 -b_n [ 2[x_{n-1}(t)-s_{n-1}-x_n(t)] - v_n(t)\tau- v_{n-1}(t)^2\hat{b}]}\right\}
+</span></p>
 <p>In the following sections, I will define and apply the functions for Gipps model in both <code>R</code> and <code>Julia</code>. <code>Julia</code> is a <a href="https://julialang.org/">fast programming language</a> and could be a good environment to implement car-following models for numerical simulations and calibration. But I am pretty new to using <code>Julia</code>, so I write <code>R</code> first and then convert the syntax to <code>Julia</code>. You will see side by side code for both.</p>
 </section>
 <section id="load-libraries" class="level2">

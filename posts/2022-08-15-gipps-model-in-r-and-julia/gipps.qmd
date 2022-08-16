@@ -5,6 +5,7 @@ format:
   html:
     page-layout: full
     toc-location: left
+    html-math-method: katex
 image: "carfollow.png"
 cache: true
 warning: false
@@ -16,11 +17,19 @@ bibliography: references.bib
 
 Car-following behaviour refers to the motion of a vehicle that follows another vehicle in the same lane. Generally, car-following models are used in simulation software that provide other models as well (e.g., lane change model). However, to understand the outputs of a model, it is a good idea to run the model in a programming environment in isolation. This blog post is about running a car-following model - Gipps car-following model [@gipps1981]- in `R` and `Julia` programming languages.
 
-The equation for the Gipps model is as follows. You can learn more about the model in this [wikipedia article](https://en.wikipedia.org/wiki/Gipps%27_model).
+
+::: {.column-margin}
+<iframe width="560" height="315" src="https://www.youtube.com/embed/4RxqKvi8Nys?start=278" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+:::
+
+The equation for Gipps model is shown below. To learn more, see this [wikipedia article](https://en.wikipedia.org/wiki/Gipps%27_model). You may also be interested in listening to Dr. Martin Treiber's lecture on Gipps model (see the right bar). 
+
+
 
 $$
-v_n(t+\tau) = \mbox{min} \left\{v_n(t) + 2.5 a_n\tau (1-v_n(t)/V_n){(0.025+v_n(t)/V_n)}^{1/2}, \\b_n\tau+\sqrt{b_n^2\tau^2 -b_n [ 2[x_{n-1}(t)-s_{n-1}-x_n(t)] - v_n(t)\tau- v_{n-1}(t)^2/\hat{b}]}\right\}
+v_n(t+\tau) = {min} \left\{v_n(t) + 2.5 a_n\tau (1-v_n(t)/V_n){(0.025+v_n(t)/V_n)}^{1/2}, \\ b_n\tau+\sqrt{b_n^2\tau^2 -b_n [ 2[x_{n-1}(t)-s_{n-1}-x_n(t)] - v_n(t)\tau- v_{n-1}(t)^2\hat{b}]}\right\}
 $$
+
 
 In the following sections, I will define and apply the functions for Gipps model in both `R` and `Julia`. `Julia` is a [fast programming language](https://julialang.org/) and could be a good environment to implement car-following models for numerical simulations and calibration. But I am pretty new to using `Julia`, so I write `R` first and then convert the syntax to `Julia`. You will see side by side code for both.
 
