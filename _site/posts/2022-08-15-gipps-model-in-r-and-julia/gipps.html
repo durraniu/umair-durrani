@@ -9,7 +9,7 @@
 <meta name="dcterms.date" content="2022-08-15">
 <meta name="description" content="Race against time">
 
-<title>Umair Durrani - Gipps Model in R, Rcpp, and Julia</title>
+<title>Dr.&nbsp;U - Gipps Model in R, Rcpp, and Julia</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -109,6 +109,7 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
+<link href="../../umair-profile3.jpg" rel="icon" type="image/jpeg">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -137,6 +138,20 @@ div.csl-indent {
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-F61ZS733G2"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+ 
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'analytics_storage': 'denied'
+  });
+gtag('config', 'G-F61ZS733G2', { 'anonymize_ip': true});
+</script>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
@@ -157,6 +172,15 @@ div.csl-indent {
 
 <link rel="stylesheet" href="../../styles.css">
 <link rel="stylesheet" href="../../academicons.css">
+<meta property="og:title" content="Dr.&nbsp;U - Gipps Model in R, Rcpp, and Julia">
+<meta property="og:description" content="Race against time">
+<meta property="og:image" content="carfollow.png">
+<meta property="og:site-name" content="Dr. U">
+<meta name="twitter:title" content="Dr.&nbsp;U - Gipps Model in R, Rcpp, and Julia">
+<meta name="twitter:description" content="Race against time">
+<meta name="twitter:image" content="carfollow.png">
+<meta name="twitter:creator" content="@umairdurrani87">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="floating nav-fixed slimcontent">
@@ -166,7 +190,7 @@ div.csl-indent {
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Umair Durrani</span>
+    <span class="navbar-title">Dr.&nbsp;U</span>
   </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
@@ -325,7 +349,7 @@ div.csl-indent {
 </iframe>
 </div></div><p>The equation for Gipps model is shown below. To learn more, see this <a href="https://en.wikipedia.org/wiki/Gipps%27_model">wikipedia article</a>. You may also be interested in listening to Dr.&nbsp;Martin Treiber’s lecture on Gipps model (see the right bar).</p>
 <p><span class="math display">
-v_n(t+\tau) = {min} \left\{v_n(t) + 2.5 a_n\tau (1-v_n(t)/V_n){(0.025+v_n(t)/V_n)}^{1/2}, \\ b_n\tau+\sqrt{b_n^2\tau^2 -b_n [ 2[x_{n-1}(t)-s_{n-1}-x_n(t)] - v_n(t)\tau- v_{n-1}(t)^2\hat{b}]}\right\}
+v_n(t+\tau) = {min} \biggl\{v_n(t) + 2.5 a_n\tau (1-v_n(t)/V_n){(0.025+v_n(t)/V_n)}^{1/2}, \\ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ b_n\tau+\sqrt{b_n^2\tau^2 -b_n [ 2[x_{n-1}(t)-s_{n-1}-x_n(t)] - v_n(t)\tau- v_{n-1}(t)^2\hat{b}]}\biggr\}
 </span></p>
 <p>In the following sections, I will define and apply the functions for Gipps model in both <code>R</code> and <code>Julia</code>. <code>Julia</code> is a <a href="https://julialang.org/">fast programming language</a> and could be a good environment to implement car-following models for numerical simulations and calibration. But I am pretty new to using <code>Julia</code>, so I write <code>R</code> first and then convert the syntax to <code>Julia</code>. You will see side by side code for both.</p>
 </section>

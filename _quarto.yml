@@ -2,7 +2,14 @@ project:
   type: website
 
 website:
-  title: "Umair Durrani"
+  favicon: umair-profile3.jpg
+  twitter-card:
+    creator: "@umairdurrani87"
+  open-graph: true
+  google-analytics:
+    tracking-id: "G-F61ZS733G2"
+    storage: "none"
+  title: "Dr. U"
   navbar:
     left:
       - href: index.qmd

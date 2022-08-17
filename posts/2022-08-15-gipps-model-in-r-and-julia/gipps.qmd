@@ -27,9 +27,8 @@ The equation for Gipps model is shown below. To learn more, see this [wikipedia 
 
 
 $$
-v_n(t+\tau) = {min} \left\{v_n(t) + 2.5 a_n\tau (1-v_n(t)/V_n){(0.025+v_n(t)/V_n)}^{1/2}, \\ b_n\tau+\sqrt{b_n^2\tau^2 -b_n [ 2[x_{n-1}(t)-s_{n-1}-x_n(t)] - v_n(t)\tau- v_{n-1}(t)^2\hat{b}]}\right\}
+v_n(t+\tau) = {min} \biggl\{v_n(t) + 2.5 a_n\tau (1-v_n(t)/V_n){(0.025+v_n(t)/V_n)}^{1/2}, \\ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ b_n\tau+\sqrt{b_n^2\tau^2 -b_n [ 2[x_{n-1}(t)-s_{n-1}-x_n(t)] - v_n(t)\tau- v_{n-1}(t)^2\hat{b}]}\biggr\}
 $$
-
 
 In the following sections, I will define and apply the functions for Gipps model in both `R` and `Julia`. `Julia` is a [fast programming language](https://julialang.org/) and could be a good environment to implement car-following models for numerical simulations and calibration. But I am pretty new to using `Julia`, so I write `R` first and then convert the syntax to `Julia`. You will see side by side code for both.
 
