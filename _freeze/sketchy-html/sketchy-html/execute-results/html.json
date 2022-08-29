@@ -1,0 +1,14 @@
+{
+  "hash": "efad9f851cc69050a1f7f8e0d0e570e2",
+  "result": {
+    "markdown": "---\ntitle: \"Quarto Sketchy Theme\"\nsubtitle: \"for html documents\"\nauthor: \"David Schoch\"\ndate: today\ninstitute: \"GESIS - Leibniz Institute for the Social Sciences\"\nformat: sketchy-html\ntoc: true\n---\n\n\n## Quarto\n\nQuarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.\n\n## Running Code\n\nWhen you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n\n::: {.cell}\n\n```{.r .cell-code}\n1 + 1\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[1] 2\n```\n:::\n:::\n\n\nThe `echo: false` option disables the printing of code (only output is displayed).\n\n> blockquotes are fun\n\nYou can also [strike through]{.strike}, [cross-off]{.cross}, [highlight]{.highlight}, and [circle]{.circle} text\n\n:::{.box}\nbox for arbitrary content\n:::\n\nTables also work\n\n| Default | Left | Right | Center |\n|---------|:-----|------:|:------:|\n| 12      | 12   |    12 |   12   |\n| 123     | 123  |   123 |  123   |\n| 1       | 1    |     1 |   1    |\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

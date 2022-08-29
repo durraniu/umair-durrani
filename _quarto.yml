@@ -14,12 +14,12 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: teaching.qmd
-        text: Teaching
       - href: projects.qmd
         text: Projects
       - href: software.qmd
         text: Software
+      - href: teaching.qmd
+        text: Training
       - href: https://scholar.google.com/citations?user=jS1b6osAAAAJ&hl=en
         text: Publications
       - href: MLinTransportation.qmd
@@ -49,8 +49,6 @@ website:
         - text: "Hypothesis Test for Population Mean"
           href: https://rpubs.com/durraniu/HT1
     right:
-      - href: CV.pdf
-        text: CV
       - icon: github
         href: https://github.com/durraniu
       - icon: twitter
@@ -66,7 +64,6 @@ format:
       - theme.scss
     css: 
       - styles.css
-      - academicons.css
     toc: true
     
 
