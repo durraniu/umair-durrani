@@ -2,7 +2,7 @@ project:
   type: website
 
 website:
-  favicon: umair-profile3.jpg
+  favicon: umair-profile1.jpg
   twitter-card:
     creator: "@umairdurrani87"
   open-graph: true

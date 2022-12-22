@@ -8,7 +8,7 @@ page-layout: full
 ::: {.grid}
 
 ::: {.g-col-12 .g-col-md-6}
-![](umair-profile3.jpg)
+![](umair-profile1.jpg)
 :::
 
 ::: {.g-col-12 .g-col-md-6 #about-me-text}
@@ -43,7 +43,7 @@ I speak **English**, **Urdu** and **R** (programming) fluently. You can get in t
 
 <ul>
 
--   **PhD in Civil Engineering, 2022** <br>
+-   **PhD in Civil Engineering** <br>
 
     <p class="grad-location">
 
@@ -52,7 +52,7 @@ I speak **English**, **Urdu** and **R** (programming) fluently. You can get in t
     </p>
 
 
--   **B.Sc. in Transportation Engineering, 2009** <br>
+-   **B.Sc. in Transportation Engineering** <br>
 
     <p class="grad-location">
 
