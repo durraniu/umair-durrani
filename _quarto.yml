@@ -26,6 +26,8 @@ website:
         text: ML
       - href: blog.qmd
         text: Blog
+      - href: resume_linkedin.pdf
+        text: Resume
       - text: "Fun R Stuff"
         menu:
         - text: "Segmented"
