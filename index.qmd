@@ -8,11 +8,13 @@ page-layout: full
 ::: {.grid}
 
 ::: {.g-col-12 .g-col-md-6}
-![](umair-profile1.jpg)
+<img src=umair-profile2.jpg  width="90%" height="65%">
 :::
 
 ::: {.g-col-12 .g-col-md-6 #about-me-text}
-# <span style="color:#1296e3">Hello there, I am Umair Durrani.</span>
+<!-- # <span style="color:#1296e3">Hello there, I am Umair Durrani.</span> -->
+
+# Hello there, I am Umair Durrani
 
 I am a transportation data scientist and traffic modeler at the [Civil and Environmental Engineering Department at the University of Windsor](https://www.uwindsor.ca/engineering/civil/). I study and develop models of road users for traffic flow modeling. Moreover, I teach programmatic data analysis to students in the Transportation Systems Innovation Lab.
 
@@ -24,7 +26,8 @@ I speak **English**, **Urdu** and **R** (programming) fluently. You can get in t
 
 
 ::: {.g-col-12 .g-col-md-5 .g-start-md-2}
-# <span style="color:#1296e3">Interests</span>
+<!-- # <span style="color:#1296e3">Interests</span> -->
+# Interests
 
 -   Machine Learning Applications in Transportation  
 
@@ -34,12 +37,11 @@ I speak **English**, **Urdu** and **R** (programming) fluently. You can get in t
 
 -   Connected and Autonomous Vehicles  
 
--   Spatiotemporal Analysis of Transportation Networks
-
 :::
 
 ::: {.g-col-12 .g-col-md-5}
-# <span style="color:#1296e3">Education</span>
+<!-- # <span style="color:#1296e3">Education</span> -->
+# Education
 
 <ul>
 

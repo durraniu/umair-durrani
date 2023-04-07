@@ -11,12 +11,17 @@ suppressPackageStartupMessages(library(kableExtra))
 suppressPackageStartupMessages(library(readxl))
 ```
 
+## Machine Learning Basics Workshop Series
+
+This workshop is held in Winter 2023 for the members of Transportation Systems Innovation Lab at University of Windsor.
 
 ## Data Analytics Instructor at St. Clair College
 
 ```{r}
 tribble(
   ~Semester, ~ `Course(s)`,
+  "Winter 2023", "Capstone Project",
+  "Fall 2022", "Machine Learning I",
   "Spring 2022", "Capstone Project", 
   "Winter 2022", "Machine Learning I,\nCapstone Project",
   "Fall 2021", "Intro. to Artificial Intelligence,    Machine Learning I",

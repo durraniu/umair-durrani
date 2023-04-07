@@ -8,3 +8,4 @@ image: "snow_plots.png"
 -	Assisted in the development of a new criteria to propose various sites for the deployment of the Variable Speed Limit System in Ontario
 -	Analyzed the weather patterns in Ontario to identify the locations with the most severe weather conditions
 -	Developed an interactive map application for the visualization of precipitation and proposed sites for the Variable Speed Limit System in Ontario  
+

@@ -20,6 +20,14 @@ R package for running car-following models.
 `r icon_link("github", "Code", "https://github.com/durraniu/carfollowingmodels")`
 `r icon_link("globe", "Website", "https://durraniu.github.io/carfollowingmodels/")`  
 
+## `daqr`
+
+R package for reading driving simulator data from daq files.
+
+`r icon_link("github", "Code", "https://github.com/durraniu/daqr")`
+`r icon_link("globe", "Website", "https://durraniu.github.io/daqr/")`
+
+
 
 ## `opendatawindsor`
 

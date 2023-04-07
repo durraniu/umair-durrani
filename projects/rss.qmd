@@ -9,4 +9,4 @@ image: "plt_Task 1.png"
 - Applied machine learning models to predict moderate and conservative drivers  
 
 
-[Blog post](https://umair-durrani.netlify.app/mlintransportation/clustering-drivers/clustering-drivers)
+[Read a blog post here](https://umair-durrani.netlify.app/mlintransportation/clustering-drivers/clustering-drivers)

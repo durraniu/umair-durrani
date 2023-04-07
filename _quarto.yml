@@ -2,15 +2,18 @@ project:
   type: website
 
 website:
+  title: "Dr. U"
+  image: umairlogo2.png
   favicon: umair-profile1.jpg
   twitter-card:
     creator: "@umairdurrani87"
   open-graph: true
-  google-analytics:
-    tracking-id: "G-F61ZS733G2"
-    storage: "none"
-  title: "Dr. U"
+  site-url: https://umairdurrani.com/
   navbar:
+    background: "#f0eeeb"
+    logo: umairlogo2.png
+    title: false
+    collapse-below: lg
     left:
       - href: index.qmd
         text: Home
@@ -28,7 +31,7 @@ website:
         text: Blog
       - href: resume_linkedin.pdf
         text: Resume
-      - text: "Fun R Stuff"
+      - text: "More"
         menu:
         - text: "Segmented"
           href: https://umair.shinyapps.io/segmented_app_doc/
@@ -61,12 +64,13 @@ website:
 
 format:
   html:
-    theme:
-      - journal
-      - theme.scss
-    css: 
-      - styles.css
+    theme: [lux, rwds.scss]
+    css: rwds.css
     toc: true
+    grid:
+      sidebar-width: 0px
+      body-width: 1000px
+      margin-width: 250px
     
 
 execute: 

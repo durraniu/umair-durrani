@@ -4,7 +4,7 @@ description: "Race against time"
 format: 
   html:
     page-layout: full
-    toc-location: left
+    toc-location: right
     html-math-method: katex
 image: "carfollow.png"
 cache: true
