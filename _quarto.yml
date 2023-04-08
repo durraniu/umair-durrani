@@ -24,6 +24,7 @@ website:
       - href: teaching.qmd
         text: Training
       - href: https://scholar.google.com/citations?user=jS1b6osAAAAJ&hl=en
+        target: _blank
         text: Publications
       - href: MLinTransportation.qmd
         text: ML
@@ -35,31 +36,35 @@ website:
         menu:
         - text: "Segmented"
           href: https://umair.shinyapps.io/segmented_app_doc/
+          target: _blank
         - text: "R for Driving Sim"
           href: https://umair.shinyapps.io/R_for_driving_sim/
+          target: _blank
         - text: "Ontario Weather Dashboard"
           href: https://rpubs.com/durraniu/on_dashboard
-        - text: "Short Intro. to Data Science"
-          href: https://rpubs.com/durraniu/datavizr
-        - text: "Short Intro. to ggplot2"
-          href: https://github.com/durraniu/ggplot2_for_beginners/blob/master/Using_ggplot2.Rmd
+          target: _blank
         - text: "Interactive Plotting in R"
           href: https://rpubs.com/durraniu/interactive_plots
+          target: _blank
         - text: "Histogram y axis"
           href: https://rpubs.com/durraniu/sovg
+          target: _blank
         - text: "Decision Tree Example"
           href: https://rpubs.com/durraniu/DTQR
+          target: _blank
         - text: "BBC 100 Women"
           href: https://durraniu.github.io/BBC100/
-        - text: "Hypothesis Test for Population Mean"
-          href: https://rpubs.com/durraniu/HT1
+          target: _blank
     right:
       - icon: github
         href: https://github.com/durraniu
+        target: _blank
       - icon: twitter
         href: https://twitter.com/umairdurrani87
+        target: _blank
       - icon: linkedin
         href: https://www.linkedin.com/in/durraniu/
+        target: _blank
 
 
 format:
