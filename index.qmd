@@ -29,13 +29,17 @@ I speak **English**, **Urdu** and **R** (programming) fluently. You can get in t
 <!-- # <span style="color:#1296e3">Interests</span> -->
 # Interests
 
+-   Human Factors in Autonomous Vehicles  
+
+-   Driver Behaviour & Driver State Monitoring Systems
+
 -   Machine Learning Applications in Transportation  
 
 -   Intelligent Transportation Systems
 
--   Driver Behaviour
 
--   Connected and Autonomous Vehicles  
+
+ 
 
 :::
 
@@ -45,7 +49,7 @@ I speak **English**, **Urdu** and **R** (programming) fluently. You can get in t
 
 <ul>
 
--   **PhD in Civil Engineering** <br>
+-   **Ph.D. Civil Engineering** <br>
 
     <p class="grad-location">
 
@@ -54,7 +58,7 @@ I speak **English**, **Urdu** and **R** (programming) fluently. You can get in t
     </p>
 
 
--   **B.Sc. in Transportation Engineering** <br>
+-   **B.Sc. Transportation Engineering** <br>
 
     <p class="grad-location">
 

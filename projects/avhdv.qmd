@@ -1,0 +1,16 @@
+---
+title: "Driver Behaviour in mixed traffic of Autonomous Vehicles"
+image: "av1.jpeg"
+---
+
+## Development of an Algorithm to Improve Autonomous Driving Performance in a Mixed Traffic of Autonomous and Human driving Vehicle, Ministry of Science and ICT, South Korea	(2022 – Present)
+
+
+-	Assisted in the development of the driving simulator study by specifying the behaviors of autonomous and human-driven vehicles in the simulation    
+- Collected driving and sensor data by conducting simulator studies  
+- Extracted and analyzed data  
+
+
+![](av2.jpeg)
+
+
