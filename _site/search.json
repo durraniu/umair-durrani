@@ -21,6 +21,20 @@
     "text": "Hello there, I am Umair Durrani\nI am a transportation data scientist and traffic modeler at the Civil and Environmental Engineering Department at the University of Windsor. I study and develop models of road users for traffic flow modeling. Moreover, I teach programmatic data analysis to students in the Transportation Systems Innovation Lab.\nI am also an instructor of Data Analytics at St. Clair College, Windsor, Ontario. I teach Statistics and data analytics using Python, R, Tableau, Excel, etc. I also supervise capstone projects of students from diverse backgrounds.\nI speak English, Urdu and R (programming) fluently. You can get in touch with me via email or twitter.\n\n\n\n\n\nInterests\n\nHuman Factors in Autonomous Vehicles\nDriver Behaviour & Driver State Monitoring Systems\nMachine Learning Applications in Transportation\nIntelligent Transportation Systems\n\n\n\n\n\n\nEducation\n\n\nPh.D. Civil Engineering \n\nUniversity of Windsor, Ontario, Canada\n\nB.Sc. Transportation Engineering \n\nUniversity of Engineering and Technology, Lahore, Pakistan"
   },
   {
+    "objectID": "MLinTransportation/2023-04-15-classifying-traffic-signs/trafficsignsRF.html",
+    "href": "MLinTransportation/2023-04-15-classifying-traffic-signs/trafficsignsRF.html",
+    "title": "Classifying Traffic Signs with Machine Learning (Part 1)",
+    "section": "",
+    "text": "This post is part 1 of the three-part series on classifying traffic signs with machine learning. In this part, I will show you how to preprocess images of traffic signs, reshape those images and use them with random forest algorithm for classification. Part of image pre-processing and visualization code comes from The Complete Self Driving Car Course github repo which has a MIT license 1.\nRandom Forest (RF) is generally believed to be a useful algorithm for regression and classification problems where training data is tabular. In this post though, I will be using RF to predict the class of traffic signs that are available as images. Therefore, I would first reshape the input images to tabular form as a large 2-dimensional array (matrix). In the later posts, I will use convolution filters for a neural network as well as RF again to make predictions.\nLet’s begin by loading the required packages."
+  },
+  {
+    "objectID": "MLinTransportation/2023-04-15-classifying-traffic-signs/trafficsignsRF.html#footnotes",
+    "href": "MLinTransportation/2023-04-15-classifying-traffic-signs/trafficsignsRF.html#footnotes",
+    "title": "Classifying Traffic Signs with Machine Learning (Part 1)",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nMIT License\nCopyright (c) 2019 Packt\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\nTHE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.↩︎"
+  },
+  {
     "objectID": "MLinTransportation/clustering-drivers/clustering-drivers.html",
     "href": "MLinTransportation/clustering-drivers/clustering-drivers.html",
     "title": "Clustering drivers",
@@ -67,7 +81,7 @@
     "href": "MLinTransportation.html",
     "title": "Machine Learning Applications in Transportation",
     "section": "",
-    "text": "Clustering drivers\n\n\n\n\n\nUsing Dynamic Time Warping (DTW) algorithm to cluster drivers\n\n\n\n\n\n\nAug 13, 2022\n\n\n\n\n\n\nNo matching items"
+    "text": "Classifying Traffic Signs with Machine Learning (Part 1)\n\n\n\n\n\nRandom Forest begins\n\n\n\n\n\n\nApr 16, 2023\n\n\n\n\n\n\n  \n\n\n\n\nClustering drivers\n\n\n\n\n\nUsing Dynamic Time Warping (DTW) algorithm to cluster drivers\n\n\n\n\n\n\nAug 13, 2022\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/2020-09-07-creating-your-own-geom-in-ggplot2/2020-09-07-creating-your-own-geom-in-ggplot2.html",

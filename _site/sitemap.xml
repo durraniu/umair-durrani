@@ -2,86 +2,90 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://umairdurrani.com/about.html</loc>
-    <lastmod>2023-04-11T13:41:12.126Z</lastmod>
+    <lastmod>2023-04-16T18:26:33.774Z</lastmod>
   </url>
   <url>
     <loc>https://umairdurrani.com/blog.html</loc>
-    <lastmod>2023-04-11T13:41:13.452Z</lastmod>
+    <lastmod>2023-04-16T18:26:35.059Z</lastmod>
   </url>
   <url>
     <loc>https://umairdurrani.com/index.html</loc>
-    <lastmod>2023-04-11T13:41:14.041Z</lastmod>
+    <lastmod>2023-04-16T18:26:35.591Z</lastmod>
+  </url>
+  <url>
+    <loc>https://umairdurrani.com/MLinTransportation/2023-04-15-classifying-traffic-signs/trafficsignsRF.html</loc>
+    <lastmod>2023-04-16T18:52:31.483Z</lastmod>
   </url>
   <url>
     <loc>https://umairdurrani.com/MLinTransportation/clustering-drivers/clustering-drivers.html</loc>
-    <lastmod>2023-04-11T13:41:15.594Z</lastmod>
+    <lastmod>2023-04-16T18:27:23.836Z</lastmod>
   </url>
   <url>
     <loc>https://umairdurrani.com/MLinTransportation.html</loc>
-    <lastmod>2023-04-11T13:41:16.177Z</lastmod>
+    <lastmod>2023-04-16T19:02:00.411Z</lastmod>
   </url>
   <url>
     <loc>https://umairdurrani.com/posts/2020-09-07-creating-your-own-geom-in-ggplot2/2020-09-07-creating-your-own-geom-in-ggplot2.html</loc>
-    <lastmod>2023-04-11T13:41:17.400Z</lastmod>
+    <lastmod>2023-04-16T18:27:25.746Z</lastmod>
   </url>
   <url>
     <loc>https://umairdurrani.com/posts/2020-09-13-combining-multiple-animations/2020-09-13-combining-multiple-animations.html</loc>
-    <lastmod>2023-04-11T13:41:18.580Z</lastmod>
+    <lastmod>2023-04-16T18:27:26.907Z</lastmod>
   </url>
   <url>
     <loc>https://umairdurrani.com/posts/2020-09-14-create-quick-3d-maps-in-r-with-g3r-package/2020-09-14-create-quick-3d-maps-in-r-with-g3r-package.html</loc>
-    <lastmod>2023-04-11T13:41:19.187Z</lastmod>
+    <lastmod>2023-04-16T18:27:27.565Z</lastmod>
   </url>
   <url>
     <loc>https://umairdurrani.com/posts/2020-12-16-dtw/2020-12-16-dtw.html</loc>
-    <lastmod>2023-04-11T13:41:20.275Z</lastmod>
+    <lastmod>2023-04-16T18:27:28.670Z</lastmod>
   </url>
   <url>
     <loc>https://umairdurrani.com/posts/2020-12-25-elevation-maps-in-r/elevation-maps-in-r.html</loc>
-    <lastmod>2023-04-11T13:41:21.527Z</lastmod>
+    <lastmod>2023-04-16T18:27:29.890Z</lastmod>
   </url>
   <url>
     <loc>https://umairdurrani.com/posts/2021-01-01-autocomplete-character-factor-values-in-rstudio/2021-01-01-autocomplete-character-factor-values-in-rstudio.html</loc>
-    <lastmod>2023-04-11T13:41:22.396Z</lastmod>
+    <lastmod>2023-04-16T18:27:30.792Z</lastmod>
   </url>
   <url>
     <loc>https://umairdurrani.com/posts/2021-02-07-making-a-history-table-from-discover-canada-in-r/making-a-history-table-from-discover-canada-in-r.html</loc>
-    <lastmod>2023-04-11T13:41:23.580Z</lastmod>
+    <lastmod>2023-04-16T18:27:32.002Z</lastmod>
   </url>
   <url>
     <loc>https://umairdurrani.com/posts/2022-08-15-gipps-model-in-r-and-julia/gipps.html</loc>
-    <lastmod>2023-04-11T13:41:25.923Z</lastmod>
+    <lastmod>2023-04-16T18:27:34.341Z</lastmod>
   </url>
   <url>
     <loc>https://umairdurrani.com/projects/avhdv.html</loc>
-    <lastmod>2023-04-11T13:42:01.781Z</lastmod>
+    <lastmod>2023-04-16T18:27:34.876Z</lastmod>
   </url>
   <url>
     <loc>https://umairdurrani.com/projects/distracted-driving.html</loc>
-    <lastmod>2023-04-11T13:41:27.046Z</lastmod>
+    <lastmod>2023-04-16T18:27:35.377Z</lastmod>
   </url>
   <url>
     <loc>https://umairdurrani.com/projects/rss.html</loc>
-    <lastmod>2023-04-11T13:41:27.566Z</lastmod>
+    <lastmod>2023-04-16T18:27:35.893Z</lastmod>
   </url>
   <url>
     <loc>https://umairdurrani.com/projects/vsl.html</loc>
-    <lastmod>2023-04-11T13:41:28.101Z</lastmod>
+    <lastmod>2023-04-16T18:27:36.417Z</lastmod>
   </url>
   <url>
     <loc>https://umairdurrani.com/projects.html</loc>
-    <lastmod>2023-04-11T13:42:27.824Z</lastmod>
+    <lastmod>2023-04-16T18:27:37.224Z</lastmod>
   </url>
   <url>
     <loc>https://umairdurrani.com/sketchy-html/sketchy-html.html</loc>
-    <lastmod>2023-04-11T13:41:30.493Z</lastmod>
+    <lastmod>2023-04-16T18:27:38.762Z</lastmod>
   </url>
   <url>
     <loc>https://umairdurrani.com/software.html</loc>
-    <lastmod>2023-04-11T13:41:31.616Z</lastmod>
+    <lastmod>2023-04-16T18:27:39.859Z</lastmod>
   </url>
   <url>
     <loc>https://umairdurrani.com/teaching.html</loc>
-    <lastmod>2023-04-11T13:41:32.431Z</lastmod>
+    <lastmod>2023-04-16T18:27:40.673Z</lastmod>
   </url>
 </urlset>

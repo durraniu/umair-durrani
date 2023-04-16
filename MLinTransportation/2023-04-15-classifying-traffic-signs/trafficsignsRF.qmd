@@ -1,0 +1,311 @@
+---
+title: "Classifying Traffic Signs with Machine Learning (Part 1)"
+description: "Random Forest begins"
+image: "batmanDALLE.png"
+cache: true
+warning: false
+jupyter: python3
+date: "2023-04-16"
+---
+
+This post is part 1 of the three-part series on classifying traffic signs with machine learning. In this part, I will show you how to preprocess images of traffic signs, reshape those images and use them with random forest algorithm for classification. Part of image pre-processing and visualization code comes from [*The Complete Self Driving Car Course* github repo](https://github.com/PacktPublishing/The-Complete-Self-Driving-Car-Course---Applied-Deep-Learning) which has a MIT license [^longnote].  
+
+[^longnote]: MIT License
+
+    Copyright (c) 2019 Packt
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+    
+
+Random Forest (RF) is generally believed to be a useful algorithm for regression and classification problems where training data is tabular. In this post though, I will be using RF to predict the class of traffic signs that are available as images. Therefore, I would first reshape the input images to tabular form as a large 2-dimensional array (matrix). In the later posts, I will use convolution filters for a neural network as well as RF again to make predictions. 
+
+Let's begin by loading the required packages.  
+
+![](begin.gif)
+
+
+### Load packages
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+import random
+import pickle
+import pandas as pd
+import cv2
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+```
+
+
+### Load data
+
+I use the `pickle` package to load the training and test data. These two sets come from the [german traffic signs bitbucket repo](https://bitbucket.org/jadslim/german-traffic-signs). The repo also contains a validation dataset, but I won't be using it as I'm not doing any hyperparameter tuning in this post.  
+
+```{python}
+
+with open('german-traffic-signs/train.p', 'rb') as f:
+    train_data = pickle.load(f)
+
+with open('german-traffic-signs/test.p', 'rb') as f:
+    test_data = pickle.load(f)
+```
+
+
+### What does the data look like?
+
+Training data is a dictionary that has the following components:  
+
+```{python}
+train_data.keys()
+```
+I only need the `features` (images) and their corresponding class `labels`. There are a total of 43 traffic sign types in these data. In the following piece of code, I rename the `features` and `labels` as training and test set pairs:  
+
+```{python}
+# Split out features and labels
+X_train, y_train = train_data['features'], train_data['labels']
+X_test, y_test = test_data['features'], test_data['labels']
+
+# 4 dimensional
+print("X_train shape:\n\n", X_train.shape, "\n")
+print("X_test shape:\n\n", X_test.shape)
+
+print("=========\n=========\n")
+
+print("y_train shape:\n\n", y_train.shape, "\n")
+print("y_test shape:\n\n", y_test.shape)
+
+```
+
+We can see that the training data and test data contain more than 34K and 12K images respectively. Moreover, these images are sized as `32 x 32` making a total of `32 x 32 = 1,024` pixels per image. The last number, `3`, in the `shape` attribute indicates that these images are coloured with 3 channels of red, green and blue.  
+
+#### Visualizing data
+
+Images are made of pixels that contain values from 0 (black) to 255 (white). The traffic sign images have 3 channels, therefore, each channel contains arrays of pixel intensity values. Following shows the first channel of a single image randomly picked from the training data:  
+
+```{python}
+np.random.seed(42)
+num_images = 5
+random_indices = np.random.choice(X_train.shape[0], num_images, replace=False)
+random_images = X_train[random_indices]
+random_images_classes = y_train[random_indices]
+
+first_image = random_images[0]
+first_image_class = random_images_classes[0]
+
+np.set_printoptions(threshold=np.inf, linewidth=np.inf)
+print(first_image[:,:,0])
+```
+
+Do you notice the triangle shape the numbers make? Let's see the actual image:  
+
+
+```{python}
+plt.imshow(random_images[0]);
+plt.axis('off');
+```
+The german traffic signs repo also contains a table with the sign label and description. Following shows the first few rows:  
+
+
+```{python}
+data = pd.read_csv('german-traffic-signs/signnames.csv')
+data.head()
+```
+
+Using the table above, I plot 5 images randomly picked from the training data and show each channel as follows:  
+
+
+```{python}
+df = data.loc[data.ClassId.isin(random_images_classes), ['SignName']].copy()
+df = df.reindex(random_images_classes)
+random_images_classes_namez = np.array(df['SignName'])
+```
+
+
+```{python}
+plot = plt.figure()
+plot.set_figwidth(10)
+plot.set_figheight(8)
+# plot each channel for the random images
+for i in range(num_images):
+    for j in range(3):
+        plt.subplot(num_images, 3, i*3+j+1)
+        if j == 0: # Red channel
+            plt.imshow(random_images[i][:,:,j], cmap='Reds')
+        elif j == 1: # Green channel
+            plt.imshow(random_images[i][:,:,j], cmap='Greens')
+        elif j == 2: # Blue channel
+            plt.imshow(random_images[i][:,:,j], cmap='Blues')
+        plt.axis('off')
+        plt.title('{} {}'.format(random_images_classes_namez[i], j+1))
+
+plt.show()
+```
+
+Hopefully, for people new to image classification, it is clear what we are dealing with. Let's also look at the top five traffic signs in the training data:  
+
+
+```{python}
+num_of_samples=[]
+namez=[]
+
+cols = 5
+num_classes = 43
+
+
+
+for i, row in data.iterrows():
+  x_selected = X_train[y_train == i]
+  num_of_samples.append(len(x_selected))
+  namez.append(data.loc[i, 'SignName'])
+  
+# print(num_of_samples)
+# print(namez)
+# print(len(num_of_samples))
+# print(len(namez))
+
+num_of_samples = np.array(num_of_samples)
+namez = np.array(namez)
+
+ind1 = np.argpartition(num_of_samples, -10)[-10:]
+ind1 = ind1[np.argsort(num_of_samples[ind1])]
+num_of_samples_top5 = num_of_samples[ind1]
+namez_top5 = namez[ind1]
+
+plt.barh(namez_top5, num_of_samples_top5);
+plt.title("Distribution of the training dataset");
+plt.ylabel("");
+plt.xlabel("Number of images");
+plt.show();
+```
+Speed limit, no passing and yield signs are some of the most common signs in this training data. Having unequal number of images can affect the performance of a machine learning model as it is biased by the most frequent classes. But that's a topic for another day.  
+
+### Preprocessing data
+
+Next, I preprocess the data as follows:  
+
+1. Convert the original coloured image to a grayscale image. This would reduce the required computing resources as 3 channels are reduced to a single channel.  
+2. Equalize the intensities of the image.  
+3. Standardize the image by dividing each pixel intensity with 255.  
+
+
+```{python}
+def grayscale(img):
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    return img
+  
+def equalize(img):
+    img = cv2.equalizeHist(img)
+    return img
+  
+def preprocess(img):
+    img = grayscale(img)
+    img = equalize(img)
+    img = img/255
+    return img
+  
+X_train = np.array(list(map(preprocess, X_train)))
+X_test = np.array(list(map(preprocess, X_test)))
+```
+
+
+#### Reshaping images
+
+If I were to use a convolutional neural network, I would use the data as individual arrays of images, similar to how it is now. But RF needs the data to be in a tabular form, i.e., rows and columns for all data. Therefore, I reshape the data in a format where each row contains `32 x 32 = 1,024` columns of a single image:  
+
+```{python}
+num_pixels = (X_train.shape[1] * X_train.shape[2])
+
+X_train = X_train.reshape(X_train.shape[0], num_pixels)
+X_test = X_test.reshape(X_test.shape[0], num_pixels)
+
+
+print(X_train.shape)
+print(X_test.shape)
+```
+
+The numbers above show the rows and columns of training and test data.
+
+### Machine Learning
+
+We are ready to fit a RF to the training data now. I use default values of all parameters but provide a `random_state` to make sure the results can be replicated. I also use `n_jobs=-1` to take advantage of all cores of my system.   
+
+```{python}
+clf = RandomForestClassifier(random_state=0,  n_jobs=-1)
+clf.fit(X_train, y_train)
+```
+
+The model is fit and is now ready to make predictions. I make predictions on both training and test sets.  
+
+```{python}
+y_pred_train = clf.predict(X_train)
+y_pred_test = clf.predict(X_test)
+```
+
+And estimate the accuracy of predictions:  
+
+```{python}
+accuracy_train = accuracy_score(y_train, y_pred_train)
+print("Train Accuracy:", np.round(accuracy_train))
+
+accuracy_test = accuracy_score(y_test, y_pred_test)
+print("Test Accuracy:", np.round(accuracy_test))
+```
+
+
+This test accuracy seems too good to be true. In practice, the model needs to be cross-validated and well-tuned. 
+
+### Predicting a new image
+
+Let's see how our RF model does on an image downloaded from the internet. Following is the image:  
+
+```{python}
+import requests
+from PIL import Image
+url = 'https://c8.alamy.com/comp/A0RX23/cars-and-automobiles-must-turn-left-ahead-sign-A0RX23.jpg'
+r = requests.get(url, stream=True)
+img = Image.open(r.raw)#Image.open('STOP_sign.jpg')
+plt.imshow(img, cmap=plt.get_cmap('gray'));
+```
+
+
+```{python}
+def preprocess2(img):
+  img = np.asarray(img)
+  img = cv2.resize(img, (32, 32))
+  img = grayscale(img)
+  img = equalize(img)
+  img = img/255
+  img = img.reshape(1, 1024)
+  return img
+
+img = preprocess2(img)
+```
+
+```{python}
+print("Predicted sign: "+ str(clf.predict(img)))
+```
+
+This prediction is incorrect as the corresponding sign for this prediction is priority road sign. The actual road sign is turn left ahead sign. 
+
+![](https://media.giphy.com/media/yyhJaoPDhCbBu/giphy.gif)  
+
+
+With some hyperparameter tuning, the model may show better results. However, keep in mind that this is expected as without learning anything about the specific properties of a traffic sign (that convolution layers can extract), RF is not able to learn much from the raw pixel intensities.  
+
