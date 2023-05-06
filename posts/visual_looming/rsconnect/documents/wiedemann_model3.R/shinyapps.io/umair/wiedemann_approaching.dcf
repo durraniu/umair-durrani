@@ -1,0 +1,14 @@
+name: wiedemann_approaching
+title: wiedemann_approaching
+username:
+account: umair
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 9039601
+bundleId: 7179726
+url: https://umair.shinyapps.io/wiedemann_approaching/
+when: 1683310630.43367
+lastSyncTime: 1683310630.43367
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: car4.png|car4_rear3.png|dalle.png|eye_part.gif|geom_car.R|loomingv2.R

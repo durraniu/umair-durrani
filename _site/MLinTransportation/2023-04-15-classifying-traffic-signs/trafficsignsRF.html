@@ -103,12 +103,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../../rwds.css">
 <meta property="og:title" content="Dr.&nbsp;U - Classifying Traffic Signs with Machine Learning (Part 1)">
 <meta property="og:description" content="Random Forest begins">
-<meta property="og:image" content="https://umairdurrani.com/MLinTransportation/2023-04-15-classifying-traffic-signs/STOP_sign.jpg">
+<meta property="og:image" content="https://umairdurrani.com/MLinTransportation/2023-04-15-classifying-traffic-signs/batmanDALLE.png">
 <meta property="og:site-name" content="Dr. U">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:width" content="1024">
 <meta name="twitter:title" content="Dr.&nbsp;U - Classifying Traffic Signs with Machine Learning (Part 1)">
 <meta name="twitter:description" content="Random Forest begins">
-<meta name="twitter:image" content="https://umairdurrani.com/MLinTransportation/2023-04-15-classifying-traffic-signs/STOP_sign.jpg">
+<meta name="twitter:image" content="https://umairdurrani.com/MLinTransportation/2023-04-15-classifying-traffic-signs/batmanDALLE.png">
 <meta name="twitter:creator" content="@umairdurrani87">
+<meta name="twitter:image-height" content="1024">
+<meta name="twitter:image-width" content="1024">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -275,7 +279,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="begin.gif" class="img-fluid"></p>
 <section id="load-packages" class="level3">
 <h3 class="anchored" data-anchor-id="load-packages">Load packages</h3>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
@@ -289,7 +293,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="load-data" class="level3">
 <h3 class="anchored" data-anchor-id="load-data">Load data</h3>
 <p>I use the <code>pickle</code> package to load the training and test data. These two sets come from the <a href="https://bitbucket.org/jadslim/german-traffic-signs">german traffic signs bitbucket repo</a>. The repo also contains a validation dataset, but I won’t be using it as I’m not doing any hyperparameter tuning in this post.</p>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'german-traffic-signs/train.p'</span>, <span class="st">'rb'</span>) <span class="im">as</span> f:</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    train_data <span class="op">=</span> pickle.load(f)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -300,14 +304,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="what-does-the-data-look-like" class="level3">
 <h3 class="anchored" data-anchor-id="what-does-the-data-look-like">What does the data look like?</h3>
 <p>Training data is a dictionary that has the following components:</p>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>train_data.keys()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>dict_keys(['coords', 'labels', 'features', 'sizes'])</code></pre>
 </div>
 </div>
 <p>I only need the <code>features</code> (images) and their corresponding class <code>labels</code>. There are a total of 43 traffic sign types in these data. In the following piece of code, I rename the <code>features</code> and <code>labels</code> as training and test set pairs:</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Split out features and labels</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>X_train, y_train <span class="op">=</span> train_data[<span class="st">'features'</span>], train_data[<span class="st">'labels'</span>]</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>X_test, y_test <span class="op">=</span> test_data[<span class="st">'features'</span>], test_data[<span class="st">'labels'</span>]</span>
@@ -344,7 +348,7 @@ y_test shape:
 <section id="visualizing-data" class="level4">
 <h4 class="anchored" data-anchor-id="visualizing-data">Visualizing data</h4>
 <p>Images are made of pixels that contain values from 0 (black) to 255 (white). The traffic sign images have 3 channels, therefore, each channel contains arrays of pixel intensity values. Following shows the first channel of a single image randomly picked from the training data:</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>num_images <span class="op">=</span> <span class="dv">5</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>random_indices <span class="op">=</span> np.random.choice(X_train.shape[<span class="dv">0</span>], num_images, replace<span class="op">=</span><span class="va">False</span>)</span>
@@ -392,7 +396,7 @@ y_test shape:
 </div>
 </div>
 <p>Do you notice the triangle shape the numbers make? Let’s see the actual image:</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plt.imshow(random_images[<span class="dv">0</span>])<span class="op">;</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">'off'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -400,7 +404,7 @@ y_test shape:
 </div>
 </div>
 <p>The german traffic signs repo also contains a table with the sign label and description. Following shows the first few rows:</p>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(<span class="st">'german-traffic-signs/signnames.csv'</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>data.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
@@ -448,12 +452,12 @@ y_test shape:
 </div>
 </div>
 <p>Using the table above, I plot 5 images randomly picked from the training data and show each channel as follows:</p>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> data.loc[data.ClassId.isin(random_images_classes), [<span class="st">'SignName'</span>]].copy()</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.reindex(random_images_classes)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>random_images_classes_namez <span class="op">=</span> np.array(df[<span class="st">'SignName'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plot <span class="op">=</span> plt.figure()</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>plot.set_figwidth(<span class="dv">10</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>plot.set_figheight(<span class="dv">8</span>)</span>
@@ -476,7 +480,7 @@ y_test shape:
 </div>
 </div>
 <p>Hopefully, for people new to image classification, it is clear what we are dealing with. Let’s also look at the top five traffic signs in the training data:</p>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>num_of_samples<span class="op">=</span>[]</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>namez<span class="op">=</span>[]</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -525,7 +529,7 @@ y_test shape:
 </li>
 <li>Standardize the image by dividing each pixel intensity with 255.</li>
 </ol>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> grayscale(img):</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    img <span class="op">=</span> cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> img</span>
@@ -546,7 +550,7 @@ y_test shape:
 <section id="reshaping-images" class="level4">
 <h4 class="anchored" data-anchor-id="reshaping-images">Reshaping images</h4>
 <p>If I were to use a convolutional neural network, I would use the data as individual arrays of images, similar to how it is now. But RF needs the data to be in a tabular form, i.e., rows and columns for all data. Therefore, I reshape the data in a format where each row contains <code>32 x 32 = 1,024</code> columns of a single image:</p>
-<div class="cell" data-execution_count="12">
+<div class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>num_pixels <span class="op">=</span> (X_train.shape[<span class="dv">1</span>] <span class="op">*</span> X_train.shape[<span class="dv">2</span>])</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> X_train.reshape(X_train.shape[<span class="dv">0</span>], num_pixels)</span>
@@ -566,7 +570,7 @@ y_test shape:
 <section id="machine-learning" class="level3">
 <h3 class="anchored" data-anchor-id="machine-learning">Machine Learning</h3>
 <p>We are ready to fit a RF to the training data now. I use default values of all parameters but provide a <code>random_state</code> to make sure the results can be replicated. I also use <code>n_jobs=-1</code> to take advantage of all cores of my system.</p>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>clf <span class="op">=</span> RandomForestClassifier(random_state<span class="op">=</span><span class="dv">0</span>,  n_jobs<span class="op">=-</span><span class="dv">1</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>clf.fit(X_train, y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
@@ -574,12 +578,12 @@ y_test shape:
 </div>
 </div>
 <p>The model is fit and is now ready to make predictions. I make predictions on both training and test sets.</p>
-<div class="cell" data-execution_count="14">
+<div class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>y_pred_train <span class="op">=</span> clf.predict(X_train)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>y_pred_test <span class="op">=</span> clf.predict(X_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>And estimate the accuracy of predictions:</p>
-<div class="cell" data-execution_count="15">
+<div class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>accuracy_train <span class="op">=</span> accuracy_score(y_train, y_pred_train)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Train Accuracy:"</span>, np.<span class="bu">round</span>(accuracy_train))</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -595,7 +599,7 @@ Test Accuracy: 1.0</code></pre>
 <section id="predicting-a-new-image" class="level3">
 <h3 class="anchored" data-anchor-id="predicting-a-new-image">Predicting a new image</h3>
 <p>Let’s see how our RF model does on an image downloaded from the internet. Following is the image:</p>
-<div class="cell" data-execution_count="16">
+<div class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://c8.alamy.com/comp/A0RX23/cars-and-automobiles-must-turn-left-ahead-sign-A0RX23.jpg'</span></span>
@@ -606,7 +610,7 @@ Test Accuracy: 1.0</code></pre>
 <p><img src="trafficsignsRF_files/figure-html/cell-17-output-1.png" width="562" height="416"></p>
 </div>
 </div>
-<div class="cell" data-execution_count="17">
+<div class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> preprocess2(img):</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  img <span class="op">=</span> np.asarray(img)</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  img <span class="op">=</span> cv2.resize(img, (<span class="dv">32</span>, <span class="dv">32</span>))</span>
@@ -618,7 +622,7 @@ Test Accuracy: 1.0</code></pre>
 <span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> preprocess2(img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="18">
+<div class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Predicted sign: "</span><span class="op">+</span> <span class="bu">str</span>(clf.predict(img)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Predicted sign: [12]</code></pre>

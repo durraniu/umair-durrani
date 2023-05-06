@@ -1,0 +1,14 @@
+name: visual_looming
+title: visual_looming
+username:
+account: umair
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 9038338
+bundleId: 7178955
+url: https://umair.shinyapps.io/visual_looming/
+when: 1683299199.7653
+lastSyncTime: 1683299199.7653
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: dalle.png|eye_part.gif

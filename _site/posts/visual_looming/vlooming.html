@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.310">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2023-05-06">
+<meta name="description" content="Wiedemann model - a short story">
+
+<title>Dr.&nbsp;U - How do drivers perceive slow traffic on highways?</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../umair-profile1.jpg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<link rel="stylesheet" href="../../rwds.css">
+<meta property="og:title" content="Dr.&nbsp;U - How do drivers perceive slow traffic on highways?">
+<meta property="og:description" content="Wiedemann model - a short story">
+<meta property="og:image" content="https://umairdurrani.com/posts/visual_looming/eye_part.gif">
+<meta property="og:site-name" content="Dr. U">
+<meta name="twitter:title" content="Dr.&nbsp;U - How do drivers perceive slow traffic on highways?">
+<meta name="twitter:description" content="Wiedemann model - a short story">
+<meta name="twitter:image" content="https://umairdurrani.com/posts/visual_looming/eye_part.gif">
+<meta name="twitter:creator" content="@umairdurrani87">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../umairlogo2.png" alt="" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../projects.html" rel="" target="">
+ <span class="menu-text">Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../software.html" rel="" target="">
+ <span class="menu-text">Software</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../teaching.html" rel="" target="">
+ <span class="menu-text">Training</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://scholar.google.com/citations?user=jS1b6osAAAAJ&amp;hl=en" rel="" target="_blank">
+ <span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../MLinTransportation.html" rel="" target="">
+ <span class="menu-text">ML</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html" rel="" target="">
+ <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../resume_linkedin.pdf" rel="" target="_blank">
+ <span class="menu-text">Resume</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-more" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">More</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-more">    
+        <li>
+    <a class="dropdown-item" href="https://umair.shinyapps.io/segmented_app_doc/" rel="" target="_blank">
+ <span class="dropdown-text">Segmented</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://umair.shinyapps.io/R_for_driving_sim/" rel="" target="_blank">
+ <span class="dropdown-text">R for Driving Sim</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://rpubs.com/durraniu/on_dashboard" rel="" target="_blank">
+ <span class="dropdown-text">Ontario Weather Dashboard</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://rpubs.com/durraniu/interactive_plots" rel="" target="_blank">
+ <span class="dropdown-text">Interactive Plotting in R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://rpubs.com/durraniu/sovg" rel="" target="_blank">
+ <span class="dropdown-text">Histogram y axis</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://rpubs.com/durraniu/DTQR" rel="" target="_blank">
+ <span class="dropdown-text">Decision Tree Example</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://durraniu.github.io/BBC100/" rel="" target="_blank">
+ <span class="dropdown-text">BBC 100 Women</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/durraniu" rel="" target="_blank"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/umairdurrani87" rel="" target="_blank"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/durraniu/" rel="" target="_blank"><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-is-visual-looming" id="toc-what-is-visual-looming" class="nav-link active" data-scroll-target="#what-is-visual-looming">What is Visual Looming?</a>
+  <ul class="collapse">
+  <li><a href="#interactive-example" id="toc-interactive-example" class="nav-link" data-scroll-target="#interactive-example">Interactive example</a></li>
+  </ul></li>
+  <li><a href="#wiedemann-car-following-model" id="toc-wiedemann-car-following-model" class="nav-link" data-scroll-target="#wiedemann-car-following-model">Wiedemann car-following model</a>
+  <ul class="collapse">
+  <li><a href="#interactive-example-free-driving-to-approaching" id="toc-interactive-example-free-driving-to-approaching" class="nav-link" data-scroll-target="#interactive-example-free-driving-to-approaching">Interactive example (free-driving to approaching)</a></li>
+  </ul></li>
+  <li><a href="#visual-looming-is-important" id="toc-visual-looming-is-important" class="nav-link" data-scroll-target="#visual-looming-is-important">Visual looming is important</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">How do drivers perceive slow traffic on highways?</h1>
+</div>
+
+<div>
+  <div class="description">
+    Wiedemann model - a short story
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">May 6, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Imagine you are driving on a highway; the weather is beautiful and you are enjoying the tunes on the radio. You see a small figure farther down the road and after a few moments you know it is another car travelling much like you.</p>
+<figure class="figure">
+<p><img src="dalle.png" style="float: left;" width="300" class="figure-img"></p>
+<figcaption class="figure-caption">
+Image by DALL-E
+</figcaption>
+</figure>
+<p>A few more seconds pass and you feel slight unease with the car dozens of meters away from you. Something is wrong but you don’t know what. May be the car is slower than the usual highway speed. And then all of a sudden you notice that the car is stopped in the middle of the road! Car’s brake lights are on but not too sharp in the broad daylight. You swerve to the other lane with no traffic, thinking what would have happened if you hadn’t.</p>
+<p>This was perhaps an extreme example. Cars don’t just stop in the middle of highways. But situations like these do and can happen. Similar situations with slower lead cars happen everyday, where you need to safely overtake the car.</p>
+<blockquote class="blockquote">
+<p>But how do you know that the car down the road is slow? How do drivers regularly overtake and change lanes so effortlessly?</p>
+</blockquote>
+<p>These questions have always been important to answer in traffic flow and psychology studies because they are connected to road safety. Understanding how drivers perceive and make decisions is even more important today to improve self-driving technology.</p>
+<p>This post introduces you to <strong>visual looming</strong> that help drivers perceieve the relative motion. Read on to learn how the Wiedemann car-following model utilizes visual looming to predict reaction behind a lead vehicle.</p>
+<section id="what-is-visual-looming" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-visual-looming">What is Visual Looming?</h2>
+<p><br></p>
+<figure class="figure">
+<p><img src="ball.gif" style="left;" width="400" class="figure-img"></p>
+<figcaption class="figure-caption">
+Source: Digital camera world
+</figcaption>
+</figure>
+<p>For most people, looking at this image would likely have an involuntary reaction - an effort to save them from the impending impact of the ball. But what exactly happens in your brain that tells you to save yourself from this <em>looming</em> threat?</p>
+<p>Visual looming (or just looming) is a measure of the growth of an image of an object approaching you. This growth of the image happens at your eye, specifically retina, where a 2D (two-dimensional) image forms. The 2D image grows in size as an object gets closer to you. Since the approaching object looms over the eye, this process is called looming.</p>
+<p>So, how is looming related to driving? As you gradually approach a slower lead vehicle, the 2D image of the rear of the lead vehicle grows on your retina. The animation below shows you that the width and height of the truck’s rear subtend visual angles (<span class="math inline">\theta</span>) on your eye (you are in the red car). One way to quantify looming is to estimate the rate of change of a visual angle, called as <code>angular velocity</code>, measured in radians per second. Thus, angular velocity measures the speed of the image growth on your eye. The line chart at the bottom-right shows that angular velocity is not constant: the closer you get to the truck, the faster the image grows on your eye.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="eye_part.gif" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">An oversimplification of how drivers perceive a slow lead vehicle</figcaption><p></p>
+</figure>
+</div>
+<p>All of this happens on your eye without much cognitive processing. After all, drivers are not physicists who’d need to use euqations of motion to determine when they need to steer away to another lane or apply brakes to avoid collision. Even if drivers want to do that, they won’t be successful as they do not know the speed and distance to the lead vehicle.</p>
+<section id="interactive-example" class="level3">
+<h3 class="anchored" data-anchor-id="interactive-example">Interactive example</h3>
+<p>In the following application, you can move ahead in time to see how the image of the lead car grows in size as the following car approaches it. The first plot show the speed of the following car as it gets closer to a lead car with a constant speed (Moving LV) or zero speed (Stationary LV). The second plot shows the position of the gas pedal of the following car and the angular velocity.</p>
+<iframe src="https://umair.shinyapps.io/visual_looming/" style="width: 100%; height: 500px;">
+</iframe>
+<p>In both figures above, you see that angular velocity increases with time. Researchers believe that there is some driver-specific value of angular velocity that is perceivable (just noticeable).</p>
+<blockquote class="blockquote">
+<p>The value of angular velocity where drivers detect that a lead vehicle is slower than them is the <strong>threshold</strong> of angular velocity, <span class="math inline">\theta_{TH}</span>.</p>
+</blockquote>
+</section>
+</section>
+<section id="wiedemann-car-following-model" class="level2">
+<h2 class="anchored" data-anchor-id="wiedemann-car-following-model">Wiedemann car-following model</h2>
+<p>Wiedemann model divides the car-following process into four distinct states:</p>
+<ul>
+<li><strong>Free-driving</strong>: Driver strives to drive at a desired speed with slight variation<br>
+</li>
+<li><strong>Approaching</strong>: Driver detects a slower lead vehicle based on angular velocity threshold (<span class="math inline">\theta_{W(TH)}</span>) and slows down to avoid collision. Angular velocity can be estimated as the width of the lead vehicle divided by the distance to lead vehicle. Wiedemann model uses the parameter <span class="math inline">CX</span> that has the following relation with the threshold of angular velocity.</li>
+</ul>
+<p><img src="cx.png" class="img-fluid" style="width:20.0%"></p>
+<ul>
+<li><strong>Following</strong>: Driver follows the lead vehicle at the same speed with small variation. Angular velocity threshold informs driver if they are getting too close to or loosing the lead vehicle.</li>
+<li><strong>Braking</strong>: Driver applies brake if the distance to the lead vehicle gets smaller than the driver-specific safety distance.</li>
+</ul>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Expand to see Wiedemann model equations
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Following are all the equations of the original Wiedemann car-following model. Want to learn more? Check out <span class="citation" data-cites="Durrani2016">(<a href="#ref-Durrani2016" role="doc-biblioref">Durrani, Lee, and Maoh 2016</a>)</span> and <span class="citation" data-cites="Durrani2019">(<a href="#ref-Durrani2019" role="doc-biblioref">Durrani and Lee 2019</a>)</span>. Or contact me.</p>
+<p><span class="math display"> BMAX = BMAXmult \times (V_{MAX} - V \times FaktorV) </span></p>
+<p><span class="math display">  FaktorV = \frac{V_{MAX}}{V_{DESIRED} + FAKTORVmult(V_{MAX} - V_{DESIRED})} </span></p>
+<p><span class="math display">  BNULL = BNULLmult \times (RND4(i) + NRND) </span></p>
+<p><span class="math display">  AX = L + AXadd + (RND1(i) \times AXmult) </span></p>
+<p><span class="math display">  SDV = \left( \frac{DX - AX}{CX} \right)^2 </span></p>
+<p><span class="math display">  CX = CXconst \times (CXadd + CXmult \times (RND1(i) + RND2(i))) </span></p>
+<p><span class="math display">  B(i)_{App} = \frac{1}{2} \times \frac{{DV}^2}{ABX - DX} + B(i - 1) + \frac{(1 - RND2(i)) \times (1 - 2 \times NRND)}{R(i)} </span></p>
+<p><span class="math display">  ABX = AX + (BXadd + BXmult \times RND1(i))\times \sqrt{V} </span></p>
+<p><span class="math display">  CLDV = SDV \times EX^2 </span></p>
+<p><span class="math display">  EX = EXadd + EXmult \times (NRND - RND2(i)) </span></p>
+<p><span class="math display">  OPDV = CLDV \times (-OPDVadd - OPDVmult \times NRND) </span></p>
+<p><span class="math display">  SDX = AX + EX \times (BXadd + BXmult \times RND1(i))\times \sqrt{V} </span></p>
+<p><span class="math display">  B(i)_{Emg} = \frac{1}{2} \times \frac{{DV}^2}{AX - DX} + B(i - 1) + BMIN \times \frac{(ABX - DX)}{(ABX - AX)} + \frac{(1 - RND2(i)) \times (1 - 2 \times NRND)}{R(i)} </span></p>
+<p><span class="math display">  BMIN = -BMINadd - BMINmult \times RND3(i) + BMINVmult \times V </span></p>
+</div>
+</div>
+</div>
+<p>Since most of the driving happens in following and approaching states, driver reactions are assumed to be initiated when the threshold of angular velocity is reached.</p>
+<section id="interactive-example-free-driving-to-approaching" class="level3">
+<h3 class="anchored" data-anchor-id="interactive-example-free-driving-to-approaching">Interactive example (free-driving to approaching)</h3>
+<p>The application below enables you to control a few model parameters of the Wiedemann model to reproduce the actual speed of a following car that is approaching a slow/stopped lead car. Try changing the <code>desired speed</code>, <code>BMAXmult</code>, and <code>CX</code> to make the predicted speed (dashed line) as close as possible to the actual speed (solid line).</p>
+<iframe src="https://umair.shinyapps.io/wiedemann_approaching/" style="width: 100%; height: 700px;">
+</iframe>
+<p>As you change these parameter values, notice how that changes the measures above the plot. You see:</p>
+<ul>
+<li>Sum of Squared Error: Mean difference between the actual and predicted distance to the lead vehicle<br>
+</li>
+<li>Predicted and observed reaction times: Reaction time was estimated as the time when the driver transitions from the free-driving state to the approaching state. These states were manually annotated in the actual data and were also predicted by the Wiedemann model based on the angular velocity threshold<br>
+</li>
+<li>AV threshold: Angular velocity threshold estimated from the observed and predicted data</li>
+</ul>
+</section>
+</section>
+<section id="visual-looming-is-important" class="level2">
+<h2 class="anchored" data-anchor-id="visual-looming-is-important">Visual looming is important</h2>
+<p>For many, many years into the future, humans will be driving manual/partially automated vehicles. Therefore, it is essential that we understand what influences drivers’ decision making and how can we make all road users safe. I hope this post made you realize the importance of looming (angular velocity) in driving. Hopefully, you’d recognize that looming cannot be ignored as long as a driver is involved even for a small part of the journey.</p>
+<p>In a future post, I will show you an alternative but seemingly more realistic model of drivers’ decision making in approaching slower vehicles that also utilizes looming. See you then.</p>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-Durrani2019" class="csl-entry" role="listitem">
+Durrani, Umair, and Chris Lee. 2019. <span>“Calibration and Validation of Psychophysical Car-Following Model Using Driver’s Action Points and Perception Thresholds.”</span> <em>Journal of Transportation Engineering Part A: Systems</em> 145 (9): 1–11. <a href="https://doi.org/10.1061/JTEPBS.0000264">https://doi.org/10.1061/JTEPBS.0000264</a>.
+</div>
+<div id="ref-Durrani2016" class="csl-entry" role="listitem">
+Durrani, Umair, Chris Lee, and Hanna Maoh. 2016. <span>“Calibrating the Wiedemann<span>’</span>s Vehicle-Following Model Using Mixed Vehicle-Pair Interactions.”</span> <em>Transportation Research Part C: Emerging Technologies</em> 67: 227–42. <a href="https://doi.org/10.1016/j.trc.2016.02.012">https://doi.org/10.1016/j.trc.2016.02.012</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="durraniu/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
