@@ -277,13 +277,13 @@ div.csl-indent {
 Image by DALL-E
 </figcaption>
 </figure>
-<p>A few more seconds pass and you feel slight unease with the car dozens of meters away from you. Something is wrong but you don’t know what. May be the car is slower than the usual highway speed. And then all of a sudden you notice that the car is stopped in the middle of the road! Car’s brake lights are on but not too sharp in the broad daylight. You swerve to the other lane with no traffic, thinking what would have happened if you hadn’t.</p>
+<p>A few more seconds pass and you feel slight unease with the car dozens of meters away from you. Something is wrong but you don’t know what. May be the car is slower than the usual highway speed. Then, all of a sudden, you notice that the car is stopped in the middle of the road! Car’s brake lights are on but not too sharp in the broad daylight. You swerve to the other lane with no traffic, thinking what would have happened if you hadn’t.</p>
 <p>This was perhaps an extreme example. Cars don’t just stop in the middle of highways. But situations like these do and can happen. Similar situations with slower lead cars happen everyday, where you need to safely overtake the car.</p>
 <blockquote class="blockquote">
 <p>But how do you know that the car down the road is slow? How do drivers regularly overtake and change lanes so effortlessly?</p>
 </blockquote>
 <p>These questions have always been important to answer in traffic flow and psychology studies because they are connected to road safety. Understanding how drivers perceive and make decisions is even more important today to improve self-driving technology.</p>
-<p>This post introduces you to <strong>visual looming</strong> that help drivers perceieve the relative motion. Read on to learn how the Wiedemann car-following model utilizes visual looming to predict reaction behind a lead vehicle.</p>
+<p>This post introduces you to <strong>visual looming</strong> that help drivers perceive relative motion. Read on to learn how the Wiedemann car-following model utilizes visual looming to predict reaction behind a lead vehicle.</p>
 <section id="what-is-visual-looming" class="level2">
 <h2 class="anchored" data-anchor-id="what-is-visual-looming">What is Visual Looming?</h2>
 <p><br></p>
@@ -294,7 +294,7 @@ Source: Digital camera world
 </figcaption>
 </figure>
 <p>For most people, looking at this image would likely have an involuntary reaction - an effort to save them from the impending impact of the ball. But what exactly happens in your brain that tells you to save yourself from this <em>looming</em> threat?</p>
-<p>Visual looming (or just looming) is a measure of the growth of an image of an object approaching you. This growth of the image happens at your eye, specifically retina, where a 2D (two-dimensional) image forms. The 2D image grows in size as an object gets closer to you. Since the approaching object looms over the eye, this process is called looming.</p>
+<p>Visual looming (or just <em>looming</em>) is a measure of the growth of an image of an object approaching you. This growth of the image happens at your eye, specifically retina, where a 2D (two-dimensional) image forms. The 2D image grows in size as an object gets closer to you. Since the approaching object looms over the eye, this process is called looming.</p>
 <p>So, how is looming related to driving? As you gradually approach a slower lead vehicle, the 2D image of the rear of the lead vehicle grows on your retina. The animation below shows you that the width and height of the truck’s rear subtend visual angles (<span class="math inline">\theta</span>) on your eye (you are in the red car). One way to quantify looming is to estimate the rate of change of a visual angle, called as <code>angular velocity</code>, measured in radians per second. Thus, angular velocity measures the speed of the image growth on your eye. The line chart at the bottom-right shows that angular velocity is not constant: the closer you get to the truck, the faster the image grows on your eye.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -305,20 +305,21 @@ Source: Digital camera world
 <p>All of this happens on your eye without much cognitive processing. After all, drivers are not physicists who’d need to use euqations of motion to determine when they need to steer away to another lane or apply brakes to avoid collision. Even if drivers want to do that, they won’t be successful as they do not know the speed and distance to the lead vehicle.</p>
 <section id="interactive-example" class="level3">
 <h3 class="anchored" data-anchor-id="interactive-example">Interactive example</h3>
-<p>In the following application, you can move ahead in time to see how the image of the lead car grows in size as the following car approaches it. The first plot show the speed of the following car as it gets closer to a lead car with a constant speed (Moving LV) or zero speed (Stationary LV). The second plot shows the position of the gas pedal of the following car and the angular velocity.</p>
+<p>In the following application, you can move ahead in time to see how the image of the lead car grows in size as the following car approaches it. The first plot shows the speed of the following car as it gets closer to a lead car with a constant speed (Moving LV) or zero speed (Stationary LV). The second plot shows the position of the gas pedal of the following car and the angular velocity.</p>
 <iframe src="https://umair.shinyapps.io/visual_looming/" style="width: 100%; height: 500px;">
 </iframe>
 <p>In both figures above, you see that angular velocity increases with time. Researchers believe that there is some driver-specific value of angular velocity that is perceivable (just noticeable).</p>
 <blockquote class="blockquote">
 <p>The value of angular velocity where drivers detect that a lead vehicle is slower than them is the <strong>threshold</strong> of angular velocity, <span class="math inline">\theta_{TH}</span>.</p>
 </blockquote>
+<p>In the <code>Moving LV</code> scenario above, move the <code>Time</code> slider to <code>89</code> s to see that the driver stepped-off the gas pedal (gas pedal position = 0) when angular velocity grew significantly. At this time, the angular velocity was about 0.0003 rad/s. Therefore, the threshold of angular velocity for this driver was 0.0003 rad/s.</p>
 </section>
 </section>
 <section id="wiedemann-car-following-model" class="level2">
 <h2 class="anchored" data-anchor-id="wiedemann-car-following-model">Wiedemann car-following model</h2>
 <p>Wiedemann model divides the car-following process into four distinct states:</p>
 <ul>
-<li><strong>Free-driving</strong>: Driver strives to drive at a desired speed with slight variation<br>
+<li><strong>Free-driving</strong>: Driver strives to drive at a desired speed.<br>
 </li>
 <li><strong>Approaching</strong>: Driver detects a slower lead vehicle based on angular velocity threshold (<span class="math inline">\theta_{W(TH)}</span>) and slows down to avoid collision. Angular velocity can be estimated as the width of the lead vehicle divided by the distance to lead vehicle. Wiedemann model uses the parameter <span class="math inline">CX</span> that has the following relation with the threshold of angular velocity.</li>
 </ul>
@@ -365,11 +366,11 @@ Expand to see Wiedemann model equations
 </iframe>
 <p>As you change these parameter values, notice how that changes the measures above the plot. You see:</p>
 <ul>
-<li>Sum of Squared Error: Mean difference between the actual and predicted distance to the lead vehicle<br>
+<li><code>Sum of Squared Error</code>: Mean difference between the actual and predicted distance to the lead vehicle<br>
 </li>
-<li>Predicted and observed reaction times: Reaction time was estimated as the time when the driver transitions from the free-driving state to the approaching state. These states were manually annotated in the actual data and were also predicted by the Wiedemann model based on the angular velocity threshold<br>
+<li><code>Predicted and observed reaction times</code>: Reaction time was estimated as the time when the driver transitions from the free-driving state to the approaching state. These states were manually annotated in the actual data and were also predicted by the Wiedemann model based on the angular velocity threshold<br>
 </li>
-<li>AV threshold: Angular velocity threshold estimated from the observed and predicted data</li>
+<li><code>AV threshold</code>: Angular velocity threshold estimated from the observed and predicted data</li>
 </ul>
 </section>
 </section>
