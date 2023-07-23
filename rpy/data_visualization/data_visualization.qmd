@@ -4,7 +4,6 @@ description: "Learn to use ggplot2 and plotnine to explore data"
 author: "Umair Durrani"
 image: "imagee.png"
 warning: false
-cache: true
 categories:
   - visualization
   - ggplot2

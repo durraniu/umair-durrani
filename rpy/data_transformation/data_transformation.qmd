@@ -4,7 +4,6 @@ description: "Learn to use dplyr, pandas and siuba to filter rows & create and c
 author: "Umair Durrani"
 image: "imagee.png"
 warning: false
-cache: true
 categories:
   - visualization
   - dplyr
