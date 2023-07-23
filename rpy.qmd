@@ -1,0 +1,14 @@
+---
+title: "Introduction to R and Python for Data Analysis"
+description: "This series of blog posts introduces you to programming for data analysis. Learn how to read, visualize, and wrangle data with R and Python."
+listing:
+  contents: rpy
+  categories: true
+  type: grid
+---
+
+![](i80_image.gif){width=50%}  
+*Google Maps image of Interstate-80 (I-80) Freeway Segment.*   
+*This series uses the I-80 dataset from NGSIM project.*
+
+<br>

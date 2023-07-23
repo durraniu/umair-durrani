@@ -28,5 +28,12 @@
       "/projects/avhdv.html",
       "/projects/distracted-driving.html"
     ]
+  },
+  {
+    "listing": "/rpy.html",
+    "items": [
+      "/rpy/data_visualization/data_visualization.html",
+      "/rpy/data_transformation/data_transformation.html"
+    ]
   }
 ]

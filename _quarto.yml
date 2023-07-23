@@ -30,9 +30,8 @@ website:
         text: ML
       - href: blog.qmd
         text: Blog
-      - href: resume_linkedin.pdf
-        text: Resume
-        target: _blank
+      - href: rpy.qmd
+        text: "RPy Data Analysis"
       - text: "More"
         menu:
         - text: "Segmented"

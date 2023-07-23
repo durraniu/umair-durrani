@@ -1,0 +1,17 @@
+---
+title: "Transforming data to make it fit for analysis"
+description: "Learn to use dplyr, pandas and siuba to filter rows & create and change columns"
+author: "Umair Durrani"
+image: "imagee.png"
+warning: false
+cache: true
+categories:
+  - visualization
+  - dplyr
+  - pandas
+  - siuba
+  - data-transformation
+  - mutate
+  - filter
+---
+
