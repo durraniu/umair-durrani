@@ -7,6 +7,7 @@ format:
 image: https://media.giphy.com/media/duud6Q9AILpj86w76x/giphy.gif
 warning: false
 toc: false
+cache: true
 date: "2023-09-04"
 categories:
   - visualization
