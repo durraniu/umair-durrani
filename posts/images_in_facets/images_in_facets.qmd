@@ -4,8 +4,10 @@ description: "The power of {ggtext}"
 format: 
   html:
     page-layout: full
+image: https://media.giphy.com/media/duud6Q9AILpj86w76x/giphy.gif
 warning: false
 toc: false
+date: "2023-09-04"
 categories:
   - visualization
   - ggplot2
