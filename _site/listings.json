@@ -33,8 +33,7 @@
   {
     "listing": "/rpy.html",
     "items": [
-      "/rpy/data_visualization/data_visualization.html",
-      "/rpy/data_transformation/data_transformation.html"
+      "/rpy/data_visualization/data_visualization.html"
     ]
   }
 ]

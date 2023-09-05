@@ -599,7 +599,7 @@
     "href": "rpy.html",
     "title": "Introduction to R and Python for Data Analysis",
     "section": "",
-    "text": "Google Maps image of Interstate-80 (I-80) Freeway Segment.\nThis series uses the I-80 dataset from NGSIM project.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGetting started with exploratory data visualization\n\n\n\nvisualization\n\n\nggplot2\n\n\nplotnine\n\n\nplotting\n\n\ngraphs\n\n\n\nLearn to use ggplot2 and plotnine to explore data\n\n\n\nUmair Durrani\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTransforming data to make it fit for analysis\n\n\n\nvisualization\n\n\ndplyr\n\n\npandas\n\n\nsiuba\n\n\ndata-transformation\n\n\nmutate\n\n\nfilter\n\n\n\nLearn to use dplyr, pandas and siuba to filter rows & create and change columns\n\n\n\nUmair Durrani\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Google Maps image of Interstate-80 (I-80) Freeway Segment.\nThis series uses the I-80 dataset from NGSIM project.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGetting started with exploratory data visualization\n\n\n\nvisualization\n\n\nggplot2\n\n\nplotnine\n\n\nplotting\n\n\ngraphs\n\n\n\nLearn to use ggplot2 and plotnine to explore data\n\n\n\nUmair Durrani\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "rpy/data_visualization/data_visualization.html",
