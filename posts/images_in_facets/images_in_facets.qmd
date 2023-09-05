@@ -13,7 +13,8 @@ categories:
   - ggtext
 ---
 
-In this post, I will show you how to replace the facet labels in ggplot2 with images. The images I'll use in this post are country flags. Let's start with loading the required packages:  
+In this post, I will show you how to replace the facet labels in ggplot2 with images. The images I'll use in this post are country flags. Let's start with loading the required packages:    
+
 ```{r}
 suppressPackageStartupMessages(library(tidyverse))
 suppressPackageStartupMessages(library(jsonlite))
