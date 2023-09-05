@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.310">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -58,7 +92,8 @@ ul.task-list li input[type="checkbox"] {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -230,6 +265,668 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Julia</a></li></ul>
+<div class="tab-content" data-group="language">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(arrow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> siuba.dply.vector <span class="im">import</span> n, row_number, last</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> siuba <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotnine <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> janitor</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>C:\Users\umair\ANACON~1\envs\homl3\lib\site-packages\lazy_loader\__init__.py:185: RuntimeWarning: subpackages can technically be lazily loaded, but it causes the package to be eagerly loaded even if it is already lazily loaded.So, you probably shouldn't use subpackages with this lazy feature.
+C:\Users\umair\ANACON~1\envs\homl3\lib\site-packages\lazy_loader\__init__.py:185: RuntimeWarning: subpackages can technically be lazily loaded, but it causes the package to be eagerly loaded even if it is already lazily loaded.So, you probably shouldn't use subpackages with this lazy feature.</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ParquetFiles</span>, <span class="bu">DataFrames</span>, <span class="bu">Tidier</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">Julia</a></li></ul>
+<div class="tab-content" data-group="language">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> arrow<span class="sc">::</span><span class="fu">read_parquet</span>(<span class="st">"data/df_raw.parquet"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> janitor<span class="sc">::</span><span class="fu">clean_names</span>(df) </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 4%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 4%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">vehicle_id</th>
+<th style="text-align: right;">frame_id</th>
+<th style="text-align: right;">total_frames</th>
+<th style="text-align: right;">global_time</th>
+<th style="text-align: right;">local_x</th>
+<th style="text-align: right;">local_y</th>
+<th style="text-align: right;">global_x</th>
+<th style="text-align: right;">global_y</th>
+<th style="text-align: right;">v_length</th>
+<th style="text-align: right;">v_width</th>
+<th style="text-align: right;">v_class</th>
+<th style="text-align: right;">v_vel</th>
+<th style="text-align: right;">v_acc</th>
+<th style="text-align: right;">lane_id</th>
+<th style="text-align: right;">preceding</th>
+<th style="text-align: right;">following</th>
+<th style="text-align: right;">space_headway</th>
+<th style="text-align: right;">time_headway</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">884</td>
+<td style="text-align: right;">1113433136100</td>
+<td style="text-align: right;">16.884</td>
+<td style="text-align: right;">52.74782</td>
+<td style="text-align: right;">6042842</td>
+<td style="text-align: right;">2133118</td>
+<td style="text-align: right;">14.3</td>
+<td style="text-align: right;">6.4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">6.947704</td>
+<td style="text-align: right;">2.188889</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">884</td>
+<td style="text-align: right;">1113433136200</td>
+<td style="text-align: right;">16.938</td>
+<td style="text-align: right;">53.45500</td>
+<td style="text-align: right;">6042842</td>
+<td style="text-align: right;">2133119</td>
+<td style="text-align: right;">14.3</td>
+<td style="text-align: right;">6.4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">7.195818</td>
+<td style="text-align: right;">3.152102</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">884</td>
+<td style="text-align: right;">1113433136300</td>
+<td style="text-align: right;">16.991</td>
+<td style="text-align: right;">54.19089</td>
+<td style="text-align: right;">6042842</td>
+<td style="text-align: right;">2133120</td>
+<td style="text-align: right;">14.3</td>
+<td style="text-align: right;">6.4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">7.522104</td>
+<td style="text-align: right;">3.871618</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">884</td>
+<td style="text-align: right;">1113433136400</td>
+<td style="text-align: right;">17.045</td>
+<td style="text-align: right;">54.96182</td>
+<td style="text-align: right;">6042842</td>
+<td style="text-align: right;">2133121</td>
+<td style="text-align: right;">14.3</td>
+<td style="text-align: right;">6.4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">7.896343</td>
+<td style="text-align: right;">4.184370</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">884</td>
+<td style="text-align: right;">1113433136500</td>
+<td style="text-align: right;">17.098</td>
+<td style="text-align: right;">55.77100</td>
+<td style="text-align: right;">6042842</td>
+<td style="text-align: right;">2133123</td>
+<td style="text-align: right;">14.3</td>
+<td style="text-align: right;">6.4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">8.287402</td>
+<td style="text-align: right;">3.906572</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">884</td>
+<td style="text-align: right;">1113433136600</td>
+<td style="text-align: right;">17.151</td>
+<td style="text-align: right;">56.61935</td>
+<td style="text-align: right;">6042842</td>
+<td style="text-align: right;">2133124</td>
+<td style="text-align: right;">14.3</td>
+<td style="text-align: right;">6.4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">8.679462</td>
+<td style="text-align: right;">3.880959</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(<span class="st">"data/df_raw.parquet"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>df.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Index(['Vehicle_ID', 'Frame_ID', 'Total_Frames', 'Global_Time', 'Local_X',
+       'Local_Y', 'Global_X', 'Global_Y', 'v_Length', 'v_Width', 'v_Class',
+       'v_Vel', 'v_Acc', 'Lane_ID', 'Preceding', 'Following', 'Space_Headway',
+       'Time_Headway'],
+      dtype='object')</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.clean_names()</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>df.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Index(['vehicle_id', 'frame_id', 'total_frames', 'global_time', 'local_x',
+       'local_y', 'global_x', 'global_y', 'v_length', 'v_width', 'v_class',
+       'v_vel', 'v_acc', 'lane_id', 'preceding', 'following', 'space_headway',
+       'time_headway'],
+      dtype='object')</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> <span class="fu">DataFrame</span>(<span class="fu">load</span>(<span class="st">"data/df_raw.parquet"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1048575×18 DataFrame
+     Row │ Vehicle_ID  Frame_ID  Total_Frames  Global_Time    Local_X  Local_Y ⋯
+         │ Int64       Int64     Int64         Int64          Float64  Float64 ⋯
+─────────┼──────────────────────────────────────────────────────────────────────
+       1 │          1        12           884  1113433136100   16.884    52.74 ⋯
+       2 │          1        13           884  1113433136200   16.938    53.45
+       3 │          1        14           884  1113433136300   16.991    54.19
+       4 │          1        15           884  1113433136400   17.045    54.96
+       5 │          1        16           884  1113433136500   17.098    55.77 ⋯
+       6 │          1        17           884  1113433136600   17.151    56.61
+       7 │          1        18           884  1113433136700   17.204    57.50
+       8 │          1        19           884  1113433136800   17.257    58.43
+    ⋮    │     ⋮          ⋮           ⋮              ⋮           ⋮         ⋮   ⋱
+ 1048569 │       2911      8586           731  1113433993500   53.639  1510.93 ⋯
+ 1048570 │       2911      8587           731  1113433993600   53.666  1513.01
+ 1048571 │       2911      8588           731  1113433993700   53.693  1515.0
+ 1048572 │       2911      8589           731  1113433993800   53.719  1516.88
+ 1048573 │       2911      8590           731  1113433993900   53.746  1518.68 ⋯
+ 1048574 │       2911      8591           731  1113433994000   53.772  1520.39
+ 1048575 │       2911      8592           731  1113433994100   53.799  1522.03
+                                             13 columns and 1048560 rows omitted</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> <span class="pp">@chain</span> df <span class="cf">begin</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>      <span class="pp">@clean_names</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>     <span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1048575×18 DataFrame
+     Row │ vehicle_i_d  frame_i_d  total_frames  global_time    local_x  local ⋯
+         │ Int64        Int64      Int64         Int64          Float64  Float ⋯
+─────────┼──────────────────────────────────────────────────────────────────────
+       1 │           1         12           884  1113433136100   16.884    52. ⋯
+       2 │           1         13           884  1113433136200   16.938    53.
+       3 │           1         14           884  1113433136300   16.991    54.
+       4 │           1         15           884  1113433136400   17.045    54.
+       5 │           1         16           884  1113433136500   17.098    55. ⋯
+       6 │           1         17           884  1113433136600   17.151    56.
+       7 │           1         18           884  1113433136700   17.204    57.
+       8 │           1         19           884  1113433136800   17.257    58.
+    ⋮    │      ⋮           ⋮           ⋮              ⋮           ⋮         ⋮ ⋱
+ 1048569 │        2911       8586           731  1113433993500   53.639  1510. ⋯
+ 1048570 │        2911       8587           731  1113433993600   53.666  1513.
+ 1048571 │        2911       8588           731  1113433993700   53.693  1515.
+ 1048572 │        2911       8589           731  1113433993800   53.719  1516.
+ 1048573 │        2911       8590           731  1113433993900   53.746  1518. ⋯
+ 1048574 │        2911       8591           731  1113433994000   53.772  1520.
+ 1048575 │        2911       8592           731  1113433994100   53.799  1522.
+                                             13 columns and 1048560 rows omitted</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>18-element Vector{String}:
+ "vehicle_i_d"
+ "frame_i_d"
+ "total_frames"
+ "global_time"
+ "local_x"
+ "local_y"
+ "global_x"
+ "global_y"
+ "v_length"
+ "v_width"
+ "v_class"
+ "v_vel"
+ "v_acc"
+ "lane_i_d"
+ "preceding"
+ "following"
+ "space_headway"
+ "time_headway"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> <span class="pp">@chain</span> df <span class="cf">begin</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>         <span class="pp">@rename</span>(vehicle_id <span class="op">=</span> vehicle_i_d,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                 frame_id <span class="op">=</span> frame_i_d,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                 lane_id <span class="op">=</span> lane_i_d)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>     <span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1048575×18 DataFrame
+     Row │ vehicle_id  frame_id  total_frames  global_time    local_x  local_y ⋯
+         │ Int64       Int64     Int64         Int64          Float64  Float64 ⋯
+─────────┼──────────────────────────────────────────────────────────────────────
+       1 │          1        12           884  1113433136100   16.884    52.74 ⋯
+       2 │          1        13           884  1113433136200   16.938    53.45
+       3 │          1        14           884  1113433136300   16.991    54.19
+       4 │          1        15           884  1113433136400   17.045    54.96
+       5 │          1        16           884  1113433136500   17.098    55.77 ⋯
+       6 │          1        17           884  1113433136600   17.151    56.61
+       7 │          1        18           884  1113433136700   17.204    57.50
+       8 │          1        19           884  1113433136800   17.257    58.43
+    ⋮    │     ⋮          ⋮           ⋮              ⋮           ⋮         ⋮   ⋱
+ 1048569 │       2911      8586           731  1113433993500   53.639  1510.93 ⋯
+ 1048570 │       2911      8587           731  1113433993600   53.666  1513.01
+ 1048571 │       2911      8588           731  1113433993700   53.693  1515.0
+ 1048572 │       2911      8589           731  1113433993800   53.719  1516.88
+ 1048573 │       2911      8590           731  1113433993900   53.746  1518.68 ⋯
+ 1048574 │       2911      8591           731  1113433994000   53.772  1520.39
+ 1048575 │       2911      8592           731  1113433994100   53.799  1522.03
+                                             13 columns and 1048560 rows omitted</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false">Julia</a></li></ul>
+<div class="tab-content" data-group="language">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(frame_id) <span class="sc">|&gt;</span>  <span class="co"># grouping by frame id</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">preceding_local_y =</span> local_y[<span class="fu">match</span>(preceding, vehicle_id)],</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">preceding_length =</span> v_length[<span class="fu">match</span>(preceding, vehicle_id)],</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">preceding_width =</span> v_width[<span class="fu">match</span>(preceding, vehicle_id)],</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">preceding_class=</span> v_class[<span class="fu">match</span>(preceding, vehicle_id)],</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">preceding_vel =</span> v_vel[<span class="fu">match</span>(preceding, vehicle_id)],</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">preceding_acc =</span> v_acc[<span class="fu">match</span>(preceding, vehicle_id)]) <span class="sc">|&gt;</span> </span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.merge(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  df.loc[:, [<span class="st">'frame_id'</span>, <span class="st">'vehicle_id'</span>, <span class="st">'local_y'</span>, <span class="st">'v_length'</span>,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>            <span class="st">'v_width'</span>, <span class="st">'v_class'</span>, <span class="st">'v_vel'</span>, <span class="st">'v_acc'</span>]] , </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>              left_on <span class="op">=</span> [<span class="st">'frame_id'</span>, <span class="st">'preceding'</span>], </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>              right_on <span class="op">=</span> [<span class="st">'frame_id'</span>, <span class="st">'vehicle_id'</span>], how <span class="op">=</span> <span class="st">'left'</span>, </span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>              suffixes<span class="op">=</span>[<span class="st">''</span>, <span class="st">'_preceding'</span>]</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>              )</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>              </span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop([<span class="st">'vehicle_id_preceding'</span>], axis <span class="op">=</span> <span class="st">'columns'</span>)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>              </span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>df.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Index(['vehicle_id', 'frame_id', 'total_frames', 'global_time', 'local_x',
+       'local_y', 'global_x', 'global_y', 'v_length', 'v_width', 'v_class',
+       'v_vel', 'v_acc', 'lane_id', 'preceding', 'following', 'space_headway',
+       'time_headway', 'local_y_preceding', 'v_length_preceding',
+       'v_width_preceding', 'v_class_preceding', 'v_vel_preceding',
+       'v_acc_preceding'],
+      dtype='object')</code></pre>
+</div>
+</div>
+<p>Rename the columns for <code>preceding</code> vehicles to match the column names with <code>R</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> (</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  df </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>      <span class="op">&gt;&gt;</span> rename(preceding_local_y <span class="op">=</span> _.local_y_preceding,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>                 preceding_v_length <span class="op">=</span>  _.v_length_preceding,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>                 preceding_v_width <span class="op">=</span> _.v_width_preceding,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>                 preceding_v_class <span class="op">=</span> _.v_class_preceding,</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>                 preceding_v_vel <span class="op">=</span> _.v_vel_preceding,</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>                 preceding_v_acc <span class="op">=</span> _.v_acc_preceding)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>     )</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>df.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Index(['vehicle_id', 'frame_id', 'total_frames', 'global_time', 'local_x',
+       'local_y', 'global_x', 'global_y', 'v_length', 'v_width', 'v_class',
+       'v_vel', 'v_acc', 'lane_id', 'preceding', 'following', 'space_headway',
+       'time_headway', 'preceding_local_y', 'preceding_v_length',
+       'preceding_v_width', 'preceding_v_class', 'preceding_v_vel',
+       'preceding_v_acc'],
+      dtype='object')</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> <span class="fu">leftjoin</span>(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>           df,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>           df[<span class="op">:</span>, [<span class="op">:</span>frame_id, <span class="op">:</span>vehicle_id, <span class="op">:</span>local_y, <span class="op">:</span>v_length, <span class="op">:</span>v_width, <span class="op">:</span>v_class, <span class="op">:</span>v_vel, <span class="op">:</span>v_acc]],</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>           on <span class="op">=</span> [<span class="op">:</span>frame_id <span class="op">=&gt;</span> <span class="op">:</span>frame_id, <span class="op">:</span>preceding <span class="op">=&gt;</span> <span class="op">:</span>vehicle_id],</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>           makeunique <span class="op">=</span> <span class="cn">true</span>, </span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>           renamecols <span class="op">=</span> <span class="st">""</span> <span class="op">=&gt;</span> <span class="st">"_preceding"</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>       )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1048575×24 DataFrame
+     Row │ vehicle_id  frame_id  total_frames  global_time    local_x  local_y ⋯
+         │ Int64       Int64     Int64         Int64          Float64  Float64 ⋯
+─────────┼──────────────────────────────────────────────────────────────────────
+       1 │         11        57           864  1113433140600   17.924   68.918 ⋯
+       2 │         11        58           864  1113433140700   17.827   69.534
+       3 │         11        59           864  1113433140800   17.73    70.158
+       4 │         11        60           864  1113433140900   17.632   70.792
+       5 │         11        61           864  1113433141000   17.533   71.434 ⋯
+       6 │         11        62           864  1113433141100   17.433   72.083
+       7 │         11        63           864  1113433141200   17.333   72.737
+       8 │         11        64           864  1113433141300   17.233   73.398
+    ⋮    │     ⋮          ⋮           ⋮              ⋮           ⋮        ⋮    ⋱
+ 1048569 │       2911      8381           731  1113433973000   61.556  928.234 ⋯
+ 1048570 │       2911      8382           731  1113433973100   60.848  931.051
+ 1048571 │       2911      8383           731  1113433973200   60.721  933.884
+ 1048572 │       2911      8384           731  1113433973300   60.667  936.733
+ 1048573 │       2911      8385           731  1113433973400   60.779  939.596 ⋯
+ 1048574 │       2911      8386           731  1113433973500   60.97   942.472
+ 1048575 │       2911      8387           731  1113433973600   60.618  945.36
+                                             19 columns and 1048560 rows omitted</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>24-element Vector{String}:
+ "vehicle_id"
+ "frame_id"
+ "total_frames"
+ "global_time"
+ "local_x"
+ "local_y"
+ "global_x"
+ "global_y"
+ "v_length"
+ "v_width"
+ ⋮
+ "following"
+ "space_headway"
+ "time_headway"
+ "local_y_preceding"
+ "v_length_preceding"
+ "v_width_preceding"
+ "v_class_preceding"
+ "v_vel_preceding"
+ "v_acc_preceding"</code></pre>
+</div>
+</div>
+<p>Rename the columns for <code>preceding</code> vehicles to match the column names with <code>R</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> <span class="pp">@chain</span> df <span class="cf">begin</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>         <span class="pp">@rename</span>(preceding_local_y <span class="op">=</span> local_y_preceding,</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                 preceding_v_length <span class="op">=</span>  v_length_preceding,</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>                 preceding_v_width <span class="op">=</span> v_width_preceding,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>                 preceding_v_class <span class="op">=</span> v_class_preceding,</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>                 preceding_v_vel <span class="op">=</span> v_vel_preceding,</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>                 preceding_v_acc <span class="op">=</span> v_acc_preceding)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>     <span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1048575×24 DataFrame
+     Row │ vehicle_id  frame_id  total_frames  global_time    local_x  local_y ⋯
+         │ Int64       Int64     Int64         Int64          Float64  Float64 ⋯
+─────────┼──────────────────────────────────────────────────────────────────────
+       1 │         11        57           864  1113433140600   17.924   68.918 ⋯
+       2 │         11        58           864  1113433140700   17.827   69.534
+       3 │         11        59           864  1113433140800   17.73    70.158
+       4 │         11        60           864  1113433140900   17.632   70.792
+       5 │         11        61           864  1113433141000   17.533   71.434 ⋯
+       6 │         11        62           864  1113433141100   17.433   72.083
+       7 │         11        63           864  1113433141200   17.333   72.737
+       8 │         11        64           864  1113433141300   17.233   73.398
+    ⋮    │     ⋮          ⋮           ⋮              ⋮           ⋮        ⋮    ⋱
+ 1048569 │       2911      8381           731  1113433973000   61.556  928.234 ⋯
+ 1048570 │       2911      8382           731  1113433973100   60.848  931.051
+ 1048571 │       2911      8383           731  1113433973200   60.721  933.884
+ 1048572 │       2911      8384           731  1113433973300   60.667  936.733
+ 1048573 │       2911      8385           731  1113433973400   60.779  939.596 ⋯
+ 1048574 │       2911      8386           731  1113433973500   60.97   942.472
+ 1048575 │       2911      8387           731  1113433973600   60.618  945.36
+                                             19 columns and 1048560 rows omitted</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>24-element Vector{String}:
+ "vehicle_id"
+ "frame_id"
+ "total_frames"
+ "global_time"
+ "local_x"
+ "local_y"
+ "global_x"
+ "global_y"
+ "v_length"
+ "v_width"
+ ⋮
+ "following"
+ "space_headway"
+ "time_headway"
+ "preceding_local_y"
+ "preceding_v_length"
+ "preceding_v_width"
+ "preceding_v_class"
+ "preceding_v_vel"
+ "preceding_v_acc"</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">Python</a></li></ul>
+<div class="tab-content" data-group="language">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(total_frames, <span class="fu">starts_with</span>(<span class="st">"global"</span>), following), global_time) <span class="sc">|&gt;</span> <span class="co"># Keeping the desired columns only</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">mutate</span>(<span class="fu">across</span>(</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">.cols =</span> <span class="fu">c</span>(<span class="fu">starts_with</span>(<span class="st">"local"</span>), <span class="fu">starts_with</span>(<span class="st">"v_"</span>), space_headway, <span class="fu">starts_with</span>(<span class="st">"preceding"</span>), <span class="sc">-</span>preceding, <span class="sc">-</span>preceding_class, <span class="sc">-</span>v_class),</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">.fns =</span> <span class="sc">~</span> <span class="fu">round</span>(.x <span class="sc">*</span> .<span class="dv">3048</span>, <span class="dv">2</span>)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">|&gt;</span> <span class="co"># Convert to metric units</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.cols =</span> <span class="fu">c</span>(vehicle_id, v_class, lane_id, preceding, preceding_class),</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">.fns =</span> <span class="sc">~</span> <span class="fu">as.factor</span>(.x)</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  )) <span class="co"># Convert a few columns to factor type</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> (</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  df </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">&gt;&gt;</span> select(<span class="op">-</span>_[_.total_frames, _.startswith(<span class="st">'global'</span>), _.following], </span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  _.global_time) <span class="co"># Keeping the desired columns only</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co">### converting to metric units</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>cols_to_convert_to_metric <span class="op">=</span> [<span class="st">'local_x'</span>, <span class="st">'local_y'</span>, <span class="st">'v_length'</span>, <span class="st">'v_width'</span>, </span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">'v_vel'</span>, <span class="st">'v_acc'</span>, <span class="st">'space_headway'</span>, <span class="st">'preceding_local_y'</span>,</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">'preceding_v_length'</span>, <span class="st">'preceding_v_width'</span>, <span class="st">'preceding_v_vel'</span>,</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>       <span class="st">'preceding_v_acc'</span>]</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>df[cols_to_convert_to_metric] <span class="op">=</span> df[cols_to_convert_to_metric].<span class="bu">apply</span>(<span class="kw">lambda</span> x: x <span class="op">*</span> <span class="fl">.3048</span>).<span class="bu">round</span>(<span class="dv">2</span>)</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a><span class="co">## change the data type to categorical</span></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>cols_to_convert_to_categorical <span class="op">=</span> [<span class="st">'vehicle_id'</span>, <span class="st">'v_class'</span>, <span class="st">'lane_id'</span>, </span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>                             <span class="st">'preceding'</span>, <span class="st">'preceding_v_class'</span>]</span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> cols_to_convert_to_categorical:</span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>    df[col] <span class="op">=</span> df[col].astype(<span class="st">'str'</span>,copy<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">Python</a></li></ul>
+<div class="tab-content" data-group="language">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">actual_time =</span> <span class="fu">as.POSIXct</span>(global_time<span class="sc">/</span><span class="dv">1000</span>, <span class="at">origin =</span> <span class="st">"1970-01-01"</span>, </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">tz=</span><span class="st">"America/Los_Angeles"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>global_time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'actual_time'</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">'global_time'</span>] <span class="op">/</span> <span class="dv">1000</span>, </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>                                    unit<span class="op">=</span><span class="st">'s'</span>, origin<span class="op">=</span><span class="st">'1970-01-01'</span>, utc<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'actual_time'</span>] <span class="op">=</span> df[<span class="st">'actual_time'</span>].dt.tz_convert(<span class="st">'America/Los_Angeles'</span>)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop([<span class="st">'global_time'</span>], axis <span class="op">=</span> <span class="st">'columns'</span>)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.columns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Index(['vehicle_id', 'frame_id', 'local_x', 'local_y', 'v_length', 'v_width',
+       'v_class', 'v_vel', 'v_acc', 'lane_id', 'preceding', 'space_headway',
+       'time_headway', 'preceding_local_y', 'preceding_v_length',
+       'preceding_v_width', 'preceding_v_class', 'preceding_v_vel',
+       'preceding_v_acc', 'actual_time'],
+      dtype='object')</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false">Julia</a></li></ul>
+<div class="tab-content" data-group="language">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Time space diagram</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot(data = df |&gt; </span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="co">#          filter(lane_id %in% c(1,2,3))) +</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_path(aes(x = actual_time, </span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co">#                 y = local_y, </span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="co">#                 color = v_vel,</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="co">#                 group = vehicle_id), alpha = 0.5) +</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   scale_color_gradient(low = "red", high = "green") +</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   facet_grid(lane_id ~ ., labeller = "label_both") +</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   labs(x = "Time (HH:MM)",</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="co">#        y = "Longitudinal position",</span></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="co">#        color = "Speed (m/s)") +</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   theme_minimal()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Time space diagram</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>df_123 <span class="op">=</span> (</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  df  </span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>      <span class="op">&gt;&gt;</span> <span class="bu">filter</span>(_.lane_id.isin([<span class="st">"1"</span>, <span class="st">"2"</span>, <span class="st">"3"</span>]))</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>C:\Users\umair\ANACON~1\envs\homl3\lib\site-packages\pandas\core\algorithms.py:522: DeprecationWarning: np.find_common_type is deprecated.  Please use `np.result_type` or `np.promote_types`.
+See https://numpy.org/devdocs/release/1.25.0-notes.html and the docs for more information.  (Deprecated NumPy 1.25)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  ggplot(data <span class="op">=</span> df_123) <span class="op">+</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  geom_path(aes(x <span class="op">=</span> <span class="st">'actual_time'</span>,</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>                y <span class="op">=</span> <span class="st">'local_y'</span>,</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>                color <span class="op">=</span> <span class="st">'v_vel'</span>,</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>                group <span class="op">=</span> <span class="st">'vehicle_id'</span>), alpha <span class="op">=</span> <span class="fl">0.5</span>) <span class="op">+</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  scale_color_gradient(low <span class="op">=</span> <span class="st">"red"</span>, high <span class="op">=</span> <span class="st">"green"</span>) <span class="op">+</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  facet_grid(<span class="st">'lane_id ~ .'</span>, labeller <span class="op">=</span> <span class="st">"label_both"</span>) <span class="op">+</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>  labs(x <span class="op">=</span> <span class="st">"Time (HH:MM)"</span>,</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>       y <span class="op">=</span> <span class="st">"Longitudinal position"</span>,</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>       color <span class="op">=</span> <span class="st">"Speed (m/s)"</span>) <span class="op">+</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>  theme_minimal()</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;Figure Size: (640 x 480)&gt;</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="data_transformation_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="614"></p>
+</div>
+</div>
+</div>
+<div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
+
+</div>
+</div>
+</div>
 
 
 

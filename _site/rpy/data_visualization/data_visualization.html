@@ -278,17 +278,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <p>We begin by loading the required visualization packages:</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Python</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="language">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<div class="cell">
+<div class="cell" data-hash="data_visualization_cache/html/unnamed-chunk-2_413e2bd7a4b5222bc5529f38ca1bd0fd">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(arrow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<div class="cell">
+<div class="cell" data-hash="data_visualization_cache/html/unnamed-chunk-3_12e0667e697fc5ab9172ab2dbd7a98f5">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotnine <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -296,11 +296,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Next we load data and take a quick look:</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Python</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="language">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<div class="cell">
+<div class="cell" data-hash="data_visualization_cache/html/unnamed-chunk-4_fdf5352bdbfa42707dc5e994635e7f9d">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> arrow<span class="sc">::</span><span class="fu">read_parquet</span>(<span class="st">"data/df.parquet"</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -515,7 +515,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The <code>kable()</code> function makes the table output pretty in html.</p>
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<div class="cell">
+<div class="cell" data-hash="data_visualization_cache/html/unnamed-chunk-5_3e49a61466f44345bf6c54ac7b8e44a9">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(<span class="st">"data/df.parquet"</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -533,58 +533,183 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>The dataset was stored as a <code>parquet</code> file in a folder named <code>data</code>. <code>parquet</code> format is faster to read and write compared to the <code>csv</code> format. If you’d like to know more about the source of the data and how to store it yourself, read <a href="to-be-added">this post</a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Expand to see data dictionary
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell" data-hash="data_visualization_cache/html/unnamed-chunk-6_1e117327ff63831913f68801d5189081">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 83%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">column</th>
+<th style="text-align: left;">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">pair_id</td>
+<td style="text-align: left;">Pair identfier in the format subject vehicle ID-preceding vehicle ID</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">time</td>
+<td style="text-align: left;">Elapsed time (s)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">actual_time</td>
+<td style="text-align: left;">Actual time (s)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">duration</td>
+<td style="text-align: left;">Duration of observation (s)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">vehicle_id</td>
+<td style="text-align: left;">Identifier of subject vehicle</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">frame_id</td>
+<td style="text-align: left;">Identifier of time frame</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">local_x</td>
+<td style="text-align: left;">Lateral position of the front center of subject vehicle from an arbitrary reference (m)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">local_y</td>
+<td style="text-align: left;">Longitudinal position of the front center of subject vehicle from an arbitrary reference (m)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">v_length</td>
+<td style="text-align: left;">Length of subject vehicle (m)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">v_width</td>
+<td style="text-align: left;">Width of subject vehicle (m)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">v_class</td>
+<td style="text-align: left;">Type of subject vehicle (1 = motorcyle, 2 = car, 3 = heavy-vehicle)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">v_vel</td>
+<td style="text-align: left;">Speed of subject vehicle (m/s)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">v_acc</td>
+<td style="text-align: left;">Acceleration of subject vehicle (m/s^2)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">lane_id</td>
+<td style="text-align: left;">Current lane number of subject vehicle</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">preceding</td>
+<td style="text-align: left;">Identifier of lead vehicle (vehicle in front of subject vehicle in the same lane)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">space_headway</td>
+<td style="text-align: left;">Front bumper to front bumper distance between subject and lead vehicles (m)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">time_headway</td>
+<td style="text-align: left;">Time required by the subject vehicle to traverse space headway (s)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">preceding_local_y</td>
+<td style="text-align: left;">Longitudinal position of the front center of lead vehicle from an arbitrary reference (m)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">preceding_length</td>
+<td style="text-align: left;">Length of lead vehicle (m)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">preceding_width</td>
+<td style="text-align: left;">Width of lead vehicle (m)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">preceding_class</td>
+<td style="text-align: left;">Type of lead vehicle (1 = motorcyle, 2 = car, 3 = heavy-vehicle)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">preceding_vel</td>
+<td style="text-align: left;">Speed of lead vehicle (m/s)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">preceding_acc</td>
+<td style="text-align: left;">Acceleration of lead vehicle (m/s^2)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
 <section id="visualizing-distributions" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="visualizing-distributions">Visualizing distributions</h2>
 <section id="boxplot" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="boxplot">Boxplot</h3>
 <p>Let’s plot vehicle length first.</p>
 <p>Start with an empty canvas:</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Python</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="language">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
-<div class="cell">
+<div class="cell" data-hash="data_visualization_cache/html/unnamed-chunk-7_ee732e4826f22cbe0014c2af30f50dbe">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="data_visualization_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="data_visualization_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
-<div class="cell">
+<div class="cell" data-hash="data_visualization_cache/html/unnamed-chunk-8_5700dfe32fa0346ca84354834aba8ad8">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ggplot(data <span class="op">=</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;Figure Size: (640 x 480)&gt;</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="data_visualization_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="614"></p>
+<p><img src="data_visualization_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="614"></p>
 </div>
 </div>
 </div>
 </div>
 </div>
 <p>Then add aesthetic mappings (we map vehicle class to x-axis and vehicle length to y-axis):</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">Python</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="language">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
-<div class="cell">
+<div class="cell" data-hash="data_visualization_cache/html/unnamed-chunk-9_c9f802308d5f3a89b43081da2477ecb5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df,</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> v_class, <span class="at">y =</span> v_length))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="data_visualization_files/figure-html/unnamed-chunk-8-3.png" class="img-fluid" width="672"></p>
+<p><img src="data_visualization_files/figure-html/unnamed-chunk-9-3.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
 <div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
-<div class="cell">
+<div class="cell" data-hash="data_visualization_cache/html/unnamed-chunk-10_e2277680c1d4fb352c909f359af9725d">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ggplot(data <span class="op">=</span> df,</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>       mapping <span class="op">=</span> aes(x <span class="op">=</span> <span class="st">"v_class"</span>, y <span class="op">=</span> <span class="st">"v_length"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;Figure Size: (640 x 480)&gt;</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="data_visualization_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="614"></p>
+<p><img src="data_visualization_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="614"></p>
 </div>
 </div>
 <p>Note that the dataset <code>df</code> is specified without quotes but the columns <code>v_class</code> and <code>v_length</code> are provided in quotes.</p>
@@ -593,21 +718,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>You see the range of vehicle class and length variables on the plot, but there is no data on the plot pane because we did not specify how to draw it.</p>
 <p>Let’s use the <code>geom</code>etrical object <code>boxplot</code> to visualize the distribution of length of various vehicles:</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">Python</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="language">
 <div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
-<div class="cell">
+<div class="cell" data-hash="data_visualization_cache/html/unnamed-chunk-11_745de1821b44ae5130058ae7f4a08e2a">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df,</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> v_class, <span class="at">y =</span> v_length)) <span class="sc">+</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="data_visualization_files/figure-html/unnamed-chunk-10-3.png" class="img-fluid" width="672"></p>
+<p><img src="data_visualization_files/figure-html/unnamed-chunk-11-3.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
 <div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
-<div class="cell">
+<div class="cell" data-hash="data_visualization_cache/html/unnamed-chunk-12_b79702bba4bc34401b4d542ebce251cf">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  ggplot(data <span class="op">=</span> df,</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>       mapping <span class="op">=</span> aes(x <span class="op">=</span> <span class="st">"v_class"</span>, y <span class="op">=</span> <span class="st">"v_length"</span>)) <span class="op">+</span></span>
@@ -617,7 +742,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>&lt;Figure Size: (640 x 480)&gt;</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="data_visualization_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="614"></p>
+<p><img src="data_visualization_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="614"></p>
 </div>
 </div>
 <p>Note that the code is wrapped in parentheses <code>()</code>. This is because the plot would not render without wrapping the code it in <code>()</code>.</p>
@@ -629,23 +754,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="box-plot-explained.gif" class="img-fluid"></p>
 <p>Reading a Boxplot: https://flowingdata.com/2008/02/15/how-to-read-and-use-a-box-and-whisker-plot/</p>
 </div></div><p>Here we see three vehicle classes with the distribution of their length. Based on the information that <code>1</code>, <code>2</code>, and <code>3</code> represent <code>motorcycle</code>, <code>car</code> and <code>heavy-vehicle</code>, we change the labels on the plot:</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false">Python</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="language">
 <div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
-<div class="cell">
+<div class="cell" data-hash="data_visualization_cache/html/unnamed-chunk-13_cb0cfb51304ec889653d770f3d9e0741">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df,</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> v_class, <span class="at">y =</span> v_length)) <span class="sc">+</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Motorcycle"</span>, <span class="st">"Car"</span>, <span class="st">"HV"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="data_visualization_files/figure-html/unnamed-chunk-12-3.png" class="img-fluid" width="672"></p>
+<p><img src="data_visualization_files/figure-html/unnamed-chunk-13-3.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>The function <code>c()</code> means combine. Here we combine three string (text) items.</p>
 </div>
 <div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
-<div class="cell">
+<div class="cell" data-hash="data_visualization_cache/html/unnamed-chunk-14_b11bd39ba9985cbde1675d155ff5292e">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  ggplot(data <span class="op">=</span> df,</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>       mapping <span class="op">=</span> aes(x <span class="op">=</span> <span class="st">"v_class"</span>, y <span class="op">=</span> <span class="st">"v_length"</span>)) <span class="op">+</span></span>
@@ -656,7 +781,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>&lt;Figure Size: (640 x 480)&gt;</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="data_visualization_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="614"></p>
+<p><img src="data_visualization_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="614"></p>
 </div>
 </div>
 <p><code>[]</code> combines multiple strings in a data structure called a <code>list</code>.</p>
@@ -665,11 +790,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>We used <code>scale_x_discrete()</code> because <code>v_class</code> is a discrete data type with 3 categories. We used the parameter <code>labels</code> to specify the custom labels that replaced the actual data (<code>1</code>, <code>2</code>, and <code>3</code>) on the plot.</p>
 <p>The main finding in this plot is that heavy-vehicles are much longer than cars and motorcycles. To make this plot even more readable, we provide the <code>labs</code> (labels) of the plot:</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false">Python</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="language">
 <div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
-<div class="cell">
+<div class="cell" data-hash="data_visualization_cache/html/unnamed-chunk-15_3566fc54de79780289f349f9e12c256d">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df,</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> v_class, <span class="at">y =</span> v_length)) <span class="sc">+</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
@@ -677,13 +802,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>,</span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Length (m)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="data_visualization_files/figure-html/unnamed-chunk-14-3.png" class="img-fluid" width="672"></p>
+<p><img src="data_visualization_files/figure-html/unnamed-chunk-15-3.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Specifying <code>NULL</code> for the <code>x</code>-axis label completely removes it.</p>
 </div>
 <div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
-<div class="cell">
+<div class="cell" data-hash="data_visualization_cache/html/unnamed-chunk-16_40015f2553a0756a331ee3a9480f0f8d">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  ggplot(data <span class="op">=</span> df,</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>       mapping <span class="op">=</span> aes(x <span class="op">=</span> <span class="st">"v_class"</span>, y <span class="op">=</span> <span class="st">"v_length"</span>)) <span class="op">+</span></span>
@@ -696,7 +821,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>&lt;Figure Size: (640 x 480)&gt;</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="data_visualization_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="614"></p>
+<p><img src="data_visualization_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="614"></p>
 </div>
 </div>
 <p>Specifying an empty string (<code>""</code>) for the <code>x</code>-axis label removes it.</p>
@@ -711,11 +836,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="no-row-height column-margin column-container"><div class="">
 <p><strong>How histograms work:</strong> https://flowingdata.com/2017/06/07/how-histograms-work/</p>
 </div></div><p>Let’s look at the histogram of speed (<code>v_vel</code>):</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false">Python</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="language">
 <div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
-<div class="cell">
+<div class="cell" data-hash="data_visualization_cache/html/unnamed-chunk-17_9ef304dce9f6239cc22390673b6dba1f">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Speed distribution</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df) <span class="sc">+</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> v_vel, <span class="at">color =</span> v_class, <span class="at">fill =</span> v_class), </span>
@@ -726,12 +851,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Vehicle Class"</span>,</span>
 <span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Vehicle Class"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="data_visualization_files/figure-html/unnamed-chunk-16-3.png" class="img-fluid" width="672"></p>
+<p><img src="data_visualization_files/figure-html/unnamed-chunk-17-3.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
 <div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
-<div class="cell">
+<div class="cell" data-hash="data_visualization_cache/html/unnamed-chunk-18_99494c338b2d1c049bc74f29ce7458ae">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Speed distribution</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  ggplot(data <span class="op">=</span> df) <span class="op">+</span></span>
@@ -749,7 +874,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 C:\Users\umair\ANACON~1\envs\homl3\lib\site-packages\plotnine\stats\stat_bin.py:109: PlotnineWarning: 'stat_bin()' using 'bins = 126'. Pick better value with 'binwidth'.</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="data_visualization_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="614"></p>
+<p><img src="data_visualization_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="614"></p>
 </div>
 </div>
 </div>
@@ -770,11 +895,11 @@ C:\Users\umair\ANACON~1\envs\homl3\lib\site-packages\plotnine\stats\stat_bin.py:
 <p>You may have noticed that <code>y</code> aesthetic is not specified here. This is because observation count was first calculated by ggplot2 in each interval of speed. Then the count was mapped to <code>y</code>.</p>
 <p>The height of each bar in a histogram corresponds to the count of observations (rows in a dataframe) of the variable (speed in this case). We can see that the speed typically varies between 5 - 20 m/s. However, since the histograms are plotted on top of each other AND the count of observations varies significantly between different vehicle classes, we need a better visualization.</p>
 <p>Instead of count on y-axis, we can ask ggplot to estimate the <a href="https://clauswilke.com/dataviz/histograms-density-plots.html">density</a> and map it as the <code>y</code> aesthetic:</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false">Python</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="language">
 <div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
-<div class="cell">
+<div class="cell" data-hash="data_visualization_cache/html/unnamed-chunk-19_3d5a1a3d228238a2ab0ca8ec360efd07">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df) <span class="sc">+</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> v_vel, <span class="at">color =</span> v_class, <span class="at">fill =</span> v_class), </span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
@@ -784,12 +909,12 @@ C:\Users\umair\ANACON~1\envs\homl3\lib\site-packages\plotnine\stats\stat_bin.py:
 <span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Vehicle Class"</span>,</span>
 <span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Vehicle Class"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="data_visualization_files/figure-html/unnamed-chunk-18-3.png" class="img-fluid" width="672"></p>
+<p><img src="data_visualization_files/figure-html/unnamed-chunk-19-3.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
 <div id="tabset-9-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-2-tab">
-<div class="cell">
+<div class="cell" data-hash="data_visualization_cache/html/unnamed-chunk-20_0b132ad2fde24f7c06cd8d5a37285da1">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  ggplot(data <span class="op">=</span> df) <span class="op">+</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  geom_density(aes(x <span class="op">=</span> <span class="st">"v_vel"</span>, color <span class="op">=</span> <span class="st">"v_class"</span>, fill <span class="op">=</span> <span class="st">"v_class"</span>), </span>
@@ -804,7 +929,7 @@ C:\Users\umair\ANACON~1\envs\homl3\lib\site-packages\plotnine\stats\stat_bin.py:
 <pre><code>&lt;Figure Size: (640 x 480)&gt;</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="data_visualization_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="614"></p>
+<p><img src="data_visualization_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="614"></p>
 </div>
 </div>
 </div>
@@ -821,11 +946,11 @@ C:\Users\umair\ANACON~1\envs\homl3\lib\site-packages\plotnine\stats\stat_bin.py:
 <p>Divides the plane into regular hexagons, counts the number of cases in each hexagon, and then (by default) maps the number of cases to the hexagon fill.</p>
 </blockquote>
 <p>Let’s use it:</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-2" role="tab" aria-controls="tabset-10-2" aria-selected="false">Python</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="language">
 <div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
-<div class="cell">
+<div class="cell" data-hash="data_visualization_cache/html/unnamed-chunk-21_0e2187ed144938d736f5c6e468ae50fc">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df,</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> v_vel, <span class="at">y =</span> space_headway)) <span class="sc">+</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hex</span>() <span class="sc">+</span></span>
@@ -833,13 +958,13 @@ C:\Users\umair\ANACON~1\envs\homl3\lib\site-packages\plotnine\stats\stat_bin.py:
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Speed (m/s)"</span>,</span>
 <span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Spacing (m)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="data_visualization_files/figure-html/unnamed-chunk-20-3.png" class="img-fluid" width="672"></p>
+<p><img src="data_visualization_files/figure-html/unnamed-chunk-21-3.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
 <div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
 <p><code>geom_hex</code> is not yet implemented in <code>plotnine</code>. So, we create a scatterplot using <code>geom_point()</code>:</p>
-<div class="cell">
+<div class="cell" data-hash="data_visualization_cache/html/unnamed-chunk-22_be1227dbb1a59b884fcd9a9458cb0c9d">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  ggplot(data <span class="op">=</span> df, </span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>        mapping <span class="op">=</span> aes(x <span class="op">=</span> <span class="st">"v_vel"</span>, y <span class="op">=</span> <span class="st">"space_headway"</span>)) <span class="op">+</span></span>
@@ -852,7 +977,7 @@ C:\Users\umair\ANACON~1\envs\homl3\lib\site-packages\plotnine\stats\stat_bin.py:
 <pre><code>&lt;Figure Size: (640 x 480)&gt;</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="data_visualization_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="614"></p>
+<p><img src="data_visualization_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="614"></p>
 </div>
 </div>
 </div>
@@ -860,11 +985,11 @@ C:\Users\umair\ANACON~1\envs\homl3\lib\site-packages\plotnine\stats\stat_bin.py:
 </div>
 <p>The plot shows a linear relationship between speed and spacing: vehicles at higher speed generally keep a higher spacing from the lead vehicle (preceding vehicle). This relationship is explicitly modeled by ggplot2 behind the scenes as it fits an algorithm to the data. The command used to achieve that is <code>geom_smooth</code>.</p>
 <p>Car-following models employ spacing and speed-difference from the lead vehicle to forecast the speed of the subject vehicle. Let’s plot the spacing vs speed-difference plot to see the typical speed-difference at different levels of spacing:</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-2" role="tab" aria-controls="tabset-11-2" aria-selected="false">Python</a></li></ul>
-<div class="tab-content">
+<div class="tab-content" data-group="language">
 <div id="tabset-11-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-11-1-tab">
-<div class="cell">
+<div class="cell" data-hash="data_visualization_cache/html/unnamed-chunk-23_7a87f6f701a471a18fd4cd74db848356">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df,</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> v_vel <span class="sc">-</span> preceding_vel, <span class="at">y =</span> space_headway)) <span class="sc">+</span></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> (v_vel <span class="sc">-</span> preceding_vel) <span class="sc">&lt;</span> <span class="dv">0</span>), </span>
@@ -873,12 +998,12 @@ C:\Users\umair\ANACON~1\envs\homl3\lib\site-packages\plotnine\stats\stat_bin.py:
 <span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Speed (m/s)"</span>,</span>
 <span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Spacing (m)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="data_visualization_files/figure-html/unnamed-chunk-22-3.png" class="img-fluid" width="672"></p>
+<p><img src="data_visualization_files/figure-html/unnamed-chunk-23-3.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
 <div id="tabset-11-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-2-tab">
-<div class="cell">
+<div class="cell" data-hash="data_visualization_cache/html/unnamed-chunk-24_2268b3ece6b08e2943c1f554c182c2c4">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  ggplot(data <span class="op">=</span> df,</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>       mapping <span class="op">=</span> aes(x <span class="op">=</span> <span class="st">"v_vel - preceding_vel"</span>, y <span class="op">=</span> <span class="st">"space_headway"</span>)) <span class="op">+</span></span>
@@ -892,7 +1017,7 @@ C:\Users\umair\ANACON~1\envs\homl3\lib\site-packages\plotnine\stats\stat_bin.py:
 <pre><code>&lt;Figure Size: (640 x 480)&gt;</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="data_visualization_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="614"></p>
+<p><img src="data_visualization_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="614"></p>
 </div>
 </div>
 </div>

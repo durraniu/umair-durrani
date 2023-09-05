@@ -1,0 +1,134 @@
+---
+title: "Images as Facet Labels in ggplot2"
+description: "The power of {ggtext}"
+format: 
+  html:
+    page-layout: full
+warning: false
+toc: false
+categories:
+  - visualization
+  - ggplot2
+  - ggh4x
+  - ggtext
+---
+
+In this post, I will show you how to replace the facet labels in ggplot2 with images. The images I'll use in this post are country flags. Let's start with loading the required packages:  
+```{r}
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(jsonlite))
+suppressPackageStartupMessages(library(ggtext))
+suppressPackageStartupMessages(library(gapminder))
+suppressPackageStartupMessages(library(ggh4x))
+```
+
+## Data
+
+I am going to get the images of flags of countries that are in the `gapminder` dataset. The flag images are available in this [Github repo](https://github.com/hampusborgos/country-flags). First, {jsonlite} will help in getting a json of country codes and names:
+
+```{r}
+country_code <- jsonlite::read_json("https://raw.githubusercontent.com/hampusborgos/country-flags/main/countries.json") |> 
+  data.frame() |>
+  pivot_longer(cols = everything(), names_to = "abb", values_to = "country") |> 
+  mutate(abb = tolower(abb),
+         abb = stringr::str_remove(abb, "\\.$"))
+
+head(country_code)
+```
+
+Next, I join the `country_code` with `gapminder`:
+
+```{r}
+gm_joined <- gapminder |> 
+  left_join(country_code, by = "country") |> 
+  drop_na(abb) 
+
+head(gm_joined)
+```
+
+I know that many countries are dropped as not all countries are stored with the exact same string in both dataframes. But I'm not going to worry about that in th is post :)  
+
+Since each country flag is stored as a png in the `png250px` folder on the repo, I create a url based on the country abbreviation as a new column. This will be helpful in downloading the flag images in the next step.
+
+```{r}
+gm_joined <- gm_joined |> 
+  mutate(url = paste0("https://github.com/hampusborgos/country-flags/blob/main/png250px/", abb, ".png?raw=true")) 
+
+country_flag_urls <- gm_joined |>
+  distinct(country, url) |> 
+  mutate(country = gsub(" ", "", country))
+
+urls <- country_flag_urls$url
+names(urls) <- country_flag_urls$country
+
+head(country_flag_urls)
+```
+
+Now that I have the url to each country flag, I am ready to download the images to a folder named `flags`:
+
+```{r, eval=FALSE}
+download.file(urls, paste0("flags/", names(urls), ".png"), mode="wb")
+```
+
+
+## Theme for flags
+
+The trick is to use `ggtext::element_markdown()` for facet strips to replace the facet labels with images. Therefore, I first generate the markdown for reading images:  
+
+```{r}
+flag_markdown <- paste0("<img src=", list.files("flags/", full.names = TRUE), " width='100'/>")
+
+names(flag_markdown) <- names(urls)
+
+head(flag_markdown)
+```
+
+Now each country name and corresponding markdown for its flag image is available in `flag_markdown`. I also add the continents to this vector so that the plot contains information about the continents as well as countries:  
+
+```{r}
+continents <- as.character(unique(gm_joined$continent))
+names(continents) <- continents
+
+flag_markdown <- c(flag_markdown, continents)
+```
+
+Next, I create a theme that will use `ggtext::element_markdown()` to replace the strip text with image:  
+
+```{r}
+theme_flag <- function(base_size = 20,
+                          title_size = 20,
+                         ...){
+  # CUSTOM THEME:
+  ggplot2::theme_minimal(base_size = base_size) +
+    ggplot2::theme(
+      # title
+      plot.title = element_text(size = title_size),
+      plot.title.position = "plot",
+      
+      #strip
+      strip.text.x = element_markdown(size = 30),
+      ...
+    )
+}
+```
+
+## Flags!
+
+To demonstrate the use of `ggtext::element_markdown()`, I'm going to plot life expectancy over GDP per capita in different countries. I also utilize the `ggh4x::facet_nested_wrap()` function to label both the continents and countries:
+
+```{r}
+#| fig-width: 20
+#| fig-height: 200
+
+gm_joined |> 
+  filter(country %in% country_flag_urls$country) |>
+  ggplot(mapping = aes(gdpPercap, lifeExp)) +
+  geom_smooth() +
+  labs(x = "GDP", y = "Life Expectancy") + 
+  facet_nested_wrap(~ continent + country, nest_line = TRUE, labeller = as_labeller(flag_markdown),
+             scales = "free",
+             ncol = 5) +
+  theme_flag() 
+
+```
+

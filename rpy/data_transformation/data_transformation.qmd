@@ -4,6 +4,8 @@ description: "Learn to use dplyr, pandas and siuba to filter rows & create and c
 author: "Umair Durrani"
 image: "imagee.png"
 warning: false
+cache: true
+draft: true
 categories:
   - visualization
   - dplyr
@@ -14,3 +16,273 @@ categories:
   - filter
 ---
 
+```{r, include=FALSE}
+reticulate::use_condaenv("C:/Users/umair/anaconda3/envs/homl3/python.exe")
+```
+
+
+::: {.panel-tabset group="language"}
+### R
+```{r}
+library(dplyr)
+library(ggplot2)
+library(janitor)
+library(arrow)
+```
+
+### Python
+```{python}
+import pandas as pd
+from siuba.dply.vector import n, row_number, last
+from siuba import *
+from plotnine import *
+import janitor
+```
+
+### Julia
+```{julia}
+using ParquetFiles, DataFrames, Tidier
+```
+:::
+
+
+
+
+::: {.panel-tabset group="language"}
+### R
+```{r}
+df <- arrow::read_parquet("data/df_raw.parquet")
+
+df <- janitor::clean_names(df) 
+  
+knitr::kable(head(df))
+```
+
+### Python
+```{python}
+df = pd.read_parquet("data/df_raw.parquet")
+
+df.columns
+
+df = df.clean_names()
+
+df.columns
+```
+
+
+### Julia
+```{julia}
+df = DataFrame(load("data/df_raw.parquet"))
+
+df = @chain df begin
+      @clean_names
+     end
+
+names(df)
+
+df = @chain df begin
+         @rename(vehicle_id = vehicle_i_d,
+                 frame_id = frame_i_d,
+                 lane_id = lane_i_d)
+     end
+```
+:::
+
+
+
+::: {.panel-tabset group="language"}
+### R
+```{r}
+df <- df |> 
+  dplyr::group_by(frame_id) |>  # grouping by frame id
+  dplyr::mutate(preceding_local_y = local_y[match(preceding, vehicle_id)],
+                preceding_length = v_length[match(preceding, vehicle_id)],
+                preceding_width = v_width[match(preceding, vehicle_id)],
+                preceding_class= v_class[match(preceding, vehicle_id)],
+                preceding_vel = v_vel[match(preceding, vehicle_id)],
+                preceding_acc = v_acc[match(preceding, vehicle_id)]) |> 
+  dplyr::ungroup()
+```
+
+### Python
+```{python}
+df = df.merge(
+  df.loc[:, ['frame_id', 'vehicle_id', 'local_y', 'v_length',
+            'v_width', 'v_class', 'v_vel', 'v_acc']] , 
+              left_on = ['frame_id', 'preceding'], 
+              right_on = ['frame_id', 'vehicle_id'], how = 'left', 
+              suffixes=['', '_preceding']
+              )
+              
+df = df.drop(['vehicle_id_preceding'], axis = 'columns')
+              
+df.columns
+```
+
+Rename the columns for `preceding` vehicles to match the column names with `R`:
+```{python}
+df = (
+  df 
+      >> rename(preceding_local_y = _.local_y_preceding,
+                 preceding_v_length =  _.v_length_preceding,
+                 preceding_v_width = _.v_width_preceding,
+                 preceding_v_class = _.v_class_preceding,
+                 preceding_v_vel = _.v_vel_preceding,
+                 preceding_v_acc = _.v_acc_preceding)
+     
+     )
+     
+df.columns
+```
+
+
+
+### Julia
+```{julia}
+df = leftjoin(
+           df,
+           df[:, [:frame_id, :vehicle_id, :local_y, :v_length, :v_width, :v_class, :v_vel, :v_acc]],
+           on = [:frame_id => :frame_id, :preceding => :vehicle_id],
+           makeunique = true, 
+           renamecols = "" => "_preceding"
+       )
+
+names(df)
+```
+
+Rename the columns for `preceding` vehicles to match the column names with `R`:
+```{julia}
+df = @chain df begin
+         @rename(preceding_local_y = local_y_preceding,
+                 preceding_v_length =  v_length_preceding,
+                 preceding_v_width = v_width_preceding,
+                 preceding_v_class = v_class_preceding,
+                 preceding_v_vel = v_vel_preceding,
+                 preceding_v_acc = v_acc_preceding)
+     end
+     
+names(df)
+```
+:::
+
+
+
+
+::: {.panel-tabset group="language"}
+### R
+```{r}
+df <- df |>
+  select(-c(total_frames, starts_with("global"), following), global_time) |> # Keeping the desired columns only
+ mutate(across(
+    .cols = c(starts_with("local"), starts_with("v_"), space_headway, starts_with("preceding"), -preceding, -preceding_class, -v_class),
+    .fns = ~ round(.x * .3048, 2)
+  )) |> # Convert to metric units
+  mutate(across(
+    .cols = c(vehicle_id, v_class, lane_id, preceding, preceding_class),
+    .fns = ~ as.factor(.x)
+  )) # Convert a few columns to factor type
+```
+
+### Python
+```{python}
+df = (
+  df 
+  >> select(-_[_.total_frames, _.startswith('global'), _.following], 
+  _.global_time) # Keeping the desired columns only
+    )
+    
+### converting to metric units
+cols_to_convert_to_metric = ['local_x', 'local_y', 'v_length', 'v_width', 
+        'v_vel', 'v_acc', 'space_headway', 'preceding_local_y',
+        'preceding_v_length', 'preceding_v_width', 'preceding_v_vel',
+       'preceding_v_acc']
+
+df[cols_to_convert_to_metric] = df[cols_to_convert_to_metric].apply(lambda x: x * .3048).round(2)
+
+
+
+## change the data type to categorical
+cols_to_convert_to_categorical = ['vehicle_id', 'v_class', 'lane_id', 
+                             'preceding', 'preceding_v_class']
+for col in cols_to_convert_to_categorical:
+    df[col] = df[col].astype('str',copy=False)
+```
+:::
+
+
+
+
+::: {.panel-tabset group="language"}
+### R
+```{r}
+df <- df |> 
+  mutate(actual_time = as.POSIXct(global_time/1000, origin = "1970-01-01", 
+                                  tz="America/Los_Angeles")) |>
+  select(-global_time)
+```
+
+### Python
+```{python}
+df['actual_time'] = pd.to_datetime(df['global_time'] / 1000, 
+                                    unit='s', origin='1970-01-01', utc=True)
+df['actual_time'] = df['actual_time'].dt.tz_convert('America/Los_Angeles')
+
+df = df.drop(['global_time'], axis = 'columns')
+
+print(df.columns)
+```
+:::
+
+
+
+
+::: {.panel-tabset group="language"}
+### R
+```{r}
+## Time space diagram
+# ggplot(data = df |> 
+#          filter(lane_id %in% c(1,2,3))) +
+#   geom_path(aes(x = actual_time, 
+#                 y = local_y, 
+#                 color = v_vel,
+#                 group = vehicle_id), alpha = 0.5) +
+#   scale_color_gradient(low = "red", high = "green") +
+#   facet_grid(lane_id ~ ., labeller = "label_both") +
+#   labs(x = "Time (HH:MM)",
+#        y = "Longitudinal position",
+#        color = "Speed (m/s)") +
+#   theme_minimal()
+```
+
+### Python
+```{python}
+## Time space diagram
+
+df_123 = (
+  df  
+      >> filter(_.lane_id.isin(["1", "2", "3"]))
+)
+
+
+
+(
+  ggplot(data = df_123) +
+  geom_path(aes(x = 'actual_time',
+                y = 'local_y',
+                color = 'v_vel',
+                group = 'vehicle_id'), alpha = 0.5) +
+  scale_color_gradient(low = "red", high = "green") +
+  facet_grid('lane_id ~ .', labeller = "label_both") +
+  labs(x = "Time (HH:MM)",
+       y = "Longitudinal position",
+       color = "Speed (m/s)") +
+  theme_minimal()
+  )
+```
+
+
+### Julia
+```{julia}
+
+```
+:::

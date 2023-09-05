@@ -4,6 +4,7 @@ description: "Learn to use ggplot2 and plotnine to explore data"
 author: "Umair Durrani"
 image: "imagee.png"
 warning: false
+cache: true
 categories:
   - visualization
   - ggplot2
@@ -19,7 +20,7 @@ reticulate::use_condaenv("C:/Users/umair/anaconda3/envs/homl3/python.exe")
 
 We begin by loading the required visualization packages:
 
-::: panel-tabset
+::: {.panel-tabset group="language"} 
 ### R
 ```{r}
 library(ggplot2)
@@ -31,12 +32,13 @@ library(arrow)
 import pandas as pd
 from plotnine import *
 ```
+
 :::
 
 
 Next we load data and take a quick look:
 
-::: panel-tabset
+::: {.panel-tabset group="language"}
 ### R
 ```{r}
 df <- arrow::read_parquet("data/df.parquet")
@@ -50,9 +52,47 @@ The `kable()` function makes the table output pretty in html.
 df = pd.read_parquet("data/df.parquet")
 df.head()
 ```
+
 :::
 
 The dataset was stored as a `parquet` file in a folder named `data`. `parquet` format is faster to read and write compared to the `csv` format. If you'd like to know more about the source of the data and how to store it yourself, read [this post](to-be-added). 
+
+::: {.callout-note collapse="true"}
+## Expand to see data dictionary
+```{r, echo=FALSE}
+
+
+knitr::kable(
+  data.frame(column = names(df),
+           description = c("Pair identfier in the format subject vehicle ID-preceding vehicle ID",
+                           "Elapsed time (s)",
+                           "Actual time (s)",
+                           "Duration of observation (s)",
+                           "Identifier of subject vehicle",
+                           "Identifier of time frame",
+                           "Lateral position of the front center of subject vehicle from an arbitrary reference (m)",
+                           "Longitudinal position of the front center of subject vehicle from an arbitrary reference (m)",
+                           "Length of subject vehicle (m)",
+                           "Width of subject vehicle (m)",
+                           "Type of subject vehicle (1 = motorcyle, 2 = car, 3 = heavy-vehicle)",
+                           "Speed of subject vehicle (m/s)",
+                           "Acceleration of subject vehicle (m/s^2)",
+                           "Current lane number of subject vehicle",
+                           "Identifier of lead vehicle (vehicle in front of subject vehicle in the same lane)",
+                           "Front bumper to front bumper distance between subject and lead vehicles (m)",
+                           "Time required by the subject vehicle to traverse space headway (s)",
+                           "Longitudinal position of the front center of lead vehicle from an arbitrary reference (m)",
+                           "Length of lead vehicle (m)",
+                           "Width of lead vehicle (m)",
+                           "Type of lead vehicle (1 = motorcyle, 2 = car, 3 = heavy-vehicle)",
+                           "Speed of lead vehicle (m/s)",
+                           "Acceleration of lead vehicle (m/s^2)"))
+)
+```
+:::
+
+
+
 
 ## Visualizing distributions
 
@@ -62,7 +102,7 @@ Let's plot vehicle length first.
 
 Start with an empty canvas:
 
-::: panel-tabset
+::: {.panel-tabset group="language"}
 ### R
 ```{r}
 ggplot(data = df)
@@ -76,7 +116,7 @@ ggplot(data = df)
 
 Then add aesthetic mappings (we map vehicle class to x-axis and vehicle length to y-axis):  
 
-::: panel-tabset
+::: {.panel-tabset group="language"}
 ### R
 ```{r}
 ggplot(data = df,
@@ -96,7 +136,7 @@ You see the range of vehicle class and length variables on the plot, but there i
 
 Let's use the `geom`etrical object `boxplot` to visualize the distribution of length of various vehicles:  
 
-::: panel-tabset
+::: {.panel-tabset group="language"}
 ### R
 ```{r}
 ggplot(data = df,
@@ -123,7 +163,7 @@ Reading a Boxplot: https://flowingdata.com/2008/02/15/how-to-read-and-use-a-box-
 
 Here we see three vehicle classes with the distribution of their length. Based on the information that `1`, `2`, and `3` represent `motorcycle`, `car` and `heavy-vehicle`, we change the labels on the plot:  
 
-::: panel-tabset
+::: {.panel-tabset group="language"}
 ### R
 ```{r}
 ggplot(data = df,
@@ -151,7 +191,7 @@ We used `scale_x_discrete()` because `v_class` is a discrete data type with 3 ca
 
 The main finding in this plot is that heavy-vehicles are much longer than cars and motorcycles. To make this plot even more readable, we provide the `labs` (labels) of the plot:  
 
-::: panel-tabset
+::: {.panel-tabset group="language"}
 ### R
 ```{r}
 ggplot(data = df,
@@ -190,7 +230,7 @@ Histogram and Density plots also help in understanding a variable distribution.
 
 Let's look at the histogram of speed (`v_vel`):  
 
-::: panel-tabset
+::: {.panel-tabset group="language"}
 ### R
 ```{r}
 # Speed distribution
@@ -236,7 +276,7 @@ The height of each bar in a histogram corresponds to the count of observations (
 Instead of count on y-axis, we can ask ggplot to estimate the [density](https://clauswilke.com/dataviz/histograms-density-plots.html) and map it as the `y` aesthetic:  
 
 
-::: panel-tabset
+::: {.panel-tabset group="language"}
 ### R
 ```{r}
 ggplot(data = df) +
@@ -277,7 +317,7 @@ Since there are `r nrow(df)` observations in these data, using a hexagonal heatm
 
 Let's use it:
 
-::: panel-tabset
+::: {.panel-tabset group="language"}
 ### R
 ```{r}
 ggplot(data = df,
@@ -309,7 +349,7 @@ The plot shows a linear relationship between speed and spacing: vehicles at high
 
 Car-following models employ spacing and speed-difference from the lead vehicle to forecast the speed of the subject vehicle. Let's plot the spacing vs speed-difference plot to see the typical speed-difference at different levels of spacing:
 
-::: panel-tabset
+::: {.panel-tabset group="language"}
 ### R
 ```{r}
 ggplot(data = df,
