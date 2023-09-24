@@ -16,30 +16,14 @@ page-layout: full
 
 # Hello there, I am Umair Durrani
 
-I am a transportation data scientist and traffic modeler. I study and develop models of road users for traffic flow modeling. I am also an instructor of [Data Analytics at St. Clair College, Windsor, Ontario](https://www.stclaircollege.ca/programs/data-analytics-business). I teach Statistics and data analytics using Python, R, Tableau, Excel, etc. I also supervise capstone projects of students from diverse backgrounds.
+I am a transportation data scientist and I am passionate about understanding, modeling, and mitigating human error in transportation systems. 
 
-I speak **English**, **Urdu** and **R** (programming) fluently. You can get in touch with me via [email](mailto:umairdurrani@outlook.com) or [twitter](https://twitter.com/umairdurrani87).
+During my graduate studies in transportation engineering, I studied and developed models of road users for traffic flow modeling. I was also an instructor of Data Analytics at St. Clair College, Windsor, Ontario. 
 
-:::
-
-
-::: {.g-col-12 .g-col-md-5 .g-start-md-2}
-<!-- # <span style="color:#1296e3">Interests</span> -->
-# Interests
-
--   Human Factors in Autonomous Vehicles  
-
--   Driver Behaviour & Driver State Monitoring Systems
-
--   Machine Learning Applications in Transportation  
-
--   Intelligent Transportation Systems
-
-
-
- 
+I speak **English**, **Urdu** and **R** (programming) fluently. You can get in touch with me via [email](mailto:umairdurrani@outlook.com) or [mastodon](https://fosstodon.org/@transportationtalk).
 
 :::
+
 
 ::: {.g-col-12 .g-col-md-5}
 <!-- # <span style="color:#1296e3">Education</span> -->
