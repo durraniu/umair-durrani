@@ -1,14 +1,15 @@
 ---
-title: "Classifying Traffic Signs with Machine Learning (Part 1)"
+title: "Classifying Traffic Signs with Machine Learning"
 description: "Random Forest begins"
 image: "batmanDALLE.png"
-cache: true
+execute: 
+  cache: true
 warning: false
 jupyter: python3
 date: "2023-04-16"
 ---
 
-This post is part 1 of the three-part series on classifying traffic signs with machine learning. In this part, I will show you how to preprocess images of traffic signs, reshape those images and use them with random forest algorithm for classification. Part of image pre-processing and visualization code comes from [*The Complete Self Driving Car Course* github repo](https://github.com/PacktPublishing/The-Complete-Self-Driving-Car-Course---Applied-Deep-Learning) which has a MIT license [^longnote].  
+In this post, I will show you how to preprocess images of traffic signs, reshape those images and use them with random forest algorithm for classification. Part of image pre-processing and visualization code comes from [*The Complete Self Driving Car Course* github repo](https://github.com/PacktPublishing/The-Complete-Self-Driving-Car-Course---Applied-Deep-Learning) which has a MIT license [^longnote].  
 
 [^longnote]: MIT License
 

@@ -8,7 +8,7 @@ page-layout: full
 ::: {.grid}
 
 ::: {.g-col-12 .g-col-md-6}
-<img src=umair-profile2.jpg  width="90%" height="65%">
+<img src=umair_green.jpeg  width="90%" height="65%">
 :::
 
 ::: {.g-col-12 .g-col-md-6 #about-me-text}
@@ -18,37 +18,9 @@ page-layout: full
 
 I am a transportation data scientist and I am passionate about understanding, modeling, and mitigating human error in transportation systems. 
 
-During my graduate studies in transportation engineering, I studied and developed models of road users for traffic flow modeling. I was also an instructor of Data Analytics at St. Clair College, Windsor, Ontario. 
+During my PhD in transportation engineering, I studied and developed models of road users for traffic flow modeling. I was also an instructor of Data Analytics at St. Clair College, Windsor, Ontario. 
 
 I speak **English**, **Urdu** and **R** (programming) fluently. You can get in touch with me via [email](mailto:umairdurrani@outlook.com) or [mastodon](https://fosstodon.org/@transportationtalk).
-
-:::
-
-
-::: {.g-col-12 .g-col-md-5}
-<!-- # <span style="color:#1296e3">Education</span> -->
-# Education
-
-<ul>
-
--   **Ph.D. Civil Engineering** <br>
-
-    <p class="grad-location">
-
-    University of Windsor, Ontario, Canada
-
-    </p>
-
-
--   **B.Sc. Transportation Engineering** <br>
-
-    <p class="grad-location">
-
-    University of Engineering and Technology, Lahore, Pakistan
-
-    </p>
-
-</ul>
 
 :::
 

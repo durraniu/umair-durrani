@@ -3,12 +3,10 @@ title: "Driver Behaviour in mixed traffic of Autonomous Vehicles"
 image: "av1.jpeg"
 ---
 
-## Development of an Algorithm to Improve Autonomous Driving Performance in a Mixed Traffic of Autonomous and Human driving Vehicle, Ministry of Science and ICT, South Korea	(2022 – Present)
+## Development of an Algorithm to Improve Autonomous Driving Performance in a Mixed Traffic of Autonomous and Human driving Vehicle, Ministry of Science and ICT, South Korea	(2022 – 2023)
 
 
--	Assisted in the development of the driving simulator study by specifying the behaviors of autonomous and human-driven vehicles in the simulation    
-- Collected driving and sensor data by conducting simulator studies  
-- Extracted and analyzed data  
+In this project, I developed a driving simulator study with a team where we specified the behaviors of autonomous and human-driven vehicles in the simulation. This study collected driving and sensor data (eye-tracker, EGG, bio-signals, etc.). I wrote part of the [software](https://github.com/durraniu/daqr) that cleaned and extracted driving data from the simulator.
 
 
 ![](av2.jpeg)

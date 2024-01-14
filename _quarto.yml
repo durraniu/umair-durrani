@@ -22,7 +22,7 @@ website:
       - href: software.qmd
         text: Software
       - href: teaching.qmd
-        text: Training
+        text: Talks
       - href: https://scholar.google.com/citations?user=jS1b6osAAAAJ&hl=en
         target: _blank
         text: Publications
@@ -30,8 +30,6 @@ website:
         text: ML
       - href: blog.qmd
         text: Blog
-      - href: rpy.qmd
-        text: "RPy Data Analysis"
       - text: "More"
         menu:
         - text: "Segmented"
@@ -79,4 +77,4 @@ format:
     
 
 execute: 
-  freeze: auto
+  freeze: true

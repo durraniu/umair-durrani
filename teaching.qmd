@@ -1,6 +1,6 @@
 ---
 page-layout: full
-title: "Teaching"
+title: "Talks and Teaching"
 echo: false
 warning: false
 ---
@@ -11,9 +11,29 @@ suppressPackageStartupMessages(library(kableExtra))
 suppressPackageStartupMessages(library(readxl))
 ```
 
+## A Mini Tour of Open-source tools for Transportation Planning & Engineering
+
+In November 2023, I gave a talk to University of Windsor chapter of Institute of Transportation Engineers (ITE). The slides are embedded below:  
+
+```{=html}
+<iframe width="780" height="500" src="https://dru.quarto.pub/slides/#/section"></iframe>
+```
+
+
+## Scaling Shiny Apps with Google’s Firebase
+
+I gave a talk in October 2023 at Windsor Devfest 2023, organized by Google Developers Group Windsor, Ontario. The talk was titled `Catching Fire: Scaling Shiny Apps with Google’s Firebase`.  
+
+```{=html}
+<iframe width="780" height="500" src="https://durraniu.github.io/gdg_talk/#/title-slide"></iframe>
+```
+
+* GitHub: https://github.com/durraniu/gdg    
+* App: https://umair.shinyapps.io/GoogleDevelopersGroupShiny/_w_f3eb35a9/ 
+
 ## Machine Learning Basics Workshop Series
 
-This workshop is held in Winter 2023 for the members of Transportation Systems Innovation Lab at University of Windsor.
+This workshop was held in Winter 2023 for the members of Transportation Systems Innovation Lab at University of Windsor.
 
 ## Data Analytics Instructor at St. Clair College
 

@@ -1,0 +1,6 @@
+---
+title: "Importing, Transforming, Analyzing, and Visualizing NGSIM Data (2024)"
+image: "trajectories.gif"
+---
+
+This [series of posts](https://itav-ngsim.netlify.app/) show you how to import, transform, analyze and visualize vehicle trajectories data.  

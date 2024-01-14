@@ -6,6 +6,7 @@
       "/posts/images_in_facets/images_in_facets.html",
       "/posts/visual_looming/vlooming.html",
       "/posts/2022-08-15-gipps-model-in-r-and-julia/gipps.html",
+      "/posts/2022-08-15-gipps-model-in-r-and-julia/gipps.html",
       "/posts/2021-02-07-making-a-history-table-from-discover-canada-in-r/making-a-history-table-from-discover-canada-in-r.html",
       "/posts/2021-01-01-autocomplete-character-factor-values-in-rstudio/2021-01-01-autocomplete-character-factor-values-in-rstudio.html",
       "/posts/2020-12-25-elevation-maps-in-r/elevation-maps-in-r.html",
@@ -27,6 +28,7 @@
     "items": [
       "/projects/vsl.html",
       "/projects/rss.html",
+      "/projects/ngsim.html",
       "/projects/avhdv.html",
       "/projects/distracted-driving.html"
     ]
